@@ -1,11 +1,8 @@
 package uk.ac.soton.comp2211.utility;
 
-<<<<<<< Updated upstream
-public class Calculator {
-    
-=======
-import uk.ac.soton.comp2211.components.ObstacleOnRunway;
-import uk.ac.soton.comp2211.components.Runway;
+
+import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
+import uk.ac.soton.comp2211.airport.Runway;
 
 public class Calculator {
 
@@ -20,5 +17,5 @@ public class Calculator {
 
        return runwayWithObstacle;
    }
->>>>>>> Stashed changes
+
 }
