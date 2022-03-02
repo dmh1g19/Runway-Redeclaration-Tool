@@ -74,4 +74,15 @@ public class Runway {
     public void setLDA(int LDA) {
         this.LDA = LDA;
     }
+
+    public Runway(String name, float length, float width, float bearing, int TORA, int TODA, int ASDA, int LDA) {
+        this.name = name;
+        this.length = length;
+        this.width = width;
+        this.bearing = bearing;
+        this.TORA = TORA;
+        this.TODA = TODA;
+        this.ASDA = ASDA;
+        this.LDA = LDA;
+    }
 }
