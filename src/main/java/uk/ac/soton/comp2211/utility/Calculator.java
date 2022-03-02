@@ -8,7 +8,7 @@ public class Calculator {
 
    public Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs){
        Runway runwayWithObstacle = new Runway(runway);
-       int obstaclePosition = obs.getPosition();
+       int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
        int RESA = 240;
        int distanceToStripEnd = 60;
        int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
@@ -17,5 +17,19 @@ public class Calculator {
 
        return runwayWithObstacle;
    }
+
+
+    public Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs){
+        Runway runwayWithObstacle = new Runway(runway);
+        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
+        int obstacleLength =
+        int RESA = 240;
+        int distanceToStripEnd = 60;
+        int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
+        runwayWithObstacle.setLDA(newLDA);
+
+
+        return runwayWithObstacle;
+    }
 
 }
