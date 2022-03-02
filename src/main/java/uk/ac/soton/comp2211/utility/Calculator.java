@@ -22,7 +22,7 @@ public class Calculator {
     public Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
-        int obstacleLength =
+        int obstacleLength = 2
         int RESA = 240;
         int distanceToStripEnd = 60;
         int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
