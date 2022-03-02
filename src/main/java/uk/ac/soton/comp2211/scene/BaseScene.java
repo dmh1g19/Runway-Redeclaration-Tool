@@ -1,7 +1,7 @@
-package org.openjfx.scene;
+package uk.ac.soton.comp2211.scene;
 
 import javafx.scene.Scene;
-import org.openjfx.ui.AppWindow;
+import uk.ac.soton.comp2211.ui.AppWindow;
 
 public class BaseScene {
     protected final AppWindow appWindow;

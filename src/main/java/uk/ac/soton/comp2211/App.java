@@ -1,4 +1,4 @@
-package org.openjfx;
+package uk.ac.soton.comp2211;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
