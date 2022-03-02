@@ -85,4 +85,15 @@ public class Runway {
         this.ASDA = ASDA;
         this.LDA = LDA;
     }
+    public Runway (Runway runway){
+        name = runway.getName();
+        length = runway.getLength();
+        width = runway.getWidth();
+        bearing = runway.getBearing();
+        TORA = runway.getTORA();
+        TODA = runway.getTODA();
+        ASDA = runway.getASDA();
+        LDA = runway.getLDA();
+
+    }
 }

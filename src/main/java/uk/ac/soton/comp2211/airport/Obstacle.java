@@ -11,5 +11,29 @@ public class Obstacle {
         this.height = height;
         this.length = length;
     }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
 
