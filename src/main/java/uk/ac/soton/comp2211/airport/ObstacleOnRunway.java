@@ -1,4 +1,6 @@
-package uk.ac.soton.comp2211.components;
+package uk.ac.soton.comp2211.airport;
+
+import uk.ac.soton.comp2211.airport.Obstacle;
 
 public class ObstacleOnRunway extends Obstacle {
 

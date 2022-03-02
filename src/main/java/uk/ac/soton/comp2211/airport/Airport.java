@@ -1,4 +1,4 @@
-package uk.ac.soton.comp2211.components;
+package uk.ac.soton.comp2211.airport;
 
 public class Airport {
     protected String name;
