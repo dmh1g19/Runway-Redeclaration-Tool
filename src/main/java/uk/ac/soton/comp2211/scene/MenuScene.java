@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import uk.ac.soton.comp2211.App;
 
+import java.io.IOException;
+
 public class MenuScene extends BaseScene {
 
 
@@ -14,16 +16,17 @@ public class MenuScene extends BaseScene {
         super(stage);
     }
 
-    @Override
-    public Scene getScene() {
-        StackPane root = new StackPane();
+
+    public void build() {
+        root = new StackPane();
+
 
         Button button = new Button("Hello!!");
-        button.setOnMousePressed(e -> app.loadSettings());
+        button.setOnMousePressed(e ->app.loadPrimary());
         root.getChildren().add(button);
 
         root.setStyle("-fx-background-color: #81c483");
-        Scene scene = new Scene(root, 800, 600);
-        return scene;
     }
+
+
 }
