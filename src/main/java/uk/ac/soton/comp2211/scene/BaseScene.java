@@ -1,16 +1,22 @@
 package uk.ac.soton.comp2211.scene;
 
 import javafx.scene.Scene;
-import uk.ac.soton.comp2211.ui.AppWindow;
+import javafx.stage.Stage;
+import uk.ac.soton.comp2211.App;
 
-public class BaseScene {
-    protected final AppWindow appWindow;
+public abstract class BaseScene {
+    protected Stage stage;
+    protected App app;
 
-    protected Scene scene;
 
-    public BaseScene (AppWindow appWindow) {
-        this.appWindow = appWindow;
+
+    public BaseScene(App app) {
+        this.app = app;
     }
+
+    public abstract Scene getScene();
+
+
 
 
 }
