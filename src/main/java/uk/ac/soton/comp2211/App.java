@@ -22,7 +22,6 @@ public class App extends Application {
     private static int height = 800;
     private static int width = 600;
 
-    private static ScreenController controller;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,7 +35,6 @@ public class App extends Application {
         defaultScene();
         loadMenu();
 
-        controller = new ScreenController(scene,this);
 
         stage.show();
     }
