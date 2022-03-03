@@ -2,14 +2,15 @@ package uk.ac.soton.comp2211.airport;
 
 public class Runway {
     protected String name;
-    protected float length;
-    protected float width;
-    protected float bearing;
+    protected int length;
+    protected int width;
+    protected int bearing;
 
     protected int TORA;
     protected int TODA;
     protected int ASDA;
     protected int LDA;
+    protected int displacedThreshold =0;
 
     public String getName() {
         return name;
@@ -19,27 +20,27 @@ public class Runway {
         this.name = name;
     }
 
-    public float getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(float length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
-    public float getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public float getBearing() {
+    public int getBearing() {
         return bearing;
     }
 
-    public void setBearing(float bearing) {
+    public void setBearing(int bearing) {
         this.bearing = bearing;
     }
 
@@ -75,7 +76,15 @@ public class Runway {
         this.LDA = LDA;
     }
 
-    public Runway(String name, float length, float width, float bearing, int TORA, int TODA, int ASDA, int LDA) {
+    public void setDTL(int displacedThreshold) {
+        this.displacedThreshold = displacedThreshold;
+    }
+
+    public int getDTL() {
+        return displacedThreshold;
+    }
+
+    public Runway(String name, int length, int width, int bearing, int TORA, int TODA, int ASDA, int LDA) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -84,6 +93,17 @@ public class Runway {
         this.TODA = TODA;
         this.ASDA = ASDA;
         this.LDA = LDA;
+    }
+    public Runway(String name, int length, int width, int bearing, int TORA,  int TODA, int ASDA, int LDA , int displacedThreshold) {
+        this.name = name;
+        this.length = length;
+        this.width = width;
+        this.bearing = bearing;
+        this.TORA = TORA;
+        this.TODA = TODA;
+        this.ASDA = ASDA;
+        this.LDA = LDA;
+        this.displacedThreshold = displacedThreshold;
     }
     public Runway (Runway runway){
         name = runway.getName();
@@ -94,6 +114,7 @@ public class Runway {
         TODA = runway.getTODA();
         ASDA = runway.getASDA();
         LDA = runway.getLDA();
+        displacedThreshold = runway.getDTL();
 
     }
 }
