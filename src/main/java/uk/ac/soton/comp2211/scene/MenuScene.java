@@ -28,5 +28,4 @@ public class MenuScene extends BaseScene {
         root.setStyle("-fx-background-color: #81c483");
     }
 
-
 }

@@ -7,6 +7,14 @@ public class ObstacleOnRunway extends Obstacle {
 protected int position; // how far down the runway the obstacle is
 protected int distanceFromCentreLine;
 
+    public ObstacleOnRunway(Obstacle obstacle, int pos, int dis) {
+        this.name = obstacle.getName();
+        this.height = obstacle.getHeight();
+        this.length = obstacle.getLength();
+        this.position = pos;
+        this.distanceFromCentreLine = dis;
+    }
+
     public ObstacleOnRunway(String name, int height, int length, int position, int distanceFromCentreLine) {
         super(name, height, length);
         this.position = position;

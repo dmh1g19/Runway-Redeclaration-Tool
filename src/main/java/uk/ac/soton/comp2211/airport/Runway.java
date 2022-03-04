@@ -10,7 +10,24 @@ public class Runway {
     protected int TODA;
     protected int ASDA;
     protected int LDA;
-    protected int displacedThreshold =0;
+    protected int displacedThreshold = 0;
+
+    protected ObstacleOnRunway obstacle;
+    protected boolean obstacleOnRunway = false;
+
+    public ObstacleOnRunway getObstacle() {
+        return obstacle;
+    }
+
+    public void setObstacle(ObstacleOnRunway obstacle) {
+        this.obstacle = obstacle;
+        obstacleOnRunway = true;
+    }
+
+    public void changeObstacle(ObstacleOnRunway obstacle) {
+        this.obstacle = obstacle;
+        obstacleOnRunway = true;
+    }
 
     public String getName() {
         return name;
@@ -115,6 +132,10 @@ public class Runway {
         ASDA = runway.getASDA();
         LDA = runway.getLDA();
         displacedThreshold = runway.getDTL();
+    }
 
+    public Runway(Runway runway, ObstacleOnRunway obstacle) {
+        this(runway);
+        setObstacle(obstacle);
     }
 }
