@@ -30,6 +30,7 @@ public class SideOnRunway extends Canvas {
         //add listener so that everytime runway or obstacle changed by user side on view updates.
     }
 
+    //this represents view for plane taking off from left- add right.
     public void representView(){
         //for now will represent plane as rectangle but implement drawImage later.
         var gc = getGraphicsContext2D();
@@ -41,6 +42,28 @@ public class SideOnRunway extends Canvas {
         double obHeight = (obstacle.getHeight()/runway.getLength())*height;
         gc.fillRect( (obPos - (obLen/2)),10,(obPos + (obLen/2)) ,(10+obHeight) );
 
+        gc.setLineWidth(3);
+
+        double TODALen = (runway.getTODA() / runway.getLength()) * width;
+        gc.strokeLine(1,20,(TODALen-1),20);
+        gc.fillText("TODA", (TODALen / 2) ,25);
+
+        //don't know name for the 60m bit RETURN
+
+        double sixtyLen = (60/runway.getLength())*width;
+        gc.strokeLine((TODALen+1),20,(TODALen + sixtyLen - 1),20);
+
+        //is RESA always 240m?
+        double RESALen = (240/runway.getLength())*width;
+        gc.strokeLine((TODALen + sixtyLen + 1),20,(TODALen + sixtyLen - 1),20);
+
+    }
+
+    public void takeOffView(){
+
+    }
+
+    public void landingView(){
 
     }
 
