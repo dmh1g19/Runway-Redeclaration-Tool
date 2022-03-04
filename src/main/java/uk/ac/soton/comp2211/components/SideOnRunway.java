@@ -1,6 +1,12 @@
 package uk.ac.soton.comp2211.components;
 
-public class SideOnRunway extends Canvas{
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
+import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
+import uk.ac.soton.comp2211.airport.Runway;
+
+public class SideOnRunway extends Canvas {
 
     /**
      * Draw the view for side-on runway here -
@@ -24,9 +30,17 @@ public class SideOnRunway extends Canvas{
         //add listener so that everytime runway or obstacle changed by user side on view updates.
     }
 
-    private void representView(){
-        var gc = getGrapicsContext2D();
-        gc.clearRect(0,0,width,height);
+    public void representView(){
+        //for now will represent plane as rectangle but implement drawImage later.
+        var gc = getGraphicsContext2D();
+        gc.clearRect(0,0, height, width);
+
+        gc.fillRect(0,0, 10, width);
+        double obPos = (obstacle.getPosition()/runway.getLength())*width;
+        double obLen = (obstacle.getLength()/runway.getLength())*width;
+        double obHeight = (obstacle.getHeight()/runway.getLength())*height;
+        gc.fillRect( (obPos - (obLen/2)),10,(obPos + (obLen/2)) ,(10+obHeight) );
+
 
     }
 
