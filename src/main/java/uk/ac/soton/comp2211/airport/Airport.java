@@ -8,4 +8,14 @@ public class Airport {
         this.name = name;
         this.runways = runways;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Runway[] getRunways() {
+        return runways;
+    }
+
+
 }
