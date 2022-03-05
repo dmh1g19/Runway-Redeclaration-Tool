@@ -19,9 +19,8 @@ public class App extends Application {
     private static Scene scene;
     private static Stage stage;
 
-    private static int height = 800;
-    private static int width = 600;
-
+    private static int height = 500;
+    private static int width = 700;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -50,6 +49,8 @@ public class App extends Application {
     public void loadPrimary() {
         loadScene(new PrimaryScene(this));
     }
+
+    public void loadCalculations() {loadScene(new CalculationsScene(this));}
 
     public void loadScene(BaseScene newScene) {
         newScene.build();

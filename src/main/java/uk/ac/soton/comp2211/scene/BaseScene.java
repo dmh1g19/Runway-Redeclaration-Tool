@@ -13,8 +13,6 @@ public abstract class BaseScene {
     protected Scene scene;
     protected Pane root;
 
-
-
     public BaseScene(App app) {
         this.app = app;
     }

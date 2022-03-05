@@ -2,7 +2,7 @@ package uk.ac.soton.comp2211.components;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
@@ -31,11 +31,14 @@ public class SideOnRunway extends Canvas {
     }
 
     //this represents view for plane taking off from left- add right.
-    public void representView(){
+    public void representView() {
         //for now will represent plane as rectangle but implement drawImage later.
         var gc = getGraphicsContext2D();
-        gc.clearRect(0,0, height, width);
+        //gc.clearRect(0,0, height, width);
+        gc.setFill(Color.color(0.02,0.024,0.024,0.4));
+        gc.fillRect(0,0, height, width);
 
+        gc.setFill(Color.BLACK);
         gc.fillRect(0,0, 10, width);
         double obPos = (obstacle.getPosition()/runway.getLength())*width;
         double obLen = (obstacle.getLength()/runway.getLength())*width;
@@ -43,6 +46,7 @@ public class SideOnRunway extends Canvas {
         gc.fillRect( (obPos - (obLen/2)),10,(obPos + (obLen/2)) ,(10+obHeight) );
 
         gc.setLineWidth(3);
+        gc.setStroke(Color.RED);
 
         double TODALen = (runway.getTODA() / runway.getLength()) * width;
         gc.strokeLine(1,20,(TODALen-1),20);

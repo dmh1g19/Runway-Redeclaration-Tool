@@ -21,8 +21,8 @@ public class MenuScene extends BaseScene {
         root = new StackPane();
 
 
-        Button button = new Button("Hello!!");
-        button.setOnMousePressed(e ->app.loadPrimary());
+        Button button = new Button("Calculate");
+        button.setOnMousePressed(e ->app.loadCalculations());
         root.getChildren().add(button);
 
         root.setStyle("-fx-background-color: #81c483");
