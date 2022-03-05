@@ -1,6 +1,7 @@
 module org.openjfx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.xml;
 
     opens uk.ac.soton.comp2211 to javafx.fxml;
     exports uk.ac.soton.comp2211;
