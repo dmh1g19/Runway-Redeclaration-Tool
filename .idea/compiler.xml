@@ -9,7 +9,7 @@
         <module name="group-11-runway-re-declaration" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17">
       <module name="group-11-runway-re-declaration" target="17" />
     </bytecodeTargetLevel>
   </component>
