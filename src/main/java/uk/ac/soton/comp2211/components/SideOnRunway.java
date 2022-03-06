@@ -36,30 +36,52 @@ public class SideOnRunway extends Canvas {
         var gc = getGraphicsContext2D();
         //gc.clearRect(0,0, height, width);
         gc.setFill(Color.color(0.02,0.024,0.024,0.4));
-        gc.fillRect(0,0, height, width);
+        gc.fillRect(0,0, width, height);
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(0,0, 10, width);
-        double obPos = (obstacle.getPosition()/runway.getLength())*width;
-        double obLen = (obstacle.getLength()/runway.getLength())*width;
-        double obHeight = (obstacle.getHeight()/runway.getLength())*height;
-        gc.fillRect( (obPos - (obLen/2)),10,(obPos + (obLen/2)) ,(10+obHeight) );
+        gc.fillRect(0, (height - 20), width, 20); //fillRect(topLeftX, topLeftY, length, height)
+
+        gc.setFill(Color.RED);
+        double obPos = (((double) obstacle.getPosition())/runway.getLength())*width; //relative position of object
+        double obLen = (((double)obstacle.getLength())/runway.getLength())*width; //relative length of object
+        double obHeight = (((double)obstacle.getHeight())/runway.getLength())*height; //relative height of object
+        gc.fillRect((obPos - (obLen / 2)), (height -(obHeight + 20)), obLen, obHeight);
+        //gc.fillRect(69.645, 174.29, 3.57, 5.71);
+
 
         gc.setLineWidth(3);
-        gc.setStroke(Color.RED);
+        gc.setStroke(Color.DARKGREEN);
 
-        double TODALen = (runway.getTODA() / runway.getLength()) * width;
-        gc.strokeLine(1,20,(TODALen-1),20);
-        gc.fillText("TODA", (TODALen / 2) ,25);
+        double TODALen = ((double) runway.getTODA() / runway.getLength()) * width;
+        double sixtyLen = (60.0/runway.getLength())*width;
+        double RESALen = (240.0/runway.getLength())*width;
+        if (obPos > width/2){
+            gc.strokeLine(1,(height - 30), (TODALen-1) ,(height - 30));
+            gc.fillText(("TODA:" + runway.getTODA() + "m"), (TODALen / 2) ,(height - 45));
+
+            gc.setStroke(Color.YELLOW);
+            gc.strokeLine((TODALen+1),(height - 30),(TODALen + sixtyLen - 1),(height - 30));
+
+            gc.setStroke(Color.ORANGE);
+            gc.strokeLine((TODALen + sixtyLen + 1),(height - 30),(TODALen + sixtyLen +RESALen - 1),(height - 30));
+            gc.fillText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 45));
+        }
+        else{
+            gc.strokeLine(width -1 ,(height - 30), (width - TODALen + 1) ,(height - 30));
+            gc.fillText(("TODA:" + runway.getTODA() + "m"), (width - (TODALen / 2)) ,(height - 45));
+
+            gc.setStroke(Color.YELLOW);
+            gc.strokeLine((width - TODALen - 1),(height - 30),(width -(TODALen + sixtyLen - 1)),(height - 30));
+
+            gc.setStroke(Color.ORANGE);
+            gc.strokeLine((width -(TODALen + sixtyLen + 1)),(height - 30),(width -(TODALen + sixtyLen + RESALen - 1)),(height - 30));
+            gc.fillText(("RESA: 240m"), (width -(TODALen + sixtyLen + (RESALen/2))) ,(height - 45));
+        }
 
         //don't know name for the 60m bit RETURN
 
-        double sixtyLen = (60/runway.getLength())*width;
-        gc.strokeLine((TODALen+1),20,(TODALen + sixtyLen - 1),20);
-
         //is RESA always 240m?
-        double RESALen = (240/runway.getLength())*width;
-        gc.strokeLine((TODALen + sixtyLen + 1),20,(TODALen + sixtyLen - 1),20);
+
 
     }
 
