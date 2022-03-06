@@ -21,7 +21,7 @@ public class CalculationsScene extends BaseScene {
         root = new AnchorPane();
 
         //Side view test values
-        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, new Pair<>(0,0), new Pair<>(0,0));
+        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, new Pair<>(0,0));
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",160,100,2000, 40);
 
         SideOnRunway sideOn = new SideOnRunway(runway, obstacle,250,200);
