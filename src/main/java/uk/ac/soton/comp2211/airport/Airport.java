@@ -17,5 +17,7 @@ public class Airport {
         return runways;
     }
 
-
+    public void setRunways(Runway[] runways) {
+        this.runways = runways;
+    }
 }
