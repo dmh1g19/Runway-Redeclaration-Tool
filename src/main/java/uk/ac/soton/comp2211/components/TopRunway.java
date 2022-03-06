@@ -8,6 +8,8 @@ import uk.ac.soton.comp2211.airport.Runway;
 
 public class TopRunway extends Canvas {
 
+    private final double SCALEUP = 10;
+
     private final Runway runway;
     private final ObstacleOnRunway obstacle;
     private final double viewWidth;
@@ -21,9 +23,9 @@ public class TopRunway extends Canvas {
         this.viewWidth = viewWidth;
         this.viewHeight = viewHeight;
 
-        //fit schematic to the viewport
-        this.scaledLengthToFit = (viewWidth/runway.getLength())*runway.getLength();
-        this.scaledWidthToFit = (viewHeight/runway.getLength())*runway.getWidth();
+        //fit schematic to the viewport's width
+        this.scaledLengthToFit = scaleToFitWidth(runway.getLength());
+        this.scaledWidthToFit = scaleToFitWidth(runway.getWidth())*SCALEUP;
 
         setWidth(viewWidth);
         setHeight(viewHeight);
@@ -33,15 +35,40 @@ public class TopRunway extends Canvas {
         //add listener
     }
 
+    //scale elements to fit
+    public double scaleToFitWidth(double n) {
+        return (viewWidth/runway.getLength())*n;
+    }
+
    public void representView() {
         var gc = getGraphicsContext2D();
+        double RESA = scaleToFitWidth(240); //TODO: Pass as dynamic var
+        double rightSide = (viewHeight/2)-(scaledWidthToFit/2);
 
-       //tmp
         gc.setFill(Color.color(0.02,0.024,0.024,0.4));
         gc.fillRect(0,0, viewWidth, viewHeight);
 
+        //runway
+        gc.setFill(Color.color(0.02,0.024,0.024,0.4));
+        gc.fillRect(0,rightSide,scaledLengthToFit,scaledWidthToFit);
 
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0,viewHeight/2,scaledLengthToFit,scaledWidthToFit);
+       //runway lines
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
+        gc.setLineDashes(5);
+        gc.strokeLine(0,viewHeight/2,scaledLengthToFit,viewHeight/2);
+
+        //TODO: object - put into correct position (currently only a square)
+        gc.setFill(Color.RED);
+        gc.fillRect(0,0,scaleToFitWidth(obstacle.getLength())*SCALEUP,scaleToFitWidth(obstacle.getHeight())*SCALEUP);
+
+       //RESA - currently a fixed length of 240m
+       gc.setFill(Color.DARKGREY);
+       gc.fillRect(0,rightSide,RESA,scaledWidthToFit);
+       gc.setFill(Color.DARKGREY);
+       gc.fillRect(viewWidth-RESA,rightSide,RESA,scaledWidthToFit);
+
+
+
    }
 }
