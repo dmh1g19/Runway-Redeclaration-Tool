@@ -67,8 +67,5 @@ public class TopRunway extends Canvas {
        gc.fillRect(0,rightSide,RESA,scaledWidthToFit);
        gc.setFill(Color.DARKGREY);
        gc.fillRect(viewWidth-RESA,rightSide,RESA,scaledWidthToFit);
-
-
-
    }
 }
