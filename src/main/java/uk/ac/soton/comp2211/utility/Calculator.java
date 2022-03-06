@@ -6,7 +6,13 @@ import uk.ac.soton.comp2211.airport.Runway;
 
 public class Calculator {
 
-   public Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs){
+    /**
+     * Calculates runway landing parameters if the plane is landing towards the obstacle
+     * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
+     * @returns updated runway values
+     */
+    public Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs){
        Runway runwayWithObstacle = new Runway(runway);
        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
        int RESA = 240;
@@ -18,7 +24,12 @@ public class Calculator {
        return runwayWithObstacle;
    }
 
-
+    /**
+     * Calculates runway landing parameters if the plane is landing over the obstacle
+     * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
+     * @returns updated runway values
+     */
     public Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
@@ -34,6 +45,12 @@ public class Calculator {
         return runwayWithObstacle;
     }
 
+    /**
+     * Calculates take off parameters if the plane is taking off towards the obstacle
+     * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
+     * @returns updated runway values
+     */
     public Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
@@ -50,7 +67,12 @@ public class Calculator {
 
         return runwayWithObstacle;
     }
-
+    /**
+     * Calculates take off parameters if the plane is taking off away from an obstacle
+     * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
+     * @returns updated runway values
+     */
     public Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
