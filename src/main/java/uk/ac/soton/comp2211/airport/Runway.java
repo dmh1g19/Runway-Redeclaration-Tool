@@ -13,7 +13,6 @@ public class Runway {
     protected int ASDA;
     protected int LDA;
     protected int displacedThreshold = 0;
-    protected Pair<Integer,Integer> runwayDimensions;
     protected Pair<Integer,Integer> clearwayDimensions;
     protected ObstacleOnRunway obstacle;
     protected boolean obstacleOnRunway = false;
@@ -112,15 +111,9 @@ public class Runway {
         this.clearwayDimensions = clearwayDimensions;
     }
 
-    public Pair<Integer, Integer> getRunwayDimensions() {
-        return runwayDimensions;
-    }
 
-    public void setRunwayDimensions(Pair<Integer, Integer> runwayDimensions) {
-        this.runwayDimensions = runwayDimensions;
-    }
 
-    public Runway(String name, int length, int width, int bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions) {
+    public Runway(String name, int length, int width, int bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> clearwayDimensions) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -129,7 +122,6 @@ public class Runway {
         this.TODA = TODA;
         this.ASDA = ASDA;
         this.LDA = LDA;
-        this.runwayDimensions =runwayDimensions;
         this.clearwayDimensions =clearwayDimensions;
     }
     public Runway(String name, int length, int width, int bearing, int TORA,  int TODA, int ASDA, int LDA ,Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions , int displacedThreshold) {
@@ -142,7 +134,6 @@ public class Runway {
         this.ASDA = ASDA;
         this.LDA = LDA;
         this.displacedThreshold = displacedThreshold;
-        this.runwayDimensions =runwayDimensions;
         this.clearwayDimensions =clearwayDimensions;
     }
     public Runway (Runway runway){
@@ -154,7 +145,6 @@ public class Runway {
         TODA = runway.getTODA();
         ASDA = runway.getASDA();
         LDA = runway.getLDA();
-        runwayDimensions = runway.getRunwayDimensions();
         clearwayDimensions = runway.getClearwayDimensions();
         displacedThreshold = runway.getDTL();
     }

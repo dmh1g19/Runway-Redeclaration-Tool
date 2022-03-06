@@ -12,7 +12,7 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs){
        Runway runwayWithObstacle = new Runway(runway);
        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
        int RESA = 240;
@@ -30,7 +30,7 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
         int obstacleLength = obs.getLength();
@@ -51,7 +51,7 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
@@ -73,7 +73,7 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
