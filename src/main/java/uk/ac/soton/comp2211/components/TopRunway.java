@@ -40,10 +40,11 @@ public class TopRunway extends Canvas {
         return (viewWidth/runway.getLength())*n;
     }
 
-   public void representView() {
+    public void representView() {
         var gc = getGraphicsContext2D();
         double RESA = scaleToFitWidth(240); //TODO: Pass as dynamic var
-        double rightSide = (viewHeight/2)-(scaledWidthToFit/2);
+        double halfHeight = viewHeight/2;
+        double rightSide = halfHeight-(scaledWidthToFit/2);
 
         gc.setFill(Color.color(0.02,0.024,0.024,0.4));
         gc.fillRect(0,0, viewWidth, viewHeight);
@@ -52,20 +53,23 @@ public class TopRunway extends Canvas {
         gc.setFill(Color.color(0.02,0.024,0.024,0.4));
         gc.fillRect(0,rightSide,scaledLengthToFit,scaledWidthToFit);
 
-       //runway lines
+        //runway centre line
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
         gc.setLineDashes(5);
-        gc.strokeLine(0,viewHeight/2,scaledLengthToFit,viewHeight/2);
+        gc.strokeLine(0,halfHeight,scaledLengthToFit,halfHeight);
 
-        //TODO: object - put into correct position (currently only a square)
+        //Object - position may need adjusting slightly
         gc.setFill(Color.RED);
-        gc.fillRect(0,0,scaleToFitWidth(obstacle.getLength())*SCALEUP,scaleToFitWidth(obstacle.getHeight())*SCALEUP);
+        gc.fillRect(scaleToFitWidth(obstacle.getPosition()),halfHeight-(scaleToFitWidth(obstacle.getDFCL())),
+                    scaleToFitWidth(obstacle.getLength())*SCALEUP,scaleToFitWidth(obstacle.getHeight())*SCALEUP);
 
-       //RESA - currently a fixed length of 240m
-       gc.setFill(Color.DARKGREY);
-       gc.fillRect(0,rightSide,RESA,scaledWidthToFit);
-       gc.setFill(Color.DARKGREY);
-       gc.fillRect(viewWidth-RESA,rightSide,RESA,scaledWidthToFit);
-   }
+        //RESA - currently a fixed length of 240m
+        gc.setFill(Color.DARKGREY);
+        gc.fillRect(0,rightSide,RESA,scaledWidthToFit);
+        gc.setFill(Color.DARKGREY);
+        gc.fillRect(viewWidth-RESA,rightSide,RESA,scaledWidthToFit);
+
+
+    }
 }
