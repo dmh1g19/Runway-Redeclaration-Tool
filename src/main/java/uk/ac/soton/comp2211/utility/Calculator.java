@@ -38,7 +38,7 @@ public class Calculator {
         int distanceToStripEnd = 60;
         int obstacleHeight = obs.getHeight();
         //int newLDA = (obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
-        int newLDA = runway.getLength() -obstaclePosition -distanceToStripEnd -  (obstacleHeight *50);
+        int newLDA = runway.getLDA() -obstaclePosition -distanceToStripEnd -  (obstacleHeight *50);
         runwayWithObstacle.setLDA(newLDA);
 
 
@@ -51,15 +51,13 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
-        int RESA = 240;
-        int distanceToStripEnd = 60;
         int clearway = runway.getTODA() -runway.getTORA();
         int stopway = runway.getASDA() - runway.getTORA();
-        int newTORA = (obstaclePosition + runway.getDTL()) -(obstaclePosition -distanceToStripEnd) -  (obstacleHeight *50);
+        int newTORA = runway.getTORA() -300 - obstaclePosition - runway.getDTL() ;
         runwayWithObstacle.setTORA(newTORA);
         runwayWithObstacle.setTODA(newTORA+clearway);
         runwayWithObstacle.setASDA(newTORA+stopway);
@@ -73,15 +71,14 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs){
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
         int RESA = 240;
         int distanceToStripEnd = 60;
-        int clearway = runway.getTODA() -runway.getTORA();
-        int stopway = runway.getASDA() - runway.getTORA();
-        int newTORA = obstaclePosition -runway.getDTL() -(obstaclePosition -distanceToStripEnd) -  (obstacleHeight *50);
+        int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - (obstacleHeight *50);
+
         runwayWithObstacle.setTORA(newTORA);
         runwayWithObstacle.setTODA(newTORA);
         runwayWithObstacle.setASDA(newTORA);
