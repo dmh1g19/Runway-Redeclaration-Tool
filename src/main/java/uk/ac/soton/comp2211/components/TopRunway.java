@@ -8,7 +8,7 @@ import uk.ac.soton.comp2211.airport.Runway;
 
 public class TopRunway extends Canvas {
 
-    private final double SCALEUP = 10;
+    private final double SCALEUP = 1;
 
     private final Runway runway;
     private final ObstacleOnRunway obstacle;
@@ -25,7 +25,7 @@ public class TopRunway extends Canvas {
 
         //fit schematic to the viewport's width
         this.scaledLengthToFit = scaleToFitWidth(runway.getLength());
-        this.scaledWidthToFit = scaleToFitWidth(runway.getWidth())*SCALEUP;
+        this.scaledWidthToFit = scaleToFitWidth(runway.getWidth());
 
         setWidth(viewWidth);
         setHeight(viewHeight);
@@ -37,7 +37,7 @@ public class TopRunway extends Canvas {
 
     //scale elements to fit
     public double scaleToFitWidth(double n) {
-        return (viewWidth/runway.getLength())*n;
+        return (viewWidth/runway.getLength())*n*SCALEUP;
     }
 
     public void representView() {
@@ -50,7 +50,7 @@ public class TopRunway extends Canvas {
         gc.fillRect(0,0, viewWidth, viewHeight);
 
         //runway
-        gc.setFill(Color.color(0.02,0.024,0.024,0.4));
+        gc.setFill(Color.LIGHTGREY);
         gc.fillRect(0,rightSide,scaledLengthToFit,scaledWidthToFit);
 
         //runway centre line
@@ -62,7 +62,7 @@ public class TopRunway extends Canvas {
         //Object - position may need adjusting slightly
         gc.setFill(Color.RED);
         gc.fillRect(scaleToFitWidth(obstacle.getPosition()),halfHeight-(scaleToFitWidth(obstacle.getDFCL())),
-                    scaleToFitWidth(obstacle.getLength())*SCALEUP,scaleToFitWidth(obstacle.getHeight())*SCALEUP);
+                    scaleToFitWidth(obstacle.getLength()),scaleToFitWidth(obstacle.getHeight()));
 
         //RESA - currently a fixed length of 240m
         gc.setFill(Color.DARKGREY);
