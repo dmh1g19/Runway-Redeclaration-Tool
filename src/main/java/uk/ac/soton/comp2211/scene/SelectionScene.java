@@ -16,9 +16,11 @@ import javafx.util.Pair;
 import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.Airport;
+import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SelectionScene extends BaseScene {
 
@@ -35,7 +37,8 @@ public class SelectionScene extends BaseScene {
         Airport airport = new Airport("Heathrow",null);
         Airport newAirport = new Airport("Stansted", null);
         Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, new Pair<>(0,0));
-        Runway[] runs = {runway};
+        PhysicalRunway[] runs = {new PhysicalRunway(runway,runway)};
+
         airport.setRunways(runs);
 
         ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -44,6 +47,9 @@ public class SelectionScene extends BaseScene {
         ComboBox<Airport> airportList = new ComboBox<>();
         airportList.setItems(airports);
         airportList.getSelectionModel().selectFirst();
+        if (!Objects.isNull(app.getAirport())) {
+            airportList.getSelectionModel().select(app.getAirport());
+        }
         airportList.setEditable(false);
         airportList.getStyleClass().add("airportList");
         airportList.setMaxWidth(Double.MAX_VALUE);
