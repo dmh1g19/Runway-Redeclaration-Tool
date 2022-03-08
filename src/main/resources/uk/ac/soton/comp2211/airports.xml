@@ -24,13 +24,16 @@
          <property name ="bearing" value = "89.67">
          <property name ="obstacle" ref ="obstacle1">
     </bean>
-    <bean id="Obstacle1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle"
-         <property name ="name" value="">
-            <null>
-         <property name ="hight" value="">
-            <null>
-         <property name ="length" value="">
-            <null>
+    <bean id="Obstacle1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Runway2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27R">
@@ -46,13 +49,16 @@
              <entry key ="78" value="50">
            </map>
          <property name ="obstacle" ref ="obstacle2">
-    <bean id="obstacle2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle"
-         <property name ="name" value="">
-            <null>
-         <property name ="hight" value="">
-            <null>
-         <property name ="length" value="">
-            <null>
+    <bean id="obstacle2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Runway3" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="09R">
@@ -65,13 +71,16 @@
          <property name ="bearing" value = "89.65">
          <property name ="obstacle" ref ="obstacle3">
     </bean>
-    <bean id="obstacle3" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle"
-         <property name ="name" value="">
-            <null>
-         <property name ="hight" value="">
-            <null>
-         <property name ="length" value="">
-            <null>
+    <bean id="obstacle3" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>    
     <bean id="Runway4" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27L">
@@ -84,13 +93,16 @@
          <property name ="bearing" value = "269.72">
          <property name ="obstacle" ref ="obstacle4">
     </bean>
-    <bean id="obstacle4" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle"
-         <property name ="name" value="">
-            <null>
-         <property name ="hight" value="">
-            <null>
-         <property name ="length" value="">
-            <null>
+    <bean id="obstacle4" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Airport2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Airport">
          <property name ="name" value="Oxford">
@@ -116,13 +128,16 @@
            </map>
          <property name ="obstacle" ref ="obstacle5">
     </bean>
-    <bean id="obstacle5" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle"
-         <property name ="name" value="">
-            <null>
-         <property name ="hight" value="">
-            <null>
-         <property name ="length" value="">
-            <null>
+    <bean id="obstacle5" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Runway6" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="19">
@@ -139,13 +154,16 @@
            </map>
          <property name ="obstacle" ref ="obstacle6">
     </bean>
-    <bean id="obstacle6" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle"
-         <property name ="name" value="">
-            <null>
-         <property name ="hight" value="">
-            <null>
-         <property name ="length" value="">
-            <null>
+    <bean id="obstacle6" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
 </beans>
 
