@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/shema/beans/spring-beans-3.0.xsd
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    xsi:schemaLocation="http://www.springframework.org/shema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
     <bean id="Airport1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Airport">
          <property name ="name" value="Heathrow">
+         <property name ="runway">
+            <array>
+               <ref bean = "Runway1"></ref>
+               <ref bean = "Runway2"></ref>
+               <ref bean = "Runway3"></ref>
+               <ref bean = "Runway4"></ref>
+            </array>
+         </property>
     </bean>
     <bean id="Runway1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="09L">
@@ -15,6 +22,18 @@
          <property name ="length" value = "3901">
          <property name ="width" value = "50">
          <property name ="bearing" value = "89.67">
+         <property name ="obstacle" ref ="obstacle1">
+    </bean>
+    <bean id="Obstacle1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Runway2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27R">
@@ -25,7 +44,21 @@
          <property name ="length" value = "3901">
          <property name ="width" value = "50">
          <property name ="bearing" value = "269.71">
-         <property name ="clearwayDimensions" value="">
+         <property name ="clearwayDimensions">
+           <map>
+             <entry key ="78" value="50">
+           </map>
+         <property name ="obstacle" ref ="obstacle2">
+    <bean id="obstacle2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Runway3" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="09R">
@@ -36,6 +69,18 @@
          <property name ="length" value = "3658">
          <property name ="width" value = "50">
          <property name ="bearing" value = "89.65">
+         <property name ="obstacle" ref ="obstacle3">
+    </bean>
+    <bean id="obstacle3" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>    
     <bean id="Runway4" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27L">
@@ -46,10 +91,27 @@
          <property name ="length" value = "3658">
          <property name ="width" value = "50">
          <property name ="bearing" value = "269.72">
-         <property name ="clearwayDimensions" value="">
+         <property name ="obstacle" ref ="obstacle4">
+    </bean>
+    <bean id="obstacle4" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Airport2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Airport">
          <property name ="name" value="Oxford">
+         <property name ="runway">
+            <array>
+               <ref bean = "Runway5"></ref>
+               <ref bean = "Runway6"></ref>
+            </array>
+         </property>
     </bean>
     <bean id="Runway5" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="01">
@@ -60,8 +122,22 @@
          <property name ="length" value = "1552">
          <property name ="width" value = "30">
          <property name ="bearing" value = "10.68">
-         <property name ="clearwayDimensions" value="">
-
+         <property name ="clearwayDimensions">
+           <map>
+             <entry key ="150" value ="-1">
+           </map>
+         <property name ="obstacle" ref ="obstacle5">
+    </bean>
+    <bean id="obstacle5" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
     <bean id="Runway6" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="19">
@@ -72,18 +148,22 @@
          <property name ="length" value = "1552">
          <property name ="width" value = "30">
          <property name ="bearing" value = "190.68">
-         <property name ="clearwayDimensions" value="">
+         <property name ="clearwayDimensions">
+           <map>
+             <entry key ="175" value ="-1">
+           </map>
+         <property name ="obstacle" ref ="obstacle6">
     </bean>
-    <bean id="Runway7" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
-         <property name ="name" value="19">
-         <property name ="TORA" value="1002">
-         <property name ="TODA" value="1177">
-         <property name ="ASDA" value="1002">
-         <property name ="LDA" value="0">
-         <property name ="length" value = "1552">
-         <property name ="width" value = "30">
-         <property name ="bearing" value = "190.68">
-         <property name ="clearwayDimensions" value="">
+    <bean id="obstacle6" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Obstacle">
+         <property name ="name">
+            <null/>
+         </property>
+         <property name ="hight">
+            <null/>
+         </property>
+         <property name ="length">
+            <null/>
+         </property>
     </bean>
 </beans>
 
