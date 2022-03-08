@@ -26,6 +26,7 @@ public abstract class BaseScene {
     public Scene setScene() {
         var previous = app.getScene();
         scene = new Scene(root,previous.getWidth(),previous.getHeight());
+        scene.getStylesheets().add(App.class.getResource("main.css").toExternalForm());
         return scene;
     }
 

@@ -1,19 +1,19 @@
 package uk.ac.soton.comp2211.airport;
 
-import javafx.util.Pair;
+import javafx.util.Map;
 
 public class Runway {
     protected String name;
     protected int length;
     protected int width;
-    protected int bearing;
+    protected double bearing;
 
     protected int TORA;
     protected int TODA;
     protected int ASDA;
     protected int LDA;
     protected int displacedThreshold = 0;
-    protected Pair<Integer,Integer> clearwayDimensions;
+    protected Map<Integer,Integer> clearwayDimensions;
     protected ObstacleOnRunway obstacle;
     protected boolean obstacleOnRunway = false;
 
@@ -55,11 +55,11 @@ public class Runway {
         this.width = width;
     }
 
-    public int getBearing() {
+    public Double getBearing() {
         return bearing;
     }
 
-    public void setBearing(int bearing) {
+    public void setBearing(double bearing) {
         this.bearing = bearing;
     }
 
@@ -103,17 +103,17 @@ public class Runway {
         return displacedThreshold;
     }
 
-    public Pair<Integer, Integer> getClearwayDimensions() {
+    public Map<Integer, Integer> getClearwayDimensions() {
         return clearwayDimensions;
     }
 
-    public void setClearwayDimensions(Pair<Integer, Integer> clearwayDimensions) {
+    public void setClearwayDimensions(Map<Integer, Integer> clearwayDimensions) {
         this.clearwayDimensions = clearwayDimensions;
     }
 
 
 
-    public Runway(String name, int length, int width, int bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> clearwayDimensions) {
+    public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, Map<Integer,Integer> clearwayDimensions) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -124,7 +124,7 @@ public class Runway {
         this.LDA = LDA;
         this.clearwayDimensions =clearwayDimensions;
     }
-    public Runway(String name, int length, int width, int bearing, int TORA,  int TODA, int ASDA, int LDA ,Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions , int displacedThreshold) {
+    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA , Map<Integer,Integer> clearwayDimensions , int displacedThreshold) {
         this.name = name;
         this.length = length;
         this.width = width;
