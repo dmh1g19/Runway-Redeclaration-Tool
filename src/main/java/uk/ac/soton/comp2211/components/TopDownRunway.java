@@ -1,12 +1,11 @@
 package uk.ac.soton.comp2211.components;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
-public class TopRunway extends Canvas {
+public class TopDownRunway extends Canvas {
 
     private final double SCALEUP = 1;
 
@@ -17,7 +16,7 @@ public class TopRunway extends Canvas {
     private final double scaledLengthToFit;
     private final double scaledWidthToFit;
 
-    public TopRunway(Runway runway, ObstacleOnRunway obstacle, double viewWidth, double viewHeight){
+    public TopDownRunway(Runway runway, ObstacleOnRunway obstacle, double viewWidth, double viewHeight){
         this.runway = runway;
         this.obstacle = obstacle;
         this.viewWidth = viewWidth;

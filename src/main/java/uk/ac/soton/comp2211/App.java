@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.scene.*;
 
 import java.io.IOException;
@@ -16,14 +17,16 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
-    private static Stage stage;
+    private Scene scene;
+    private Stage stage;
 
-    private static int height = 500;
-    private static int width = 700;
+    private Airport airport;
+
+    private final int height = 500;
+    private final int width = 700;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage)  {
         this.stage = stage;
 
         stage.setMinWidth(width);
@@ -32,7 +35,7 @@ public class App extends Application {
         stage.setTitle("Runway Tool");
 
         defaultScene();
-        loadMenu();
+        loadSelection();
 
         stage.show();
     }
@@ -49,7 +52,13 @@ public class App extends Application {
         loadScene(new PrimaryScene(this));
     }
 
-    public void loadCalculations() {loadScene(new CalculationsScene(this));}
+    public void loadCalculations() {
+        loadScene(new CalculationsScene(this));
+    }
+
+    public void loadSelection() {
+        loadScene(new SelectionScene(this));
+    }
 
     public void loadScene(BaseScene newScene) {
         newScene.build();
@@ -66,8 +75,16 @@ public class App extends Application {
         return this.scene;
     }
 
+    public Airport getAirport() {
+        return airport;
+    }
 
-    static void setRoot(String fxml) {
+    public void setAirport(Airport airport) {
+        this.airport = airport;
+    }
+
+
+    void setRoot(String fxml) {
         try {
             scene = new Scene((loadFXML(fxml)),width,height);
         } catch (IOException ex) {
