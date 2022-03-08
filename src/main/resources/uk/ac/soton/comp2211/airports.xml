@@ -15,7 +15,6 @@
          <property name ="length" value = "3901">
          <property name ="width" value = "50">
          <property name ="bearing" value = "89.67">
-         <property name ="displacedThreshold" value="">
     </bean>
     <bean id="Runway2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27R">
@@ -26,7 +25,6 @@
          <property name ="length" value = "3901">
          <property name ="width" value = "50">
          <property name ="bearing" value = "269.71">
-         <property name ="displacedThreshold" value="">
          <property name ="clearwayDimensions" value="">
     </bean>
     <bean id="Runway3" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
@@ -38,7 +36,6 @@
          <property name ="length" value = "3658">
          <property name ="width" value = "50">
          <property name ="bearing" value = "89.65">
-         <property name ="displacedThreshold" value="">
     </bean>    
     <bean id="Runway4" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27L">
@@ -49,7 +46,6 @@
          <property name ="length" value = "3658">
          <property name ="width" value = "50">
          <property name ="bearing" value = "269.72">
-         <property name ="displacedThreshold" value="">
          <property name ="clearwayDimensions" value="">
     </bean>
     <bean id="Airport2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Airport">
@@ -64,7 +60,6 @@
          <property name ="length" value = "1552">
          <property name ="width" value = "30">
          <property name ="bearing" value = "10.68">
-         <property name ="displacedThreshold" value="">
          <property name ="clearwayDimensions" value="">
 
     </bean>
@@ -77,7 +72,6 @@
          <property name ="length" value = "1552">
          <property name ="width" value = "30">
          <property name ="bearing" value = "190.68">
-         <property name ="displacedThreshold" value="">
          <property name ="clearwayDimensions" value="">
     </bean>
     <bean id="Runway7" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
@@ -89,7 +83,6 @@
          <property name ="length" value = "1552">
          <property name ="width" value = "30">
          <property name ="bearing" value = "190.68">
-         <property name ="displacedThreshold" value="">
          <property name ="clearwayDimensions" value="">
     </bean>
 </beans>
