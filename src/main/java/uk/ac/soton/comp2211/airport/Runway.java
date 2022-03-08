@@ -6,7 +6,7 @@ public class Runway {
     protected String name;
     protected int length;
     protected int width;
-    protected int bearing;
+    protected double bearing;
 
     protected int TORA;
     protected int TODA;
@@ -59,7 +59,7 @@ public class Runway {
         return bearing;
     }
 
-    public void setBearing(int bearing) {
+    public void setBearing(double bearing) {
         this.bearing = bearing;
     }
 
@@ -113,7 +113,7 @@ public class Runway {
 
 
 
-    public Runway(String name, int length, int width, int bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> clearwayDimensions) {
+    public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> clearwayDimensions) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -124,7 +124,7 @@ public class Runway {
         this.LDA = LDA;
         this.clearwayDimensions =clearwayDimensions;
     }
-    public Runway(String name, int length, int width, int bearing, int TORA,  int TODA, int ASDA, int LDA ,Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions , int displacedThreshold) {
+    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA ,Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions , int displacedThreshold) {
         this.name = name;
         this.length = length;
         this.width = width;
