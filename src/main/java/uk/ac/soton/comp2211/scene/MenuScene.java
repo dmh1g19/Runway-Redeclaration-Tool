@@ -50,7 +50,7 @@ public class MenuScene extends BaseScene {
 
         Label airportIndicator = new Label("Airport: " + app.getAirport().getName());
         airportIndicator.getStyleClass().add("airportIndicator");
-
+        airportIndicator.setOnMouseClicked(e -> app.loadSelection());
 
         BorderPane layout = new BorderPane();
         layout.setCenter(new Group(menuItems));

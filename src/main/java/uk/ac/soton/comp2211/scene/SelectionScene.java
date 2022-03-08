@@ -2,11 +2,15 @@ package uk.ac.soton.comp2211.scene;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
@@ -68,7 +72,7 @@ public class SelectionScene extends BaseScene {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().addAll(airportList,select);
-        hbox.getStyleClass().add("selection");
+        hbox.getStyleClass().add("selectBox");
         hbox.setPrefWidth(400);
 
         HBox.setHgrow(airportList, Priority.ALWAYS);
@@ -76,9 +80,11 @@ public class SelectionScene extends BaseScene {
         Label label = new Label("Select Airport");
         label.getStyleClass().add("selectLabel");
 
+        Separator line = new Separator(Orientation.HORIZONTAL);
+
         VBox vbox = new VBox();
-        vbox.getChildren().addAll(label,hbox);
-        vbox.getStyleClass().add("selection");
+        vbox.getChildren().addAll(label,line,hbox);
+        vbox.getStyleClass().add("selectArea");
 
         GridPane gridPane = new GridPane();
         gridPane.add(vbox,1,1);

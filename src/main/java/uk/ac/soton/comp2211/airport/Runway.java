@@ -55,7 +55,7 @@ public class Runway {
         this.width = width;
     }
 
-    public int getBearing() {
+    public Double getBearing() {
         return bearing;
     }
 
