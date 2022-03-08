@@ -5,6 +5,14 @@
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
     <bean id="Airport1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Airport">
          <property name ="name" value="Heathrow">
+         <property name =”runway”>
+            <array>
+               <ref bean = “Runway1”></ref>
+               <ref bean = “Runway2”></ref>
+               <ref bean = “Runway3”></ref>
+               <ref bean = "Runway4"></ref>
+            </array>
+         </property>
     </bean>
     <bean id="Runway1" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="09L">
@@ -15,6 +23,8 @@
          <property name ="length" value = "3901">
          <property name ="width" value = "50">
          <property name ="bearing" value = "89.67">
+         <property name ="obstacle" ref ="obstacle1">
+         </property>
     </bean>
     <bean id="Runway2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="27R">
@@ -50,6 +60,12 @@
     </bean>
     <bean id="Airport2" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Airport">
          <property name ="name" value="Oxford">
+         <property name =”runway”>
+            <array>
+               <ref bean = “Runway5”></ref>
+               <ref bean = “Runway6”></ref>
+            </array>
+         </property>
     </bean>
     <bean id="Runway5" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
          <property name ="name" value="01">
@@ -69,17 +85,6 @@
          <property name ="TODA" value="1558">
          <property name ="ASDA" value="1383">
          <property name ="LDA" value="1319">
-         <property name ="length" value = "1552">
-         <property name ="width" value = "30">
-         <property name ="bearing" value = "190.68">
-         <property name ="clearwayDimensions" value="">
-    </bean>
-    <bean id="Runway7" class="group-11-runway-re-declaration.src.main.java.uk.ac.soton.comp2211.airport.Runway">
-         <property name ="name" value="19">
-         <property name ="TORA" value="1002">
-         <property name ="TODA" value="1177">
-         <property name ="ASDA" value="1002">
-         <property name ="LDA" value="0">
          <property name ="length" value = "1552">
          <property name ="width" value = "30">
          <property name ="bearing" value = "190.68">
