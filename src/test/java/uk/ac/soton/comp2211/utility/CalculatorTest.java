@@ -1,9 +1,11 @@
 package uk.ac.soton.comp2211.utility;
 
+import javafx.application.Application;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
@@ -34,7 +36,7 @@ class CalculatorTest {
      * threshold. The same obstacle is 3646m from the 27R threshold.
      */
     @Test
-    void exampleCalculation1() {
+    void exampleCalculation1() throws Calculator.IncorrectObstacleException {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, -50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 3646, 0);
@@ -59,7 +61,7 @@ class CalculatorTest {
      * 09R threshold.
      */
     @Test
-    void exampleCalculation2() {
+    void exampleCalculation2() throws Calculator.IncorrectObstacleException {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 25, 0, 500, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 25, 0, 2853, 0);
@@ -89,7 +91,7 @@ class CalculatorTest {
      * threshold.
      */
     @Test
-    void exampleCalculation3() {
+    void exampleCalculation3() throws Calculator.IncorrectObstacleException {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 15, 0, 150, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 15, 0, 3203, 0);
@@ -115,7 +117,7 @@ class CalculatorTest {
      * from 09L threshold.
      */
     @Test
-    void exampleCalculation4() {
+    void exampleCalculation4() throws Calculator.IncorrectObstacleException {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 20, 0, 50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 20, 0, 3546, 0);
@@ -137,4 +139,101 @@ class CalculatorTest {
 
 
     }
+
+    @Test
+    void awayFromObstacleTest() throws Calculator.IncorrectObstacleException {
+        ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, -50, 0);
+        Runway runway1 = Calculator.AwayFromObstacle(runways[2],obs);
+        Assertions.assertTrue(3346 == runway1.getTORA(), "09L TORA Incorrect " + (runway1.getTORA()));
+        Assertions.assertTrue(3346 == runway1.getASDA(), "09L ASDA Incorrect " + (runway1.getASDA()));
+        Assertions.assertTrue(3346 == runway1.getTODA(), "09L TODA Incorrect " + (runway1.getTODA()));
+        Assertions.assertTrue(2985 == runway1.getLDA(), "09L LDA Incorrect " + runway1.getLDA());
+    }
+
+    @Test
+    void towardsObstacleTest() throws Calculator.IncorrectObstacleException {
+        ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 3646, 0);
+        Runway runway2 = Calculator.TowardsObstacle(runways[3],obs2);
+        Assertions.assertTrue(2986 == runway2.getTORA(), "27R TORA Incorrect " + (runway2.getTORA()));
+        Assertions.assertTrue(2986 == runway2.getASDA(), "27R ASDA Incorrect " + (runway2.getASDA()));
+        Assertions.assertTrue(2986 == runway2.getTODA(), "27R TODA Incorrect " + (runway2.getTODA()));
+        Assertions.assertTrue(3346 == runway2.getLDA(), "27R LDA Incorrect " + runway2.getLDA());
+    }
+
+    @Test
+    void invalidHeightTest (){
+
+
+        //testing negative height
+        ObstacleOnRunway obs = new ObstacleOnRunway("test", -10, 0, 20, 0);
+        Calculator.IncorrectObstacleException t;
+       t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.AwayFromObstacle(runways[0],obs));
+       assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.AwayFromObstacle negative height error");
+       t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TowardsObstacle(runways[0],obs));
+       assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.TowardsObstacle negative height error");
+       t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffTowardsObstacle(runways[0],obs));
+       assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.TakeOffTowardsObstacle negative height error");
+       t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffAwayFromObstacle(runways[0],obs));
+       assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.TakeOffAwayFromObstacle negative height error");
+       t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingOverObstacle(runways[0],obs));
+       assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.LandingOverObstacle negative height  error");
+       t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingTowardsObstacle(runways[0],obs));
+       assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.LandingTowardsObstacle negative height error");
+
+       //testing large height
+        ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 1000000, 0, 20, 0);
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.AwayFromObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.AwayFromObstacle large height error");
+        t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TowardsObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.TowardsObstacle large height error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffTowardsObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.TakeOffTowardsObstacle large height error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffAwayFromObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.TakeOffAwayFromObstacle large height error");
+        t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingOverObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.LandingOverObstacle large height  error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingTowardsObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Height of obstacle incorrect","Calculator.LandingTowardsObstacle large height error");
+
+
+    }
+
+    @Test
+    void invalidPositionTest (){
+
+
+        //testing negative position
+        ObstacleOnRunway obs = new ObstacleOnRunway("test", 10, 0, -1000000, 0);
+        Calculator.IncorrectObstacleException t;
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.AwayFromObstacle(runways[0],obs));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.AwayFromObstacle negative position error");
+        t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TowardsObstacle(runways[0],obs));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.TowardsObstacle negative position error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffTowardsObstacle(runways[0],obs));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.TakeOffTowardsObstacle negative position error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffAwayFromObstacle(runways[0],obs));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.TakeOffAwayFromObstacle negative position error");
+        t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingOverObstacle(runways[0],obs));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.LandingOverObstacle negative position  error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingTowardsObstacle(runways[0],obs));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.LandingTowardsObstacle negative position error");
+
+        //testing large position
+        ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 10, 0, 100000000, 0);
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.AwayFromObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.AwayFromObstacle large position error");
+        t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TowardsObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.TowardsObstacle large position error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffTowardsObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.TakeOffTowardsObstacle large position error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.TakeOffAwayFromObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.TakeOffAwayFromObstacle large position error");
+        t =assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingOverObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.LandingOverObstacle large position  error");
+        t = assertThrows( Calculator.IncorrectObstacleException.class, () -> Calculator.LandingTowardsObstacle(runways[0],obs2));
+        assertEquals(t.getMessage(),"Position of obstacle incorrect","Calculator.LandingTowardsObstacle large position error");
+
+
+    }
+
 }

@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.utility;
 
 
+import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
@@ -12,7 +13,8 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+        validateObstacle(obs);
        Runway runwayWithObstacle = new Runway(runway);
        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
        int RESA = 240;
@@ -30,7 +32,8 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+        validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
         int obstacleLength = obs.getLength();
@@ -51,7 +54,8 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+        validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
@@ -71,7 +75,8 @@ public class Calculator {
      * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs){
+    public static Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+        validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
@@ -86,4 +91,33 @@ public class Calculator {
 
         return runwayWithObstacle;
     }
+
+    public static   Runway TowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+        validateObstacle(obs);
+        return LandingTowardsObstacle(TakeOffTowardsObstacle(runway ,obs),obs);
+
+    }
+
+    public  static Runway AwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+        validateObstacle(obs);
+        return LandingOverObstacle(TakeOffAwayFromObstacle(runway ,obs),obs);
+
+    }
+    private static void validateObstacle (ObstacleOnRunway obs) throws IncorrectObstacleException {
+
+
+        if (obs.getHeight() < 0 || obs.getHeight() > 10000 ){
+            throw new IncorrectObstacleException("Height of obstacle incorrect");
+        }
+        if (obs.getPosition() < -10000 || obs.getPosition() > 10000 ){
+            throw new IncorrectObstacleException("Position of obstacle incorrect");
+        }
+    }
+    public static class IncorrectObstacleException extends Exception {
+        public IncorrectObstacleException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
 }
+
