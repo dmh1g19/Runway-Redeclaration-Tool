@@ -236,4 +236,23 @@ class CalculatorTest {
 
     }
 
+
+    @Test
+    void towardsObstacleBreakdownTest() throws Calculator.IncorrectObstacleException {
+        ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 3646, 0);
+
+        System.out.println( Calculator.calculationBreakdown(runways[3],obs2,true));
+        assertEquals(1,1);
+
+    }
+
+
+    @Test
+    void awayFromObstacleBreakdownTest() throws Calculator.IncorrectObstacleException {
+        ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, -50, 0);
+        System.out.println(Calculator.calculationBreakdown(runways[2],obs,false));
+        assertEquals(1,1);
+
+    }
+
 }
