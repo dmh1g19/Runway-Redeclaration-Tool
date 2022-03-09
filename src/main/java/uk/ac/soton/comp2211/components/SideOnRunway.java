@@ -65,7 +65,7 @@ public class SideOnRunway extends Canvas {
     public void representView() {
         //for now will represent plane as rectangle but implement drawImage later.
 
-        gc.setFill(Color.color(0.02,0.024,0.024,0.4));
+        gc.setFill(Color.GREY);
         gc.fillRect(0,0, width, height);
 
         gc.setFill(Color.BLACK);

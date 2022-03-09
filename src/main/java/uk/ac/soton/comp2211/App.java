@@ -40,6 +40,10 @@ public class App extends Application {
         stage.show();
     }
 
+    public void loadSide() { loadScene(new SideViewScene(this));}
+
+    public void loadTopDown() { loadScene(new TopDownScene(this));}
+
     public void loadSettings() {
         loadScene(new SettingsScene(this));
     }

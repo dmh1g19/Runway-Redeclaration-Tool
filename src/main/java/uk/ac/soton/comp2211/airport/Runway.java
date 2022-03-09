@@ -1,6 +1,6 @@
 package uk.ac.soton.comp2211.airport;
 
-import javafx.util.Map;
+import javafx.util.Pair;
 
 public class Runway {
     protected String name;
@@ -13,7 +13,7 @@ public class Runway {
     protected int ASDA;
     protected int LDA;
     protected int displacedThreshold = 0;
-    protected Map<Integer,Integer> clearwayDimensions;
+    protected Pair<Integer,Integer> clearwayDimensions;
     protected ObstacleOnRunway obstacle;
     protected boolean obstacleOnRunway = false;
 
@@ -103,17 +103,17 @@ public class Runway {
         return displacedThreshold;
     }
 
-    public Map<Integer, Integer> getClearwayDimensions() {
+    public Pair<Integer, Integer> getClearwayDimensions() {
         return clearwayDimensions;
     }
 
-    public void setClearwayDimensions(Map<Integer, Integer> clearwayDimensions) {
+    public void setClearwayDimensions(Pair<Integer, Integer> clearwayDimensions) {
         this.clearwayDimensions = clearwayDimensions;
     }
 
 
 
-    public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, Map<Integer,Integer> clearwayDimensions) {
+    public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> clearwayDimensions) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -124,7 +124,7 @@ public class Runway {
         this.LDA = LDA;
         this.clearwayDimensions =clearwayDimensions;
     }
-    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA , Map<Integer,Integer> clearwayDimensions , int displacedThreshold) {
+    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA ,Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions , int displacedThreshold) {
         this.name = name;
         this.length = length;
         this.width = width;

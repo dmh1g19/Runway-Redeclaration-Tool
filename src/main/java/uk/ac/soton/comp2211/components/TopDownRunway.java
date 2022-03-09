@@ -2,73 +2,109 @@ package uk.ac.soton.comp2211.components;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
 public class TopDownRunway extends Canvas {
 
-    private final double SCALEUP = 1;
+    //scaled down runway dimension
+    double runwayLen = 650;
+    double runwayWidth = 50;
 
     private final Runway runway;
     private final ObstacleOnRunway obstacle;
     private final double viewWidth;
     private final double viewHeight;
-    private final double scaledLengthToFit;
-    private final double scaledWidthToFit;
+    private final String direction;
 
-    public TopDownRunway(Runway runway, ObstacleOnRunway obstacle, double viewWidth, double viewHeight){
+    public TopDownRunway(Runway runway, ObstacleOnRunway obstacle, double viewWidth, double viewHeight, String direction) {
         this.runway = runway;
         this.obstacle = obstacle;
         this.viewWidth = viewWidth;
         this.viewHeight = viewHeight;
-
-        //fit schematic to the viewport's width
-        this.scaledLengthToFit = scaleToFitWidth(runway.getLength());
-        this.scaledWidthToFit = scaleToFitWidth(runway.getWidth());
+        this.direction = direction;
 
         setWidth(viewWidth);
         setHeight(viewHeight);
 
         representView();
-
-        //add listener
     }
 
-    //scale elements to fit
-    public double scaleToFitWidth(double n) {
-        return (viewWidth/runway.getLength())*n*SCALEUP;
+    public double scaleToRunwayLength (double object) {
+        return (runwayLen/runway.getLength())*object;
+    }
+
+    public double scaleToRunwayWidth (double object) {
+        return (runwayWidth/runway.getWidth())*object;
     }
 
     public void representView() {
-        var gc = getGraphicsContext2D();
-        double RESA = scaleToFitWidth(240); //TODO: Pass as dynamic var
-        double halfHeight = viewHeight/2;
-        double rightSide = halfHeight-(scaledWidthToFit/2);
 
-        gc.setFill(Color.color(0.02,0.024,0.024,0.4));
+        double halfHeight = viewHeight/2;
+        double halfWidth = viewWidth/2;
+        double startOfRunwayX= halfWidth-(runwayLen/2);
+        double startOfRunwayY= halfHeight-(runwayWidth/2);
+
+        double scaledRESA = scaleToRunwayLength(240);
+        double scaledLDA = scaleToRunwayLength(runway.getLDA());
+        double scaledTORA = scaleToRunwayLength(runway.getTORA());
+        double scaledTODA = scaleToRunwayLength(runway.getTODA());
+        double scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
+        double scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
+        double scaledObjLen = (runwayLen/runway.getLength())*obstacle.getLength();
+        double scaledObjLen2 = (runwayWidth/runway.getWidth())*obstacle.getLength();
+
+        var gc = getGraphicsContext2D();
+
+        //viewport
+        gc.setFill(Color.color(0.06,0.25,0.06));
         gc.fillRect(0,0, viewWidth, viewHeight);
 
+        //grass
+        gc.setFill(Color.DARKGREEN);
+        gc.fillRect(startOfRunwayX-5, startOfRunwayY-5, runwayLen+10, runwayWidth+10);
+
         //runway
-        gc.setFill(Color.LIGHTGREY);
-        gc.fillRect(0,rightSide,scaledLengthToFit,scaledWidthToFit);
+        gc.setFill(Color.BLACK);
+        gc.fillRect(startOfRunwayX, startOfRunwayY, runwayLen, runwayWidth);
 
         //runway centre line
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(1);
+        gc.setLineDashes(10);
+        gc.strokeLine(startOfRunwayX,halfHeight,startOfRunwayX+runwayLen,halfHeight);
+
+        //object
+        gc.setFill(Color.RED);
+        gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjLen2,scaledObjLen);
+        //gc.fillOval(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjLen2,scaledObjLen);
+
+        //LEFT THR MARKING
+        gc.save();
+        gc.setStroke(Color.WHITE);
+        gc.translate(startOfRunwayX+scaledRESA+15, halfHeight-(runwayWidth/2)+15);
+        gc.rotate(90);
+        gc.setFont(new Font(30));
+        gc.fillText("09", startOfRunwayX-runwayWidth/2, 0);
+        gc.restore();
+
+        //RESA
+        gc.setFill(Color.WHITE);
+        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledRESA, runwayWidth);
+        //TODA
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
-        gc.setLineDashes(5);
-        gc.strokeLine(0,halfHeight,scaledLengthToFit,halfHeight);
-
-        //Object - position may need adjusting slightly
-        gc.setFill(Color.RED);
-        gc.fillRect(scaleToFitWidth(obstacle.getPosition()),halfHeight-(scaleToFitWidth(obstacle.getDFCL())),
-                    scaleToFitWidth(obstacle.getLength()),scaleToFitWidth(obstacle.getHeight()));
-
-        //RESA - currently a fixed length of 240m
-        gc.setFill(Color.DARKGREY);
-        gc.fillRect(0,rightSide,RESA,scaledWidthToFit);
-        gc.setFill(Color.DARKGREY);
-        gc.fillRect(viewWidth-RESA,rightSide,RESA,scaledWidthToFit);
-
-
+        gc.setLineDashes(0);
+        gc.strokeLine(startOfRunwayX,halfHeight-50,startOfRunwayX+scaledTODA,halfHeight-50);
+        //TORA
+        gc.setStroke(Color.BLACK);
+        gc.strokeLine(startOfRunwayX,halfHeight-70,startOfRunwayX+scaledTORA,halfHeight-70);
+        //LDA
+        gc.setStroke(Color.BLACK);
+        gc.strokeLine(startOfRunwayX,halfHeight-90,startOfRunwayX+scaledLDA,halfHeight-90);
+        //RESA
+        gc.setStroke(Color.BLACK);
+        gc.strokeLine(startOfRunwayX,halfHeight-110,startOfRunwayX+scaledRESA,halfHeight-110);
     }
 }
