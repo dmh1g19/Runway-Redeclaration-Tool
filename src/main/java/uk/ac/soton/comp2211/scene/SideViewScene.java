@@ -22,7 +22,7 @@ public class SideViewScene extends BaseScene {
         Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, 5);
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",10,100,2000, 15);
 
-        SideOnRunway sideOn = new SideOnRunway(runway, obstacle,app.getScene().getWidth(), app.getScene().getHeight(), "forward");
+        SideOnRunway sideOn = new SideOnRunway(runway, obstacle,app.getScene().getWidth(), app.getScene().getHeight());
 
         root.getChildren().add(sideOn);
 

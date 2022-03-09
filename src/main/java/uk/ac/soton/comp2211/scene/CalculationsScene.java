@@ -2,8 +2,11 @@ package uk.ac.soton.comp2211.scene;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.App;
@@ -37,7 +40,6 @@ public class CalculationsScene extends BaseScene {
 
         ObservableList<Runway> runways1 = FXCollections.observableArrayList();
         runways1.addAll(prun.getRunways());
-        System.out.println(prun.getRunways());
         /**
          * GATHERING INPUT
          */
@@ -139,7 +141,15 @@ public class CalculationsScene extends BaseScene {
         //test values
 
         Button sideOn = new Button("Side");
-        sideOn.setOnAction(e -> app.loadSide());
+        sideOn.setOnAction(e -> {
+            SideViewScene scene = new SideViewScene(app);
+            scene.build();
+            Scene sce = scene.setScene();
+            Stage stage = new Stage();
+            stage.setTitle("Side on");
+            stage.setScene(sce);
+            stage.show();
+        });
         AnchorPane.setRightAnchor(sideOn, 0d);
         AnchorPane.setTopAnchor(sideOn, 0d);
 

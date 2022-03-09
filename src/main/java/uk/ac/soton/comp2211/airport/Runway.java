@@ -108,7 +108,7 @@ public class Runway {
         return clearwayLength;
     }
 
-    public void setClearwayDimensions(int clearwayLength) {
+    public void setClearwayLength(int clearwayLength) {
         this.clearwayLength = clearwayLength;
     }
 
