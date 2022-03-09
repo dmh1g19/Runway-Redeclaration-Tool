@@ -20,6 +20,7 @@ import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class SelectionScene extends BaseScene {
@@ -36,8 +37,10 @@ public class SelectionScene extends BaseScene {
 
         Airport airport = new Airport("Heathrow",null);
         Airport newAirport = new Airport("Stansted", null);
-        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, new Pair<>(0,0));
-        PhysicalRunway[] runs = {new PhysicalRunway(runway,runway)};
+        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, 5);
+        ArrayList<Runway> runways = new ArrayList<>();
+        runways.add(runway);
+        PhysicalRunway[] runs = {new PhysicalRunway(runways)};
 
         airport.setRunways(runs);
 

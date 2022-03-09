@@ -1,9 +1,12 @@
 package uk.ac.soton.comp2211;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,7 +35,8 @@ public class App extends Application {
         stage.setMinWidth(width);
         stage.setMinHeight(height);
 
-        stage.setTitle("Runway Tool");
+        stage.setTitle("Runway Re-declaration Tool");
+
 
         defaultScene();
         loadSelection();
@@ -68,6 +72,11 @@ public class App extends Application {
         newScene.build();
         scene = newScene.setScene();
         stage.setScene(scene);
+        scene.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                loadCalculations();
+            }
+        });
     }
 
     public void defaultScene() {

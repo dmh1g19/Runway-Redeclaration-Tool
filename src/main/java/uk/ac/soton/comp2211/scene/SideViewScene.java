@@ -7,6 +7,8 @@ import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.SideOnRunway;
 
+import java.util.HashMap;
+
 public class SideViewScene extends BaseScene {
 
     public SideViewScene (App stage) {
@@ -17,7 +19,7 @@ public class SideViewScene extends BaseScene {
     public void build() {
         root = new StackPane();
 
-        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, new Pair<>(0,0));
+        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, 5);
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",10,100,2000, 15);
 
         SideOnRunway sideOn = new SideOnRunway(runway, obstacle,app.getScene().getWidth(), app.getScene().getHeight(), "forward");

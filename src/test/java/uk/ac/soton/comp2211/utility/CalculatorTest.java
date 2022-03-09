@@ -8,21 +8,22 @@ import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CalculatorTest {
-    static Airport heathrow;
+    static Runway[] runways;
 
     @BeforeAll
     static void initialiseAirport() {
-        Runway[] runways = new Runway[4];
-        runways[0] = new Runway("09R", 4022, 280, 90, 3660, 3660, 3660, 3353, new Pair<>(0, 0));
+        runways = new Runway[4];
+        runways[0] = new Runway("09R", 4022, 280, 90, 3660, 3660, 3660, 3353, 5);
         runways[0].setDTL(307);
-        runways[1] = new Runway("27L", 4022, 280, 270, 3660, 3660, 3660, 3660, new Pair<>(0, 0));
-        runways[2] = new Runway("09L", 4022, 280, 90, 3902, 3902, 3902, 3595, new Pair<>(0, 0));
+        runways[1] = new Runway("27L", 4022, 280, 270, 3660, 3660, 3660, 3660, 5);
+        runways[2] = new Runway("09L", 4022, 280, 90, 3902, 3902, 3902, 3595, 5);
         runways[2].setDTL(306);
-        runways[3] = new Runway("27R", 4022, 280, 270, 3884, 3962, 3884, 3884, new Pair<>(0, 0));
-        heathrow = new Airport("heathrow", runways);
+        runways[3] = new Runway("27R", 4022, 280, 270, 3884, 3962, 3884, 3884, 5);
 
 
     }
@@ -34,7 +35,7 @@ class CalculatorTest {
      */
     @Test
     void exampleCalculation1() {
-        Runway[] runways = heathrow.getRunways();
+
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, -50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 3646, 0);
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[2], obs);
@@ -59,7 +60,7 @@ class CalculatorTest {
      */
     @Test
     void exampleCalculation2() {
-        Runway[] runways = heathrow.getRunways();
+
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 25, 0, 500, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 25, 0, 2853, 0);
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[1], obs);
@@ -89,7 +90,7 @@ class CalculatorTest {
      */
     @Test
     void exampleCalculation3() {
-        Runway[] runways = heathrow.getRunways();
+
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 15, 0, 150, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 15, 0, 3203, 0);
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[0], obs);
@@ -115,7 +116,7 @@ class CalculatorTest {
      */
     @Test
     void exampleCalculation4() {
-        Runway[] runways = heathrow.getRunways();
+
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 20, 0, 50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 20, 0, 3546, 0);
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[3], obs);

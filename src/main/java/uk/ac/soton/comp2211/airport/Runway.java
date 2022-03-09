@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.airport;
 
-import javafx.util.Pair;
+import java.util.Map;
+
 
 public class Runway {
     protected String name;
@@ -13,7 +14,7 @@ public class Runway {
     protected int ASDA;
     protected int LDA;
     protected int displacedThreshold = 0;
-    protected Pair<Integer,Integer> clearwayDimensions;
+    protected int clearwayLength;
     protected ObstacleOnRunway obstacle;
     protected boolean obstacleOnRunway = false;
 
@@ -103,17 +104,17 @@ public class Runway {
         return displacedThreshold;
     }
 
-    public Pair<Integer, Integer> getClearwayDimensions() {
-        return clearwayDimensions;
+    public int getClearwayLength() {
+        return clearwayLength;
     }
 
-    public void setClearwayDimensions(Pair<Integer, Integer> clearwayDimensions) {
-        this.clearwayDimensions = clearwayDimensions;
+    public void setClearwayDimensions(int clearwayLength) {
+        this.clearwayLength = clearwayLength;
     }
 
 
 
-    public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, Pair<Integer,Integer> clearwayDimensions) {
+    public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, int clearwayLength) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -122,9 +123,9 @@ public class Runway {
         this.TODA = TODA;
         this.ASDA = ASDA;
         this.LDA = LDA;
-        this.clearwayDimensions =clearwayDimensions;
+        this.clearwayLength =clearwayLength;
     }
-    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA ,Pair<Integer,Integer> runwayDimensions , Pair<Integer,Integer> clearwayDimensions , int displacedThreshold) {
+    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA , int clearwayLength , int displacedThreshold) {
         this.name = name;
         this.length = length;
         this.width = width;
@@ -134,7 +135,7 @@ public class Runway {
         this.ASDA = ASDA;
         this.LDA = LDA;
         this.displacedThreshold = displacedThreshold;
-        this.clearwayDimensions =clearwayDimensions;
+        this.clearwayLength = clearwayLength;
     }
     public Runway (Runway runway){
         name = runway.getName();
@@ -145,7 +146,7 @@ public class Runway {
         TODA = runway.getTODA();
         ASDA = runway.getASDA();
         LDA = runway.getLDA();
-        clearwayDimensions = runway.getClearwayDimensions();
+        clearwayLength = runway.getClearwayLength();
         displacedThreshold = runway.getDTL();
     }
 
