@@ -3,6 +3,8 @@ package uk.ac.soton.comp2211.components;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
@@ -15,7 +17,6 @@ public class SideOnRunway extends Canvas {
     private ObstacleOnRunway obstacle;
     private double width;
     private double height;
-    private String direction;
     private double obPos;
     private double obLen;
     private double obHeight;
@@ -27,12 +28,11 @@ public class SideOnRunway extends Canvas {
     private double ALSAcross;
     private GraphicsContext gc;
 
-    public SideOnRunway(Runway runway, ObstacleOnRunway obstacle, double width, double height, String direction){
+    public SideOnRunway(Runway runway, ObstacleOnRunway obstacle, double width, double height){
         this.runway = runway;
         this.obstacle = obstacle;
         this.width = width;
         this.height = height;
-        this.direction = direction;
 
         setWidth(width);
         setHeight(height);
@@ -48,9 +48,9 @@ public class SideOnRunway extends Canvas {
         RESALen = (240.0/runway.getLength())*width;
 
         // length and height relative to view size are calculated.
-        ALSUp = 2 * obstacle.getHeight();
+        ALSUp = 4 * obstacle.getHeight();
         ALSAcross = 50 * ALSUp;
-        ALSUp = (ALSUp / runway.getLength()) * height;
+        ALSUp = (ALSUp / runway.getLength()) * height * 10;
         ALSAcross = (ALSAcross /runway.getLength()) * height;
         gc = getGraphicsContext2D();
 
@@ -65,151 +65,126 @@ public class SideOnRunway extends Canvas {
     public void representView() {
         //for now will represent plane as rectangle but implement drawImage later.
 
-        gc.setFill(Color.GREY);
+        gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
 
         gc.setFill(Color.BLACK);
         gc.fillRect(0, (height - 20), width, 20); //fillRect(topLeftX, topLeftY, length, height)
 
+        gc.fillText("Width : Height = 1 : 10",0,15);
+
         //the objects dimensions relative to the view size are calculated.
         gc.setFill(Color.RED);
-        gc.fillRect((obPos - (obLen / 2)), (height -(obHeight + 20)), obLen, obHeight);
+        gc.fillRect((obPos - (obLen / 2)), (height -((obHeight*10) + 20)), obLen, obHeight*10);
+        gc.setFill(Color.BLACK);
+        gc.strokeLine(obPos,(height-60), obPos, (height - 80));
+        double[] xPoints = {obPos,obPos+5,obPos-5};
+        double[] yPoints = {(height - 58),(height - 65), (height - 65) };
+        gc.fillPolygon(xPoints ,yPoints , 3);
+        gc.fillText("Obstacle",obPos - 25, (height - 85));
         //gc.fillRect(69.645, 174.29, 3.57, 5.71);
-        landingView();
+
+        gc.setFill(Color.WHITE);
+        gc.fillOval(width - 100, height/10 , 50,50);
+        gc.strokeOval(width - 100, height/10 , 50,50);
+        gc.setStroke(Color.RED);
+        gc.save();
+        gc.transform(new Affine(new Rotate(runway.getBearing()*10,(width - 75),(height/10 +25))));
+        gc.strokeLine(width - 75, height/10 +25, width - 75, height/10 + 7  );
+        gc.restore();
+        gc.setFill(Color.BLACK);
+        gc.fillText("Bearing" ,width - 45,height/10 +30 );
+        gc.fillText(runway.getBearing()+"",width - 45,height/10 + 20 );
+
+        takeOffView();
         //is RESA always 240m? - RESA can be ignored for longer distances.
     }
 
     public void takeOffView(){
+        gc.setLineWidth(3);
+        gc.setStroke(Color.DARKGREEN);
         //taking off away from an obstruction
-        if (((direction == "left") && (obPos > (width/2)))|| ((direction == "right") && (obPos < (width/2)))){
-            double blastAllowance = (800.0/ runway.getLength())*width;
+        if (obPos < (width/2)){
+            double blastAllowance = (300.0/ runway.getLength())*width;
             gc.setLineWidth(3);
-            if (direction == "right"){
-                gc.setStroke(Color.ORANGE);
-                gc.strokeLine(obPos+(obLen/2), (height - 30),obPos+(obLen/2) + blastAllowance ,(height - 30));
-                gc.fillText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 45) );
+            gc.setStroke(Color.ORANGE);
+            gc.strokeLine(obPos+(obLen/2), (height - 50),obPos+(obLen/2) + blastAllowance ,(height - 50));
+            gc.fillText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) );
 
-                gc.setStroke(Color.DARKGREEN);
-                gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -30),obPos+(obLen/2) + blastAllowance+TODALen, (height - 30));
-                gc.fillText(("TODA:" + runway.getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 45));
-
-            }
-            else{
-                gc.setStroke(Color.ORANGE);
-                gc.strokeLine(obPos-(obLen/2), (height - 30),obPos-(obLen/2) - blastAllowance ,(height - 30));
-                gc.fillText("Blast Allowance: 800m",obPos-(obLen/2) - (blastAllowance/2),(height - 45) );
-
-                gc.setStroke(Color.DARKGREEN);
-                gc.strokeLine(obPos-(obLen/2) - blastAllowance, (height -30),obPos-(obLen/2) - blastAllowance-TODALen, (height - 30));
-                gc.fillText(("TODA:" + runway.getTODA() + "m"), obPos-(obLen/2) - blastAllowance-(TODALen/2) ,(height - 45));
-            }
+            gc.setStroke(Color.DARKGREEN);
+            gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -50),obPos+(obLen/2) + blastAllowance+TODALen, (height - 50));
+            gc.fillText(("TODA:" + runway.getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65));
         }
         //taking off towards an obstruction
         else{
-            gc.setLineWidth(3);
-            gc.setStroke(Color.DARKGREEN);
+            gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
+            gc.fillText(("TODA:" + runway.getTODA() + "m"), (TODALen / 2) ,(height - 65));
 
-
-            if (direction == "right"){
-                gc.strokeLine(1,(height - 30), (TODALen-1) ,(height - 30));
-                gc.fillText(("TODA:" + runway.getTODA() + "m"), (TODALen / 2) ,(height - 45));
-
-                gc.setStroke(Color.YELLOW);
-                gc.strokeLine((TODALen+1),(height - 30),(TODALen + sixtyLen - 1),(height - 30));
-
+            if ((( obstacle.getPosition() - (obstacle.getLength()/2)) - runway.getTODA()  ) > 300){
                 gc.setStroke(Color.ORANGE);
-                gc.strokeLine((TODALen + sixtyLen + 1),(height - 30),(TODALen + sixtyLen +RESALen - 1),(height - 30));
-                gc.fillText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 45));
-
-                gc.setLineWidth(1);
-                gc.setStroke(Color.BLUE);
-                gc.strokeLine(TODALen,(height - 20),TODALen + ALSAcross ,(height - 20) - ALSUp );
+                gc.strokeLine( (obPos-(obLen/2)),
+                        (height - 50),
+                        TODALen ,
+                        (height - 50));
             }
-
             else{
-                gc.strokeLine(width -1 ,(height - 30), (width - TODALen + 1) ,(height - 30));
-                gc.fillText(("TODA:" + runway.getTODA() + "m"), (width - (TODALen / 2)) ,(height - 45));
-
                 gc.setStroke(Color.YELLOW);
-                gc.strokeLine((width - TODALen - 1),(height - 30),(width -(TODALen + sixtyLen - 1)),(height - 30));
+                gc.strokeLine((TODALen+1),(height - 50),(TODALen + sixtyLen - 1),(height - 50));
 
                 gc.setStroke(Color.ORANGE);
-                gc.strokeLine((width -(TODALen + sixtyLen + 1)),(height - 30),(width -(TODALen + sixtyLen + RESALen - 1)),(height - 30));
-                gc.fillText(("RESA: 240m"), (width -(TODALen + sixtyLen + (RESALen/2))) ,(height - 45));
-
-                gc.setLineWidth(1);
-                gc.setStroke(Color.BLUE);
-                gc.strokeLine((width - TODALen),(height - 20),(width - TODALen) - ALSAcross,(height - 20) - ALSUp );
+                gc.strokeLine((TODALen + sixtyLen + 1),(height - 50),(TODALen + sixtyLen +RESALen - 1),(height - 50));
+                gc.fillText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65));
             }
+
+            gc.setLineWidth(2);
+            gc.setStroke(Color.GREEN);
+            gc.strokeLine(TODALen,(height - 20),TODALen + ALSAcross ,(height - 20) - ALSUp );
+
         }
     }
 
     public void landingView(){
         //landing over an object
-        if (((direction == "left") && (obPos > (width/2)))|| ((direction == "right") && (obPos < (width/2)))){
+        if (obPos < (width/2)){
             gc.setLineWidth(3);
             gc.setStroke(Color.DARKGREEN);
+            gc.strokeLine(width -1 ,(height - 50), (width - LDALen + 1) ,(height - 50));
+            gc.fillText(("LDA:" + runway.getLDA() + "m"), (width - (LDALen / 2)) ,(height - 65));
 
-
-            if (direction == "left"){
-                gc.strokeLine(1,(height - 30), (LDALen-1) ,(height - 30));
-                gc.fillText(("LDA:" + runway.getLDA() + "m"), (LDALen / 2) ,(height - 45));
-
-                gc.setStroke(Color.YELLOW);
-                gc.strokeLine((LDALen+1),(height - 30),(LDALen + sixtyLen - 1),(height - 30));
-
+            if ((runway.getLength() - runway.getLDA() - (obPos + (obPos/2) )) > 300){
                 gc.setStroke(Color.ORANGE);
-                gc.strokeLine((LDALen + sixtyLen + 1),(height - 30),(LDALen + sixtyLen +RESALen - 1),(height - 30));
-                gc.fillText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 45));
+                gc.strokeLine( obPos + (obLen/2),
+                        (height - 50),
+                        ((double) (runway.getLength()- runway.getLDA())/ runway.getLength())*width,
+                        (height - 50));
 
-                gc.setLineWidth(1);
-                gc.setStroke(Color.BLUE);
-                gc.strokeLine(LDALen,(height - 20),LDALen + ALSAcross ,(height - 20) - ALSUp );
             }
-
             else{
-                gc.strokeLine(width -1 ,(height - 30), (width - LDALen + 1) ,(height - 30));
-                gc.fillText(("LDA:" + runway.getLDA() + "m"), (width - (LDALen / 2)) ,(height - 45));
-
                 gc.setStroke(Color.YELLOW);
-                gc.strokeLine((width - LDALen - 1),(height - 30),(width -(LDALen + sixtyLen - 1)),(height - 30));
+                gc.strokeLine((width - LDALen - 1),(height - 50),(width -(LDALen + sixtyLen - 1)),(height - 50));
 
                 gc.setStroke(Color.ORANGE);
-                gc.strokeLine((width -(LDALen + sixtyLen + 1)),(height - 30),(width -(LDALen + sixtyLen + RESALen - 1)),(height - 30));
-                gc.fillText(("RESA: 240m"), (width -(LDALen + sixtyLen + (RESALen/2))) ,(height - 45));
-
-                gc.setLineWidth(1);
-                gc.setStroke(Color.BLUE);
-                gc.strokeLine((width - LDALen),(height - 20),(width - LDALen) - ALSAcross,(height - 20) - ALSUp );
+                gc.strokeLine((width -(LDALen + sixtyLen + 1)),(height - 50),(width -(LDALen + sixtyLen + RESALen - 1)),(height - 50));
+                gc.fillText(("RESA: 240m"), (width -(LDALen + sixtyLen + (RESALen/2))) ,(height - 65));
             }
+
+            gc.setLineWidth(2);
+            gc.setStroke(Color.GREEN);
+            gc.strokeLine((width - LDALen),(height - 20),(width - LDALen) - ALSAcross,(height - 20) - ALSUp );
+
         }
         //landing towards an object
         else{
+            gc.strokeLine(1,(height - 50), (LDALen-1) ,(height - 50));
+            gc.fillText(("LDA:" + runway.getLDA() + "m"), (LDALen / 2) ,(height - 65));
 
-            if (direction == "right"){
-                gc.strokeLine(1,(height - 30), (LDALen-1) ,(height - 30));
-                gc.fillText(("LDA:" + runway.getLDA() + "m"), (LDALen / 2) ,(height - 45));
+            gc.setStroke(Color.YELLOW);
+            gc.strokeLine((LDALen+1),(height - 50),(LDALen + sixtyLen - 1),(height - 50));
 
-                gc.setStroke(Color.YELLOW);
-                gc.strokeLine((LDALen+1),(height - 30),(LDALen + sixtyLen - 1),(height - 30));
-
-                gc.setStroke(Color.ORANGE);
-                gc.strokeLine((LDALen + sixtyLen + 1),(height - 30),(LDALen + sixtyLen +RESALen - 1),(height - 30));
-                gc.fillText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 45));
-            }
-
-            else{
-                gc.strokeLine(width -1 ,(height - 30), (width - LDALen + 1) ,(height - 30));
-                gc.fillText(("LDA:" + runway.getLDA() + "m"), (width - (LDALen / 2)) ,(height - 45));
-
-                gc.setStroke(Color.YELLOW);
-                gc.strokeLine((width - LDALen - 1),(height - 30),(width -(LDALen + sixtyLen - 1)),(height - 30));
-
-                gc.setStroke(Color.ORANGE);
-                gc.strokeLine((width -(LDALen + sixtyLen + 1)),(height - 30),(width -(LDALen + sixtyLen + RESALen - 1)),(height - 30));
-                gc.fillText(("RESA: 240m"), (width -(LDALen + sixtyLen + (RESALen/2))) ,(height - 45));
-
+            gc.setStroke(Color.ORANGE);
+            gc.strokeLine((LDALen + sixtyLen + 1),(height - 50),(LDALen + sixtyLen +RESALen - 1),(height - 50));
+            gc.fillText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65));
             }
         }
     }
-}
+
