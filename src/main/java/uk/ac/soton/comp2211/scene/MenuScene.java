@@ -29,7 +29,7 @@ public class MenuScene extends BaseScene {
         root = new StackPane();
 
 
-        Text calcButton = new Text("Calculate (WIP)");
+        Text calcButton = new Text("Calculate");
         calcButton.setOnMouseClicked(e -> app.loadCalculations());
         calcButton.getStyleClass().add("menuItem");
 
