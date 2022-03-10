@@ -2,7 +2,11 @@ package uk.ac.soton.comp2211.components;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
@@ -45,6 +49,7 @@ public class TopDownRunway extends Canvas {
         double halfWidth = viewWidth/2;
         double startOfRunwayX= halfWidth-(runwayLen/2);
         double startOfRunwayY= halfHeight-(runwayWidth/2);
+        double endOfRunwayX = halfWidth+(runwayLen/2);
 
         double scaledRESA = scaleToRunwayLength(240);
         double scaledLDA = scaleToRunwayLength(runway.getLDA());
@@ -52,14 +57,22 @@ public class TopDownRunway extends Canvas {
         double scaledTODA = scaleToRunwayLength(runway.getTODA());
         double scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
         double scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
-        double scaledObjLen = (runwayLen/runway.getLength())*obstacle.getLength();
-        double scaledObjLen2 = (runwayWidth/runway.getWidth())*obstacle.getLength();
+        double scaledObjLen = scaleToRunwayLength(obstacle.getLength());
+        double scaledObjLen2 = scaleToRunwayWidth(obstacle.getLength());
 
         var gc = getGraphicsContext2D();
 
         //viewport
         gc.setFill(Color.color(0.06,0.25,0.06));
         gc.fillRect(0,0, viewWidth, viewHeight);
+
+        Path gradedArea = new Path();
+
+        MoveTo start = new MoveTo();
+        start.setX(0);
+        start.setY(0);
+
+
 
         //grass
         gc.setFill(Color.DARKGREEN);
@@ -75,23 +88,38 @@ public class TopDownRunway extends Canvas {
         gc.setLineDashes(10);
         gc.strokeLine(startOfRunwayX,halfHeight,startOfRunwayX+runwayLen,halfHeight);
 
+        //LEFT THR MARKING
+        gc.save();
+        gc.setFill(Color.WHITE);
+        gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+15,halfHeight-(runwayWidth/2)+15)));
+        gc.setFont(new Font(30));
+        gc.fillText("L", startOfRunwayX+scaledRESA+20,halfHeight-25);
+        gc.setFont(new Font(25));
+        gc.fillText("09", startOfRunwayX+scaledRESA+10,halfHeight-50);
+        gc.restore();
+
+        //RIGHT THR MARKING
+        gc.save();
+        gc.setFill(Color.WHITE);
+        gc.transform(new Affine(new Rotate(270,endOfRunwayX-(scaledRESA)-15,halfHeight-(runwayWidth/2)+15)));
+        gc.setFont(new Font(30));
+        gc.fillText("R", endOfRunwayX-scaledRESA-35,halfHeight-25);
+        gc.setFont(new Font(25));
+        gc.fillText("27", endOfRunwayX-scaledRESA-40,halfHeight-50);
+        gc.restore();
+
+        //RESA1
+        gc.setFill(Color.WHITE);
+        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledRESA, runwayWidth);
+        //RESA2
+        gc.setFill(Color.WHITE);
+        gc.fillRect(endOfRunwayX-scaledRESA, startOfRunwayY, scaledRESA, runwayWidth);
+
         //object
         gc.setFill(Color.RED);
         gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjLen2,scaledObjLen);
         //gc.fillOval(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjLen2,scaledObjLen);
 
-        //LEFT THR MARKING
-        gc.save();
-        gc.setStroke(Color.WHITE);
-        gc.translate(startOfRunwayX+scaledRESA+15, halfHeight-(runwayWidth/2)+15);
-        gc.rotate(90);
-        gc.setFont(new Font(30));
-        gc.fillText("09", startOfRunwayX-runwayWidth/2, 0);
-        gc.restore();
-
-        //RESA
-        gc.setFill(Color.WHITE);
-        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledRESA, runwayWidth);
         //TODA
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
@@ -107,4 +135,11 @@ public class TopDownRunway extends Canvas {
         gc.setStroke(Color.BLACK);
         gc.strokeLine(startOfRunwayX,halfHeight-110,startOfRunwayX+scaledRESA,halfHeight-110);
     }
+
+    //public void takeOff() {
+    ////Away from the object
+
+    ////Towards the object
+
+    //}
 }
