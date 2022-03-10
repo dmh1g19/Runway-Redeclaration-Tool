@@ -47,7 +47,7 @@ public class SideOnRunway extends Canvas {
         sixtyLen = (60.0/runway.getLength())*width;
         RESALen = (240.0/runway.getLength())*width;
 
-        // length and height relative to view size are calculated.
+        // length and height of ALS slope relative to view size are calculated.
         ALSUp = 4 * obstacle.getHeight();
         ALSAcross = 50 * ALSUp;
         ALSUp = (ALSUp / runway.getLength()) * height * 10;
@@ -56,24 +56,21 @@ public class SideOnRunway extends Canvas {
 
         representView();
 
-        //add listener so that everytime runway or obstacle changed by user side on view updates.
     }
-    //only using TODA right now - implement other two
+
     //need to add stopway and clearway to the view.
-    //this represents view for plane taking off from left- add right towards an obstacle.
-    //need to implement taking off away from an obstacle + landing
     public void representView() {
-        //for now will represent plane as rectangle but implement drawImage later.
+
 
         gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(0, (height - 20), width, 20); //fillRect(topLeftX, topLeftY, length, height)
+        gc.fillRect(0, (height - 20), width, 20);
 
         gc.fillText("Width : Height = 1 : 10",0,15);
 
-        //the objects dimensions relative to the view size are calculated.
+        //the obstructions dimensions relative to the view size are calculated.
         gc.setFill(Color.RED);
         gc.fillRect((obPos - (obLen / 2)), (height -((obHeight*10) + 20)), obLen, obHeight*10);
         gc.setFill(Color.BLACK);
@@ -82,8 +79,8 @@ public class SideOnRunway extends Canvas {
         double[] yPoints = {(height - 58),(height - 65), (height - 65) };
         gc.fillPolygon(xPoints ,yPoints , 3);
         gc.fillText("Obstacle",obPos - 25, (height - 85));
-        //gc.fillRect(69.645, 174.29, 3.57, 5.71);
 
+        //A compass in the top right of the screen that shows the bearing of the runway
         gc.setFill(Color.WHITE);
         gc.fillOval(width - 100, height/10 , 50,50);
         gc.strokeOval(width - 100, height/10 , 50,50);
@@ -96,10 +93,11 @@ public class SideOnRunway extends Canvas {
         gc.fillText("Bearing" ,width - 45,height/10 +30 );
         gc.fillText(runway.getBearing()+"",width - 45,height/10 + 20 );
 
+        //right now just shows take off view but buttons will be installed to switch between the two
         takeOffView();
-        //is RESA always 240m? - RESA can be ignored for longer distances.
     }
 
+    //shows planes taking off away from and towards and obstruction.
     public void takeOffView(){
         gc.setLineWidth(3);
         gc.setStroke(Color.DARKGREEN);
@@ -120,6 +118,7 @@ public class SideOnRunway extends Canvas {
             gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
             gc.fillText(("TODA:" + runway.getTODA() + "m"), (TODALen / 2) ,(height - 65));
 
+            //if the RESA is less than the distance of runway taken away by the obstacle then that distance is used instead of RESA
             if ((( obstacle.getPosition() - (obstacle.getLength()/2)) - runway.getTODA()  ) > 300){
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine( (obPos-(obLen/2)),
@@ -151,6 +150,7 @@ public class SideOnRunway extends Canvas {
             gc.strokeLine(width -1 ,(height - 50), (width - LDALen + 1) ,(height - 50));
             gc.fillText(("LDA:" + runway.getLDA() + "m"), (width - (LDALen / 2)) ,(height - 65));
 
+            //if the RESA is less than the distance of runway taken away by the obstacle then that distance is used instead of RESA
             if ((runway.getLength() - runway.getLDA() - (obPos + (obPos/2) )) > 300){
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine( obPos + (obLen/2),
@@ -159,6 +159,7 @@ public class SideOnRunway extends Canvas {
                         (height - 50));
 
             }
+            //landing towards an object
             else{
                 gc.setStroke(Color.YELLOW);
                 gc.strokeLine((width - LDALen - 1),(height - 50),(width -(LDALen + sixtyLen - 1)),(height - 50));
