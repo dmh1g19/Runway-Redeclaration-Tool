@@ -31,7 +31,7 @@ public class TopDownRunway extends Canvas {
 
         setWidth(viewWidth);
         setHeight(viewHeight);
-
+        runway.setDTL(307);
         representView();
     }
 
@@ -81,6 +81,21 @@ public class TopDownRunway extends Canvas {
         //runway
         gc.setFill(Color.BLACK);
         gc.fillRect(startOfRunwayX, startOfRunwayY, runwayLen, runwayWidth);
+
+        //Threshold
+        if (runway.getDTL() != 0){
+            gc.setFill(Color.WHITE);
+            double scaledDTL = ((runway.getDTL() *1.0) / runway.getLength())* runwayLen;
+            double[] trix = new double[] {startOfRunwayX  + scaledDTL *0.75, startOfRunwayX + scaledDTL *0.75,startOfRunwayX + scaledDTL -5};
+            double[] triy= new double[] {startOfRunwayY+runwayWidth *0.25, startOfRunwayY+runwayWidth *0.75 ,halfHeight};
+            gc.fillPolygon(trix,triy, 3);
+            gc.setLineDashes();
+            gc.setStroke(Color.WHITE);
+            gc.setLineWidth(4);
+            gc.strokeLine(startOfRunwayX+5,halfHeight,startOfRunwayX+scaledDTL-10,halfHeight);
+            runwayLen = runwayLen -scaledDTL;
+            startOfRunwayX = startOfRunwayX +scaledDTL;
+        }
 
         //runway centre line
         gc.setStroke(Color.WHITE);
