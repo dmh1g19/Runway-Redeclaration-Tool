@@ -9,6 +9,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Calculator {
+    static int RESA = 240;
+    static int distanceToStripEnd = 60;
+    static int blastProtectionDistance = 300;
+
+    public static int getBlastProtectionDistance() {
+        return blastProtectionDistance;
+    }
+
+    public static int getDistanceToStripEnd() {
+        return distanceToStripEnd;
+    }
+
+    public static int getRESA() {
+        return RESA;
+    }
+
+    public static void setBlastProtectionDistance(int blastProtectionDistance) {
+        Calculator.blastProtectionDistance = blastProtectionDistance;
+    }
+
+    public static void setRESA(int RESA) {
+        Calculator.RESA = RESA;
+    }
+
+    public static void setDistanceToStripEnd(int distanceToStripEnd) {
+        Calculator.distanceToStripEnd = distanceToStripEnd;
+    }
 
     /**
      * Calculates runway landing parameters if the plane is landing towards the obstacle
@@ -20,8 +47,6 @@ public class Calculator {
         validateObstacle(obs);
        Runway runwayWithObstacle = new Runway(runway);
        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
-       int RESA = 240;
-       int distanceToStripEnd = 60;
        int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
        runwayWithObstacle.setLDA(newLDA);
 
@@ -40,11 +65,8 @@ public class Calculator {
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
         int obstacleLength = obs.getLength();
-        int RESA = 240;
-        int distanceToStripEnd = 60;
         int obstacleHeight = obs.getHeight();
-        //int newLDA = (obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
-        int newLDA = runway.getLDA() -obstaclePosition -distanceToStripEnd -  (obstacleHeight *50);
+        int newLDA = (obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
         runwayWithObstacle.setLDA(newLDA);
 
 
@@ -64,7 +86,7 @@ public class Calculator {
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
         int clearway = runway.getTODA() -runway.getTORA();
         int stopway = runway.getASDA() - runway.getTORA();
-        int newTORA = runway.getTORA() -300 - obstaclePosition - runway.getDTL() ;
+        int newTORA = runway.getTORA() -blastProtectionDistance - obstaclePosition - runway.getDTL() ;
         runwayWithObstacle.setTORA(newTORA);
         runwayWithObstacle.setTODA(newTORA+clearway);
         runwayWithObstacle.setASDA(newTORA+stopway);
@@ -82,10 +104,8 @@ public class Calculator {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
-        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
-        int RESA = 240;
-        int distanceToStripEnd = 60;
-        int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - (obstacleHeight *50);
+        int obstaclePosition = obs.getPosition();//obstacle position should represent how far down the runway it is
+        int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - Integer.max((RESA + obs.getLength()) , (obstacleHeight *50));
 
         runwayWithObstacle.setTORA(newTORA);
         runwayWithObstacle.setTODA(newTORA);
@@ -239,6 +259,8 @@ public class Calculator {
         }
         return s.toString();
     }
+
+
 
 
     public static class IncorrectObstacleException extends Exception {
