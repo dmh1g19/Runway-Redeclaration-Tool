@@ -14,6 +14,7 @@ import uk.ac.soton.comp2211.airport.*;
 import uk.ac.soton.comp2211.components.PredefinedObstacles;
 import uk.ac.soton.comp2211.components.SideOnRunway;
 import uk.ac.soton.comp2211.components.TopDownRunway;
+import uk.ac.soton.comp2211.utility.Calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CalculationsScene extends BaseScene {
+    private Runway currentRunway;
+    private ComboBox<Obstacle> obstacleSelect;
+    private  ComboBox<Runway> runwaySelect;
+    private ComboBox<Boolean> directionSelect;
+    private TextField distanceInput;
 
     public CalculationsScene(App stage) {
         super(stage);
@@ -60,7 +66,7 @@ public class CalculationsScene extends BaseScene {
         Label runwayLabel = new Label("Runway THR: ");
         inputForm.add(runwayLabel, 0, 1);
 
-        ComboBox<Runway> runwaySelect = new ComboBox<Runway>();
+        runwaySelect = new ComboBox<Runway>();
         runwaySelect.setItems(runways1);
         runwaySelect.getSelectionModel().selectFirst();
         runwaySelect.setEditable(false);
@@ -82,7 +88,7 @@ public class CalculationsScene extends BaseScene {
         inputForm.add(obstacleLabel, 0,2);
 
 
-        ComboBox<Obstacle> obstacleSelect = new ComboBox<>();
+        obstacleSelect = new ComboBox<>();
 
         obstacleSelect.setItems(PredefinedObstacles.getObstacles());
         obstacleSelect.getSelectionModel().selectFirst();
@@ -98,13 +104,16 @@ public class CalculationsScene extends BaseScene {
                 return null;
             }
         });
+
         inputForm.add(obstacleSelect,1,2);
+
+
 
         //DISTANCE
         Label distanceLabel = new Label("Distance to THR: ");
         inputForm.add(distanceLabel, 0,3);
 
-        TextField distanceInput = new TextField();
+        distanceInput = new TextField();
         inputForm.add(distanceInput, 1,3);
 
         //TAKE OFF AWAY/OVER
@@ -114,7 +123,7 @@ public class CalculationsScene extends BaseScene {
         ObservableList<Boolean> direction = FXCollections.observableArrayList();
         direction.addAll(true,false);
 
-        ComboBox<Boolean> directionSelect = new ComboBox<>();
+        directionSelect = new ComboBox<>();
         directionSelect.setItems(direction);
         directionSelect.getSelectionModel().selectFirst();
         directionSelect.setEditable(false);
@@ -133,10 +142,15 @@ public class CalculationsScene extends BaseScene {
         inputForm.add(directionSelect, 1,4);
 
         Button calculateButton = new Button("Calculate");
-        calculateButton.setOnAction(e -> app.loadMenu());
+        calculateButton.setOnAction(e -> recalculateValues());
         inputForm.add(calculateButton,0,5,2,1);
         calculateButton.setMaxWidth(Double.MAX_VALUE);
         GridPane.setFillWidth(calculateButton,true);
+
+        // back button
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> app.loadMenu());
+        backButton.setMaxWidth(Double.MAX_VALUE);
 
 
 
@@ -156,8 +170,11 @@ public class CalculationsScene extends BaseScene {
             stage.setScene(sce);
             stage.show();
         });
+
         AnchorPane.setRightAnchor(sideOn, 0d);
         AnchorPane.setTopAnchor(sideOn, 0d);
+        AnchorPane.setBottomAnchor(backButton,0d);
+        AnchorPane.setLeftAnchor(backButton,0d);
 
 
         Button s1 = new Button("Top");
@@ -165,8 +182,34 @@ public class CalculationsScene extends BaseScene {
         AnchorPane.setRightAnchor(s1, 0d);
         AnchorPane.setBottomAnchor(s1, 0d);
 
-        root.getChildren().addAll(sideOn, s1, inputForm);
+        root.getChildren().addAll(sideOn, s1, inputForm,backButton);
 
         root.setStyle("-fx-background-color: #81c483");
+    }
+
+    private void recalculateValues(){
+        Runway chosenRunway = runwaySelect.getValue();
+        Obstacle chosenObstacle = obstacleSelect.getValue();
+        int chosenDistanceFromCentreLine = 0;
+        int chosenDistance;
+
+        try {
+            chosenDistance =  Integer.parseInt( distanceInput.getCharacters().toString());
+            if (directionSelect.getValue()){
+
+                currentRunway = Calculator.TowardsObstacle(chosenRunway,new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+            }else{
+                currentRunway = Calculator.AwayFromObstacle(chosenRunway,new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+            }
+        }catch(Exception e) {
+            System.out.println(e);
+        }
+
+
+
+
+
+
+
     }
 }
