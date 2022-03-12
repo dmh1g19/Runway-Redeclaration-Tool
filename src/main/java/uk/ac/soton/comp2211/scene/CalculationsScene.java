@@ -11,6 +11,7 @@ import javafx.util.Pair;
 import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.*;
+import uk.ac.soton.comp2211.components.PredefinedObstacles;
 import uk.ac.soton.comp2211.components.SideOnRunway;
 import uk.ac.soton.comp2211.components.TopDownRunway;
 
@@ -80,12 +81,16 @@ public class CalculationsScene extends BaseScene {
         Label obstacleLabel = new Label("Obstacle: ");
         inputForm.add(obstacleLabel, 0,2);
 
+
         ComboBox<Obstacle> obstacleSelect = new ComboBox<>();
+
+        obstacleSelect.setItems(PredefinedObstacles.getObstacles());
+        obstacleSelect.getSelectionModel().selectFirst();
         obstacleSelect.setEditable(false);
         obstacleSelect.setConverter(new StringConverter<Obstacle>() {
             @Override
             public String toString(Obstacle obstacle) {
-                return "Obstacle";
+                return obstacle.getName();
             }
 
             @Override
@@ -132,6 +137,7 @@ public class CalculationsScene extends BaseScene {
         inputForm.add(calculateButton,0,5,2,1);
         calculateButton.setMaxWidth(Double.MAX_VALUE);
         GridPane.setFillWidth(calculateButton,true);
+
 
 
         AnchorPane.setLeftAnchor(inputForm,0d);

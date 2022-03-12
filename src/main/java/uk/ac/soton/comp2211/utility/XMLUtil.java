@@ -1,10 +1,15 @@
 package uk.ac.soton.comp2211.utility;
 
+import org.junit.platform.engine.discovery.ClasspathResourceSelector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.ac.soton.comp2211.airport.Airport;
+import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.airport.Runway;
+
+import java.util.ArrayList;
+
 public class XMLUtil {
     
     public static void main(String[] args) {
@@ -81,6 +86,37 @@ public class XMLUtil {
         RW6.getLDA();
         RW6.getDTL();
         RW6.getClearwayLength();
-        }
+    }
+
+
+    /**
+     * A fake read obstacles function
+     * Please feel free to  edit or delete this one to make it actually read from the xml
+     * This just allows me to implement the rest of the predefined obstacle stuff with template data
+     * @return an array list of obstacles
+     */
+    public static ArrayList<Obstacle> readObstacles(){
+        Obstacle tree = new Obstacle("Tree",5,50);
+        Obstacle civilianPlane = new Obstacle("Civilian Small Plane",3,8);
+        Obstacle smallPlane = new Obstacle("Small Commercial Plane", 11, 30);
+        Obstacle largePlane = new Obstacle("Large Commercial Plane",19,64);
+        ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+        obstacles.add(tree);
+        obstacles.add(civilianPlane);
+        obstacles.add(smallPlane);
+        obstacles.add(largePlane);
+        return obstacles;
+
+    }
+
+    /**
+     * called by the predefined obstacles class to update the xml file
+     * We could have this called automatically using a listener or do it manually with like a save button or something
+     * @param obstacles the new list of obstacles
+     */
+    public static void writeObstacles (ArrayList<Obstacle> obstacles){
+        // TODO write obstacles to xml file
+    }
+
 }
 
