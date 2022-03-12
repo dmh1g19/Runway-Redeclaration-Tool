@@ -11,6 +11,7 @@ public class TopDownScene extends BaseScene {
     public TopDownScene(App stage) {
         super(stage);
     }
+    private TopDownRunway top;
 
     @Override
     public void build() {
@@ -19,10 +20,14 @@ public class TopDownScene extends BaseScene {
         Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, 5);
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,50,0, 0);
 
-        TopDownRunway top = new TopDownRunway(runway,obstacle,app.getScene().getWidth(),app.getScene().getHeight(), "left");
+        top = new TopDownRunway(runway,obstacle,app.getScene().getWidth(),app.getScene().getHeight(), "left");
 
         root.getChildren().add(top);
 
         root.setStyle("-fx-background-color: #81c483");
+    }
+
+    public TopDownRunway getView() {
+        return top;
     }
 }

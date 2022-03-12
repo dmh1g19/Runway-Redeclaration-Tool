@@ -7,6 +7,8 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
+import uk.ac.soton.comp2211.scene.CalculationsScene;
 
 public class SideOnRunway extends Canvas {
 
@@ -33,6 +35,8 @@ public class SideOnRunway extends Canvas {
         this.obstacle = obstacle;
         this.width = width;
         this.height = height;
+
+
 
         setWidth(width);
         setHeight(height);
@@ -186,6 +190,10 @@ public class SideOnRunway extends Canvas {
             gc.strokeLine((LDALen + sixtyLen + 1),(height - 50),(LDALen + sixtyLen +RESALen - 1),(height - 50));
             gc.fillText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65));
             }
+        }
+
+        public void runwayUpdated(Runway runway){
+
         }
     }
 

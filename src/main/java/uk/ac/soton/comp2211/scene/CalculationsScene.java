@@ -14,6 +14,7 @@ import uk.ac.soton.comp2211.airport.*;
 import uk.ac.soton.comp2211.components.PredefinedObstacles;
 import uk.ac.soton.comp2211.components.SideOnRunway;
 import uk.ac.soton.comp2211.components.TopDownRunway;
+import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
 import uk.ac.soton.comp2211.utility.Calculator;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Objects;
 
 public class CalculationsScene extends BaseScene {
     private Runway currentRunway;
+    private ArrayList<RunwayUpdatedListener> runwayUpdatedListeners = new ArrayList<>();
     private ComboBox<Obstacle> obstacleSelect;
     private  ComboBox<Runway> runwaySelect;
     private ComboBox<Boolean> directionSelect;
@@ -164,6 +166,8 @@ public class CalculationsScene extends BaseScene {
         sideOn.setOnAction(e -> {
             SideViewScene scene = new SideViewScene(app);
             scene.build();
+            runwayUpdatedListeners.add(scene.getView()::runwayUpdated);
+            scene.getView().runwayUpdated(currentRunway);
             Scene sce = scene.setScene();
             Stage stage = new Stage();
             stage.setTitle("Side on");
@@ -178,7 +182,17 @@ public class CalculationsScene extends BaseScene {
 
 
         Button s1 = new Button("Top");
-        s1.setOnAction(e -> app.loadTopDown());
+        s1.setOnAction(e -> {
+            TopDownScene scene = new TopDownScene(app);
+            scene.build();
+            runwayUpdatedListeners.add(scene.getView()::runwayUpdated);
+            scene.getView().runwayUpdated(currentRunway);
+            Scene sce = scene.setScene();
+            Stage stage = new Stage();
+            stage.setTitle("Top Down");
+            stage.setScene(sce);
+            stage.show();
+        });
         AnchorPane.setRightAnchor(s1, 0d);
         AnchorPane.setBottomAnchor(s1, 0d);
 
@@ -201,6 +215,9 @@ public class CalculationsScene extends BaseScene {
             }else{
                 currentRunway = Calculator.AwayFromObstacle(chosenRunway,new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
             }
+            for (RunwayUpdatedListener r : runwayUpdatedListeners){
+                r.runwayUpdated(currentRunway);
+            }
         }catch(Exception e) {
             System.out.println(e);
         }
@@ -211,5 +228,14 @@ public class CalculationsScene extends BaseScene {
 
 
 
+
+
+    }
+    public void addRunwayListener (RunwayUpdatedListener r){
+        runwayUpdatedListeners.add(r);
+
+    }
+    public void removeRunwayListener(int i){
+        runwayUpdatedListeners.remove(i);
     }
 }

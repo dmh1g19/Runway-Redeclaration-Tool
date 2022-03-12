@@ -9,6 +9,7 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
 
 public class TopDownRunway extends Canvas {
 
@@ -151,6 +152,9 @@ public class TopDownRunway extends Canvas {
         gc.strokeLine(startOfRunwayX,halfHeight-110,startOfRunwayX+scaledRESA,halfHeight-110);
     }
 
+    public void runwayUpdated(Runway runway){
+
+    }
     //public void takeOff() {
     ////Away from the object
 
