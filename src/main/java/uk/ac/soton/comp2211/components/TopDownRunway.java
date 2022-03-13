@@ -14,23 +14,20 @@ public class TopDownRunway extends Canvas {
     double runwayLen = 650;
     double runwayWidth = 50;
 
-    private final Runway runway;
-    private final ObstacleOnRunway obstacle;
+    private  Runway runway;
+    private  ObstacleOnRunway obstacle;
     private final double viewWidth;
     private final double viewHeight;
     private final String direction;
 
-    public TopDownRunway(Runway runway, ObstacleOnRunway obstacle, double viewWidth, double viewHeight, String direction) {
-        this.runway = runway;
-        this.obstacle = obstacle;
+    public TopDownRunway(Runway runway, double viewWidth, double viewHeight, String direction) {
         this.viewWidth = viewWidth;
         this.viewHeight = viewHeight;
         this.direction = direction;
 
         setWidth(viewWidth);
         setHeight(viewHeight);
-        runway.setDTL(307);
-        representView();
+        representView(runway);
     }
 
     public double scaleToRunwayLength (double object) {
@@ -41,7 +38,9 @@ public class TopDownRunway extends Canvas {
         return (runwayWidth/runway.getWidth())*object;
     }
 
-    public void representView() {
+    public void representView(Runway runway1) {
+        this.runway = runway1;
+        this.obstacle = runway1.getObstacle();
 
         double halfHeight = viewHeight/2;
         double halfWidth = viewWidth/2;
@@ -139,7 +138,7 @@ public class TopDownRunway extends Canvas {
     }
 
     public void runwayUpdated(Runway runway){
-
+        representView(runway);
     }
     //public void takeOff() {
     ////Away from the object
