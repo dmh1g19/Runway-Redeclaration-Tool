@@ -5,6 +5,7 @@ import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.SideOnRunway;
+import uk.ac.soton.comp2211.utility.Calculator;
 
 public class SideViewScene extends BaseScene {
 
@@ -19,8 +20,14 @@ public class SideViewScene extends BaseScene {
 
         Runway runway = new Runway("Runway01",3500,35,25,2602,1902,1902,1595, 10);
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",10,100,2000, 15);
+        try{
+            runway = Calculator.TakeOffTowardsObstacle(runway,obstacle);
+            runway.setObstacle(obstacle);
+        }
+        catch(Exception e){
 
-         sideOn = new SideOnRunway(runway, obstacle,app.getScene().getWidth(), app.getScene().getHeight());
+        }
+        sideOn = new SideOnRunway(runway,app.getScene().getWidth(), app.getScene().getHeight());
 
         root.getChildren().add(sideOn);
 

@@ -30,9 +30,9 @@ public class SideOnRunway extends Canvas {
     private double ALSAcross;
     private GraphicsContext gc;
 
-    public SideOnRunway(Runway runway, ObstacleOnRunway obstacle, double width, double height){
+    public SideOnRunway(Runway runway, double width, double height){
         this.runway = runway;
-        this.obstacle = obstacle;
+        this.obstacle = runway.getObstacle();
         this.width = width;
         this.height = height;
 
