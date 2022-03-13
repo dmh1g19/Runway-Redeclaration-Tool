@@ -14,20 +14,17 @@ public class TopDownRunway extends Canvas {
     double runwayLen = 650;
     double runwayWidth = 50;
 
-    private  Runway runway;
-    private  ObstacleOnRunway obstacle;
-    private final double viewWidth;
-    private final double viewHeight;
-    private final String direction;
+    private Runway runway;
+    private ObstacleOnRunway obstacle;
 
-    public TopDownRunway(Runway runway, double viewWidth, double viewHeight, String direction) {
-        this.viewWidth = viewWidth;
-        this.viewHeight = viewHeight;
-        this.direction = direction;
+    public TopDownRunway(Runway runway) {
+        this.runway = runway;
+        this.obstacle = runway.getObstacle();
 
-        setWidth(viewWidth);
-        setHeight(viewHeight);
-        representView(runway);
+        setWidth(700);
+        setHeight(400);
+
+        draw(runway);
     }
 
     public double scaleToRunwayLength (double object) {
@@ -38,14 +35,14 @@ public class TopDownRunway extends Canvas {
         return (runwayWidth/runway.getWidth())*object;
     }
 
-    public void representView(Runway runway1) {
+    public void draw(Runway runway1) {
         this.runway = runway1;
         this.obstacle = runway1.getObstacle();
 
-        double halfHeight = viewHeight/2;
-        double halfWidth = viewWidth/2;
-        double startOfRunwayX= halfWidth-(runwayLen/2);
-        double startOfRunwayY= halfHeight-(runwayWidth/2);
+        double halfHeight = getHeight()/2;
+        double halfWidth = getWidth()/2;
+        double startOfRunwayX = halfWidth-(runwayLen/2);
+        double startOfRunwayY = halfHeight-(runwayWidth/2);
         double endOfRunwayX = halfWidth+(runwayLen/2);
 
         double scaledDTL = scaleToRunwayLength(runway.getDTL());
@@ -62,14 +59,14 @@ public class TopDownRunway extends Canvas {
 
         //viewport
         gc.setFill(Color.GREY);
-        gc.fillRect(0,0, viewWidth, viewHeight);
+        gc.fillRect(0,0, getWidth(), getHeight());
 
         //graded area
         gc.setFill(Color.GREEN);
-        double[] xPoints = new double[] {0,viewWidth/5,viewWidth/5,viewWidth-(viewWidth/5),viewWidth-(viewWidth/5),viewWidth,
-                viewWidth,viewWidth-(viewWidth/5),viewWidth-(viewWidth/5),viewWidth/5,viewWidth/5,0};
-        double[] yPoints = new double[] {viewHeight/3,viewHeight/3,viewHeight/4,viewHeight/4,viewHeight/3,viewHeight/3,
-                viewHeight-(viewHeight/3),viewHeight-(viewHeight/3),viewHeight-(viewHeight/4),viewHeight-(viewHeight/4),viewHeight-(viewHeight/3),viewHeight-(viewHeight/3)};
+        double[] xPoints = new double[] {0,getWidth()/5,getWidth()/5,getWidth()-(getWidth()/5),getWidth()-(getWidth()/5),getWidth(),
+                getWidth(),getWidth()-(getWidth()/5),getWidth()-(getWidth()/5),getWidth()/5,getWidth()/5,0};
+        double[] yPoints = new double[] {getHeight()/3,getHeight()/3,getHeight()/4,getHeight()/4,getHeight()/3,getHeight()/3,
+                getHeight()-(getHeight()/3),getHeight()-(getHeight()/3),getHeight()-(getHeight()/4),getHeight()-(getHeight()/4),getHeight()-(getHeight()/3),getHeight()-(getHeight()/3)};
         gc.fillPolygon(xPoints,yPoints,12);
 
         //grass
@@ -138,12 +135,6 @@ public class TopDownRunway extends Canvas {
     }
 
     public void runwayUpdated(Runway runway){
-        representView(runway);
+        draw(runway);
     }
-    //public void takeOff() {
-    ////Away from the object
-
-    ////Towards the object
-
-    //}
 }
