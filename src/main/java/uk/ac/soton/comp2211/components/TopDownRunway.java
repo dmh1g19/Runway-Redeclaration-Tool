@@ -2,14 +2,11 @@ package uk.ac.soton.comp2211.components;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
-import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
 
 public class TopDownRunway extends Canvas {
 
@@ -52,6 +49,7 @@ public class TopDownRunway extends Canvas {
         double startOfRunwayY= halfHeight-(runwayWidth/2);
         double endOfRunwayX = halfWidth+(runwayLen/2);
 
+        double scaledDTL = scaleToRunwayLength(runway.getDTL());
         double scaledRESA = scaleToRunwayLength(240);
         double scaledLDA = scaleToRunwayLength(runway.getLDA());
         double scaledTORA = scaleToRunwayLength(runway.getTORA());
@@ -59,21 +57,21 @@ public class TopDownRunway extends Canvas {
         double scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
         double scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
         double scaledObjLen = scaleToRunwayLength(obstacle.getLength());
-        double scaledObjLen2 = scaleToRunwayWidth(obstacle.getLength());
+        double scaledObjWidth = scaleToRunwayWidth(obstacle.getLength());
 
         var gc = getGraphicsContext2D();
 
         //viewport
-        gc.setFill(Color.color(0.06,0.25,0.06));
+        gc.setFill(Color.GREY);
         gc.fillRect(0,0, viewWidth, viewHeight);
 
-        Path gradedArea = new Path();
-
-        MoveTo start = new MoveTo();
-        start.setX(0);
-        start.setY(0);
-
-
+        //graded area
+        gc.setFill(Color.GREEN);
+        double[] xPoints = new double[] {0,viewWidth/5,viewWidth/5,viewWidth-(viewWidth/5),viewWidth-(viewWidth/5),viewWidth,
+                viewWidth,viewWidth-(viewWidth/5),viewWidth-(viewWidth/5),viewWidth/5,viewWidth/5,0};
+        double[] yPoints = new double[] {viewHeight/3,viewHeight/3,viewHeight/4,viewHeight/4,viewHeight/3,viewHeight/3,
+                viewHeight-(viewHeight/3),viewHeight-(viewHeight/3),viewHeight-(viewHeight/4),viewHeight-(viewHeight/4),viewHeight-(viewHeight/3),viewHeight-(viewHeight/3)};
+        gc.fillPolygon(xPoints,yPoints,12);
 
         //grass
         gc.setFill(Color.DARKGREEN);
@@ -82,21 +80,6 @@ public class TopDownRunway extends Canvas {
         //runway
         gc.setFill(Color.BLACK);
         gc.fillRect(startOfRunwayX, startOfRunwayY, runwayLen, runwayWidth);
-
-        //Threshold
-        if (runway.getDTL() != 0){
-            gc.setFill(Color.WHITE);
-            double scaledDTL = ((runway.getDTL() *1.0) / runway.getLength())* runwayLen;
-            double[] trix = new double[] {startOfRunwayX  + scaledDTL *0.75, startOfRunwayX + scaledDTL *0.75,startOfRunwayX + scaledDTL -5};
-            double[] triy= new double[] {startOfRunwayY+runwayWidth *0.25, startOfRunwayY+runwayWidth *0.75 ,halfHeight};
-            gc.fillPolygon(trix,triy, 3);
-            gc.setLineDashes();
-            gc.setStroke(Color.WHITE);
-            gc.setLineWidth(4);
-            gc.strokeLine(startOfRunwayX+5,halfHeight,startOfRunwayX+scaledDTL-10,halfHeight);
-            runwayLen = runwayLen -scaledDTL;
-            startOfRunwayX = startOfRunwayX +scaledDTL;
-        }
 
         //runway centre line
         gc.setStroke(Color.WHITE);
@@ -107,17 +90,17 @@ public class TopDownRunway extends Canvas {
         //LEFT THR MARKING
         gc.save();
         gc.setFill(Color.WHITE);
-        gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+15,halfHeight-(runwayWidth/2)+15)));
+        gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+scaledDTL+15,halfHeight-(runwayWidth/2)+15)));
         gc.setFont(new Font(30));
-        gc.fillText("L", startOfRunwayX+scaledRESA+20,halfHeight-25);
+        gc.fillText("L", startOfRunwayX+scaledRESA+scaledDTL+20,halfHeight-25);
         gc.setFont(new Font(25));
-        gc.fillText("09", startOfRunwayX+scaledRESA+10,halfHeight-50);
+        gc.fillText("09", startOfRunwayX+scaledRESA+scaledDTL+10,halfHeight-50);
         gc.restore();
 
         //RIGHT THR MARKING
         gc.save();
         gc.setFill(Color.WHITE);
-        gc.transform(new Affine(new Rotate(270,endOfRunwayX-(scaledRESA)-15,halfHeight-(runwayWidth/2)+15)));
+        gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
         gc.setFont(new Font(30));
         gc.fillText("R", endOfRunwayX-scaledRESA-35,halfHeight-25);
         gc.setFont(new Font(25));
@@ -126,29 +109,32 @@ public class TopDownRunway extends Canvas {
 
         //RESA1
         gc.setFill(Color.WHITE);
-        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledRESA, runwayWidth);
+        gc.fillRect(startOfRunwayX+scaledDTL, startOfRunwayY, scaledRESA, runwayWidth);
         //RESA2
         gc.setFill(Color.WHITE);
         gc.fillRect(endOfRunwayX-scaledRESA, startOfRunwayY, scaledRESA, runwayWidth);
 
-        //object
+        //disp thres
+        gc.setFill(Color.YELLOW);
+        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledDTL, runwayWidth);
+
+        //Object
         gc.setFill(Color.RED);
-        gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjLen2,scaledObjLen);
-        //gc.fillOval(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjLen2,scaledObjLen);
+        gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjWidth,scaledObjLen);
 
         //TODA
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(1);
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(2);
         gc.setLineDashes(0);
         gc.strokeLine(startOfRunwayX,halfHeight-50,startOfRunwayX+scaledTODA,halfHeight-50);
         //TORA
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.BLUE);
         gc.strokeLine(startOfRunwayX,halfHeight-70,startOfRunwayX+scaledTORA,halfHeight-70);
         //LDA
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.YELLOW);
         gc.strokeLine(startOfRunwayX,halfHeight-90,startOfRunwayX+scaledLDA,halfHeight-90);
         //RESA
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.GREEN);
         gc.strokeLine(startOfRunwayX,halfHeight-110,startOfRunwayX+scaledRESA,halfHeight-110);
     }
 
