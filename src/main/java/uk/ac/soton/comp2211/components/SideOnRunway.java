@@ -31,8 +31,8 @@ public class SideOnRunway extends Canvas {
     private GraphicsContext gc;
 
     public SideOnRunway(Runway runway, double width, double height){
-        this.runway = runway;
-        this.obstacle = runway.getObstacle();
+
+
         this.width = width;
         this.height = height;
 
@@ -40,6 +40,19 @@ public class SideOnRunway extends Canvas {
 
         setWidth(width);
         setHeight(height);
+
+
+
+        representView(runway);
+
+    }
+
+    //need to add stopway and clearway to the view.
+    public void representView(Runway runway1) {
+
+        //Moved from constructor
+        this.runway = runway1;
+        this.obstacle = runway.getObstacle();
 
         obPos = (((double) obstacle.getPosition())/runway.getLength())*width; //relative position of object
         obLen = (((double)obstacle.getLength())/runway.getLength())*width; //relative length of object
@@ -58,13 +71,7 @@ public class SideOnRunway extends Canvas {
         ALSAcross = (ALSAcross /runway.getLength()) * height;
         gc = getGraphicsContext2D();
 
-        representView();
-
-    }
-
-    //need to add stopway and clearway to the view.
-    public void representView() {
-
+        //Original Function
 
         gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
@@ -193,7 +200,7 @@ public class SideOnRunway extends Canvas {
         }
 
         public void runwayUpdated(Runway runway){
-
+            representView(runway);
         }
     }
 

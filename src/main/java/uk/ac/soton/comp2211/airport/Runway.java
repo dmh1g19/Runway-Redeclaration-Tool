@@ -148,6 +148,10 @@ public class Runway {
         LDA = runway.getLDA();
         clearwayLength = runway.getClearwayLength();
         displacedThreshold = runway.getDTL();
+        if(runway.getObstacle() != null){
+            obstacle = runway.getObstacle();
+            obstacleOnRunway = true;
+        }
     }
 
     public Runway(Runway runway, ObstacleOnRunway obstacle) {

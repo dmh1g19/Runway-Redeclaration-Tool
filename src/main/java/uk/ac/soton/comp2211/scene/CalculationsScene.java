@@ -208,12 +208,14 @@ public class CalculationsScene extends BaseScene {
         int chosenDistance;
 
         try {
+
             chosenDistance =  Integer.parseInt( distanceInput.getCharacters().toString());
+            chosenRunway.setObstacle(new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
             if (directionSelect.getValue()){
 
-                currentRunway = Calculator.TowardsObstacle(chosenRunway,new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+                currentRunway = Calculator.TowardsObstacle(chosenRunway);
             }else{
-                currentRunway = Calculator.AwayFromObstacle(chosenRunway,new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+                currentRunway = Calculator.AwayFromObstacle(chosenRunway);
             }
             for (RunwayUpdatedListener r : runwayUpdatedListeners){
                 r.runwayUpdated(currentRunway);
