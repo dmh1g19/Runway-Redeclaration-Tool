@@ -17,6 +17,7 @@ public class Runway {
     protected int clearwayLength;
     protected ObstacleOnRunway obstacle;
     protected boolean obstacleOnRunway = false;
+    protected String direction;
 
     public ObstacleOnRunway getObstacle() {
         return obstacle;
@@ -112,7 +113,9 @@ public class Runway {
         this.clearwayLength = clearwayLength;
     }
 
+    public void setDirection(String direction) {this.direction = direction;}
 
+    public String getDirection(){return direction;}
 
     public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, int clearwayLength) {
         this.name = name;
@@ -154,7 +157,7 @@ public class Runway {
         }
     }
 
-    public Runway(Runway runway, ObstacleOnRunway obstacle) {
+    public Runway(Runway runway, ObstacleOnRunway obstacle, String direction) {
         this(runway);
         setObstacle(obstacle);
     }

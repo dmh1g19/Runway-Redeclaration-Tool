@@ -220,6 +220,7 @@ public class CalculationsScene extends BaseScene {
 
             chosenDistance =  Integer.parseInt( distanceInput.getCharacters().toString());
             chosenRunway.setObstacle(new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+            chosenRunway.setDirection(directionSelect.toString());
             if (directionSelect.getValue()){
 
                 currentRunway = Calculator.TowardsObstacle(chosenRunway);
