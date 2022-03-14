@@ -16,6 +16,7 @@ public class SettingsScene extends BaseScene {
     public void build() {
         root = new StackPane();
 
+        //Empty scene so far
         Button button = new Button("This is settings!");
         button.setOnMousePressed(e -> app.loadMenu());
         root.getChildren().add(button);

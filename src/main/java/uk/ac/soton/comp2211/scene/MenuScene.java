@@ -28,27 +28,29 @@ public class MenuScene extends BaseScene {
     public void build() {
         root = new StackPane();
 
-
+        //Calculate
         Text calcButton = new Text("Calculate");
         calcButton.setOnMouseClicked(e -> app.loadCalculations());
         calcButton.getStyleClass().add("menuItem");
 
-
+        //Settings
         Text settingsButton = new Text("Settings");
         settingsButton.setOnMouseClicked(e -> app.loadSettings());
         settingsButton.getStyleClass().add("menuItem");
 
-
+        //Exit
         Text exitButton = new Text("Exit");
         exitButton.setOnMouseClicked(e -> Platform.exit());
         exitButton.getStyleClass().add("menuItem");
 
+        //Menu Items
         VBox menuItems = new VBox();
         menuItems.setAlignment(Pos.CENTER);
         menuItems.getChildren().addAll(calcButton,settingsButton,exitButton);
         menuItems.getStyleClass().add("menu");
 
-        Label airportIndicator = new Label("Airport: " + app.getAirport().getName());
+        //Airport Indicator
+        Label airportIndicator = new Label("Airport: " + app.getSelectedAirport().getName());
         airportIndicator.getStyleClass().add("airportIndicator");
         airportIndicator.setOnMouseClicked(e -> app.loadSelection());
 

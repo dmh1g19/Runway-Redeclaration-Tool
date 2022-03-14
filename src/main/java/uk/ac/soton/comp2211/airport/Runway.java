@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.airport;
 
 import java.util.Map;
+import java.util.Optional;
 
 
 public class Runway {
@@ -15,8 +16,9 @@ public class Runway {
     protected int LDA;
     protected int displacedThreshold = 0;
     protected int clearwayLength;
+    protected int stopwayLength;
+    protected int stopwayWidth;
     protected ObstacleOnRunway obstacle;
-    protected boolean obstacleOnRunway = false;
 
     public ObstacleOnRunway getObstacle() {
         return obstacle;
@@ -24,13 +26,8 @@ public class Runway {
 
     public void setObstacle(ObstacleOnRunway obstacle) {
         this.obstacle = obstacle;
-        obstacleOnRunway = true;
     }
 
-    public void changeObstacle(ObstacleOnRunway obstacle) {
-        this.obstacle = obstacle;
-        obstacleOnRunway = true;
-    }
 
     public String getName() {
         return name;
@@ -112,7 +109,9 @@ public class Runway {
         this.clearwayLength = clearwayLength;
     }
 
+    public Runway() {
 
+    }
 
     public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, int clearwayLength) {
         this.name = name;
@@ -150,12 +149,7 @@ public class Runway {
         displacedThreshold = runway.getDTL();
         if(runway.getObstacle() != null){
             obstacle = runway.getObstacle();
-            obstacleOnRunway = true;
         }
     }
 
-    public Runway(Runway runway, ObstacleOnRunway obstacle) {
-        this(runway);
-        setObstacle(obstacle);
-    }
 }

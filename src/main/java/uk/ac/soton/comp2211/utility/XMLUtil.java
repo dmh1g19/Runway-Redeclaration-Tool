@@ -1,5 +1,8 @@
 package uk.ac.soton.comp2211.utility;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.platform.engine.discovery.ClasspathResourceSelector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -8,7 +11,10 @@ import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.airport.Runway;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class XMLUtil {
     
@@ -96,10 +102,10 @@ public class XMLUtil {
      * @return an array list of obstacles
      */
     public static ArrayList<Obstacle> readObstacles(){
-        Obstacle tree = new Obstacle("Tree",5,50);
-        Obstacle civilianPlane = new Obstacle("Civilian Small Plane",3,8);
-        Obstacle smallPlane = new Obstacle("Small Commercial Plane", 11, 30);
-        Obstacle largePlane = new Obstacle("Large Commercial Plane",19,64);
+        Obstacle tree = new Obstacle("Tree",5,50,2);
+        Obstacle civilianPlane = new Obstacle("Civilian Small Plane",3,8,5);
+        Obstacle smallPlane = new Obstacle("Small Commercial Plane", 11, 30,10);
+        Obstacle largePlane = new Obstacle("Large Commercial Plane",19,64,30);
         ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
         obstacles.add(tree);
         obstacles.add(civilianPlane);
@@ -116,6 +122,12 @@ public class XMLUtil {
      */
     public static void writeObstacles (ArrayList<Obstacle> obstacles){
         // TODO write obstacles to xml file
+    }
+
+    public static Airport[] importAirports(String fileName) throws IOException {
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return xmlMapper.readValue(new File(fileName), Airport[].class);
     }
 
 }

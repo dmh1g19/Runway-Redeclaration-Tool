@@ -4,6 +4,10 @@ public class Airport {
     protected String name;
     protected PhysicalRunway[] runways;
 
+    public Airport () {
+
+    }
+
     public Airport(String name, PhysicalRunway[] runways) {
         this.name = name;
         this.runways = runways;

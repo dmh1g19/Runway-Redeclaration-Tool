@@ -1,5 +1,6 @@
 package uk.ac.soton.comp2211.scene;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -18,13 +19,19 @@ import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.utility.XMLUtil;
 
+import javax.swing.text.html.Option;
+import java.beans.XMLEncoder;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SelectionScene extends BaseScene {
 
+    ComboBox<Airport> airportList;
 
     public SelectionScene(App app) {
         super(app);
@@ -34,24 +41,13 @@ public class SelectionScene extends BaseScene {
     public void build() {
         root = new StackPane();
 
-
-        Airport airport = new Airport("Heathrow",null);
-        Airport newAirport = new Airport("Stansted", null);
-        Runway runway = new Runway("Runway01",4500,50,18,3902,3902,3902,3595, 5);
-        ArrayList<Runway> runways = new ArrayList<>();
-        runways.add(runway);
-        PhysicalRunway[] runs = {new PhysicalRunway(runways)};
-
-        airport.setRunways(runs);
-
-        ObservableList<Airport> airports = FXCollections.observableArrayList();
-        airports.addAll(airport,newAirport);
-
-        ComboBox<Airport> airportList = new ComboBox<>();
+        //Drop Down List
+        airportList = new ComboBox<>();
+        ObservableList<Airport> airports = FXCollections.observableArrayList(app.getAirports());
         airportList.setItems(airports);
         airportList.getSelectionModel().selectFirst();
-        if (!Objects.isNull(app.getAirport())) {
-            airportList.getSelectionModel().select(app.getAirport());
+        if (!Objects.isNull(app.getSelectedAirport())) {
+            airportList.getSelectionModel().select(app.getSelectedAirport());
         }
         airportList.setEditable(false);
         airportList.getStyleClass().add("airportList");
@@ -69,15 +65,15 @@ public class SelectionScene extends BaseScene {
             }
         });
 
+        //Select Button
         Button select = new Button("Select");
         select.setOnAction(e -> {
-            app.setAirport(airportList.getValue());
+            app.setSelectedAirport(airportList.getValue());
             app.loadMenu();
         });
         select.getStyleClass().add("select");
 
-
-
+        // Selection Airport and Button
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().addAll(airportList,select);
@@ -86,9 +82,11 @@ public class SelectionScene extends BaseScene {
 
         HBox.setHgrow(airportList, Priority.ALWAYS);
 
+        //Select Airport
         Label label = new Label("Select Airport");
         label.getStyleClass().add("selectLabel");
 
+        //Separator Line
         Separator line = new Separator(Orientation.HORIZONTAL);
 
         VBox vbox = new VBox();
@@ -100,6 +98,7 @@ public class SelectionScene extends BaseScene {
         gridPane.setAlignment(Pos.CENTER);
 
         root.getChildren().add(gridPane);
-
     }
+
+
 }

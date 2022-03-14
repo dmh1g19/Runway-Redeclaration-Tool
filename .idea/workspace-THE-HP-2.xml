@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b7b3ecf2-77c1-4634-8772-2a1fc5ef97c8" name="Changes" comment="Added attempt at scene switching">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/group-11-runway-re-declaration.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/group-11-runway-re-declaration.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/Airport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/Airport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/Obstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/Obstacle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/ObstacleOnRunway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/ObstacleOnRunway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/Runway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/airport/Runway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/components/SideOnRunway.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/components/SideOnRunway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/controller/controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/controller/controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/BaseScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/BaseScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/FXMLBaseScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/FXMLBaseScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/MenuScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/MenuScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/PrimaryScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/PrimaryScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/SettingsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/scene/SettingsScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/utility/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/utility/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/utility/XMLUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uk/ac/soton/comp2211/utility/XMLUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/uk/ac/soton/comp2211/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/uk/ac/soton/comp2211/primary.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Improvements" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="25pitMQVySpPgzKeY08XWPNcLO9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Perforce" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Felix\OneDrive - University of Southampton\Stage 2\Semester 2\COMP2211 - Software Engineering Group Project\Coursework" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="uk.ac.soton.comp2211" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Maven.RunwayTool [clean,javafx:run]">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="uk.ac.soton.comp2211.App" />
+      <module name="group-11-runway-re-declaration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="uk.ac.soton.comp2211.scene.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="uk.ac.soton.comp2211.App" />
+      <module name="group-11-runway-re-declaration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="uk.ac.soton.comp2211.scene.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RunwayTool [clean,javafx:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="javafx:run" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Maven.RunwayTool [clean,javafx:run]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b7b3ecf2-77c1-4634-8772-2a1fc5ef97c8" name="Changes" comment="" />
+      <created>1646230641943</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1646230641943</updated>
+      <workItem from="1646230643337" duration="1331000" />
+      <workItem from="1646232078439" duration="407000" />
+      <workItem from="1646232497277" duration="6338000" />
+      <workItem from="1646243973906" duration="98000" />
+      <workItem from="1646244100583" duration="372000" />
+      <workItem from="1646244774796" duration="11595000" />
+      <workItem from="1646298167557" duration="2753000" />
+      <workItem from="1646314225955" duration="9717000" />
+      <workItem from="1646345831475" duration="1260000" />
+      <workItem from="1646402245326" duration="1626000" />
+    </task>
+    <task id="LOCAL-00001" summary="Maven JavaFX Structure">
+      <created>1646232540531</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1646232540531</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Modules created and base classes">
+      <created>1646234180920</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1646234180920</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated package to be more relevant">
+      <created>1646234634088</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1646234634088</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added component dir and added temporary class">
+      <created>1646239890115</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1646239890115</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added Utility dir and XMLUtil class">
+      <created>1646240031826</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1646240031826</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Created Airport Package, Moved files to correct packages">
+      <created>1646242936075</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1646242936075</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updated POM file">
+      <created>1646246821492</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1646246821492</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added attempt at scene switching">
+      <created>1646269283799</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1646269283799</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added code for loading FXML files and their Controllers">
+      <created>1646345215333</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1646345215333</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added code for loading FXML files and their Controllers">
+      <created>1646345480083</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1646345480083</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added code for loading FXML files and their Controllers">
+      <created>1646345693363</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1646345693363</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Removed old files">
+      <created>1646345908091</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1646345908091</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Development" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial structure" />
+    <MESSAGE value="Maven JavaFX Structure" />
+    <MESSAGE value="Modules created and base classes" />
+    <MESSAGE value="Updated package to be more relevant" />
+    <MESSAGE value="Added component dir and added temporary class" />
+    <MESSAGE value="Added Utility dir and XMLUtil class" />
+    <MESSAGE value="Created Airport Package, Moved files to correct packages" />
+    <MESSAGE value="Updated POM file" />
+    <MESSAGE value="Added attempt at scene switching" />
+    <MESSAGE value="Added code for loading FXML files and their Controllers" />
+    <MESSAGE value="Removed old files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed old files" />
+  </component>
+</project>

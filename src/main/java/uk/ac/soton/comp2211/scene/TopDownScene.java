@@ -18,7 +18,7 @@ public class TopDownScene extends BaseScene {
         root = new StackPane();
 
         Runway runway = new Runway("Runway01",4500,50,18,4400,4000,3902,3595, 5);
-        ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,50,0, 0);
+        ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,50,0, 0, 0);
         runway.setObstacle(obstacle);
 
         top = new TopDownRunway(runway,app.getScene().getWidth(),app.getScene().getHeight(), "left");

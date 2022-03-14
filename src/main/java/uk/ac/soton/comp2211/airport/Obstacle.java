@@ -4,14 +4,16 @@ public class Obstacle {
     protected String name;
     protected int height;
     protected int length;
+    protected int width;
     //protected Image image (the png file or something idk)
 
     public Obstacle() { }
 
-    public Obstacle(String name, int height, int length) {
+    public Obstacle(String name, int height, int length, int width) {
         this.name = name;
         this.height = height;
         this.length = length;
+        this.width = width;
     }
 
     public void setLength(int length) {
@@ -36,6 +38,10 @@ public class Obstacle {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }
 
