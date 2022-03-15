@@ -6,6 +6,7 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
+import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
 public class TopDownRunway extends Canvas {
@@ -17,8 +18,8 @@ public class TopDownRunway extends Canvas {
     private Runway runway;
     private ObstacleOnRunway obstacle;
 
-    public TopDownRunway(Runway runway) {
-        this.runway = runway;
+    public TopDownRunway(RedeclaredRunway runway) {
+        this.runway = runway.getRunway();
         this.obstacle = runway.getObstacle();
 
         setWidth(700);
@@ -35,9 +36,10 @@ public class TopDownRunway extends Canvas {
         return (runwayWidth/runway.getWidth())*object;
     }
 
-    public void draw(Runway runway1) {
-        this.runway = runway1;
+    public void draw(RedeclaredRunway runway1) {
+        this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
+
 
         double halfHeight = getHeight()/2;
         double halfWidth = getWidth()/2;
@@ -134,7 +136,7 @@ public class TopDownRunway extends Canvas {
         gc.strokeLine(startOfRunwayX,halfHeight-110,startOfRunwayX+scaledRESA,halfHeight-110);
     }
 
-    public void runwayUpdated(Runway runway){
+    public void runwayUpdated(RedeclaredRunway runway){
         draw(runway);
     }
 }

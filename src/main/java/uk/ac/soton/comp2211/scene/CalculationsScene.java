@@ -5,11 +5,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.App;
@@ -21,7 +19,7 @@ import uk.ac.soton.comp2211.utility.Calculator;
 import java.util.*;
 
 public class CalculationsScene extends BaseScene {
-    private Runway currentRunway;
+    private RedeclaredRunway currentRunway;
     private ArrayList<RunwayUpdatedListener> runwayUpdatedListeners = new ArrayList<>();
     private ComboBox<Obstacle> obstacleSelect;
     private ComboBox<PhysicalRunway> runwaySelect;
@@ -30,7 +28,6 @@ public class CalculationsScene extends BaseScene {
     private TextField distanceSecondInput;
     private Label distanceFirstLabel;
     private Label distanceSecondLabel;
-    private ComboBox<Runway> thresholdSelect;
 
     public CalculationsScene(App stage) {
         super(stage);
@@ -44,10 +41,9 @@ public class CalculationsScene extends BaseScene {
         Runway runwa1 = new Runway("Runway02", 4500, 50, 18, 3902, 3902, 3902, 3595, 5);
         //setting default current runway values provided to views if they are opened without first doing a calculation
         //TODO remove these and replace them with error handeling so you cant expand views without first defining a runway
-        currentRunway = runwa;
-        currentRunway.setObstacle( new ObstacleOnRunway("test", 12, 0, 3646, 0,5));
+        currentRunway= new RedeclaredRunway(runwa, new ObstacleOnRunway("test", 12, 0, 3646, 0,5),Direction.TOWARDS);
         try{
-            currentRunway = Calculator.TowardsObstacle(currentRunway);
+            currentRunway = new RedeclaredRunway(Calculator.TowardsObstacle(currentRunway.getRunway(),currentRunway.getObstacle()),currentRunway.getObstacle(),Direction.TOWARDS) ;
         }catch(Exception ignored) {}
 
 
@@ -76,7 +72,7 @@ public class CalculationsScene extends BaseScene {
         inputForm.add(vbox,0,0,2,1);
 
         //Physical Runway
-        Label runwayLabel = new Label("Select Runway:");
+        Label runwayLabel = new Label("Runway THR: ");
         inputForm.add(runwayLabel, 0, 1);
 
         runwaySelect = new ComboBox<>();
@@ -84,24 +80,19 @@ public class CalculationsScene extends BaseScene {
                 (app.getSelectedAirport().getRunways()));
         runwaySelect.getSelectionModel().selectFirst();
         runwaySelect.setEditable(false);
-        runwaySelect.setConverter(new StringConverter<>() {
+        runwaySelect.setConverter(new StringConverter<PhysicalRunway>() {
             @Override
             public String toString(PhysicalRunway runway) {
                 return runway.getName();
             }
-
             @Override
             public PhysicalRunway fromString(String s) {
                 return null;
             }
         });
         runwaySelect.valueProperty().addListener((observableValue, oldR, newR) -> Platform.runLater(() -> {
-            distanceFirstLabel.setText("Distance to " + newR.getFirst().getName() + ":");
-            distanceSecondLabel.setText("Distance to " + newR.getSecond().getName() + ":");
-            distanceFirstInput.setText("");
-            distanceSecondInput.setText("");
-            thresholdSelect.setItems(FXCollections.observableArrayList(newR.getRunways()));
-            thresholdSelect.getSelectionModel().selectFirst();
+            distanceFirstLabel.setText("Distance to " + newR.getFirst().getName());
+            distanceSecondLabel.setText("Distance to " + newR.getSecond().getName());
         }));
         inputForm.add(runwaySelect,1,1);
 
@@ -111,6 +102,7 @@ public class CalculationsScene extends BaseScene {
 
 
         obstacleSelect = new ComboBox<>();
+
         obstacleSelect.setItems(PredefinedObstacles.getObstacles());
         obstacleSelect.getSelectionModel().selectFirst();
         obstacleSelect.setEditable(false);
@@ -128,6 +120,8 @@ public class CalculationsScene extends BaseScene {
 
         inputForm.add(obstacleSelect,1,2);
 
+
+
         //DISTANCE FIRST
         distanceFirstLabel = new Label("Distance to THR: ");
         inputForm.add(distanceFirstLabel, 0,3);
@@ -138,13 +132,7 @@ public class CalculationsScene extends BaseScene {
                 distanceFirstInput.setText(oldValue);
             }
         });
-        distanceFirstInput.setAlignment(Pos.CENTER_RIGHT);
-
-        Text firstMetre = new Text("m");
-        firstMetre.getStyleClass().add("metre");
-        HBox fhbox = new HBox();
-        fhbox.getChildren().addAll(distanceFirstInput, firstMetre);
-        inputForm.add(fhbox, 1,3, 1, 1);
+        inputForm.add(distanceFirstInput, 1,3);
 
         //DISTANCE SECOND
         distanceSecondLabel = new Label("Distance to THR: ");
@@ -156,13 +144,7 @@ public class CalculationsScene extends BaseScene {
                 distanceSecondInput.setText(oldValue);
             }
         });
-        distanceSecondInput.setAlignment(Pos.CENTER_RIGHT);
-
-        Text secondMetre = new Text("m");
-        secondMetre.getStyleClass().add("metre");
-        HBox shbox = new HBox();
-        shbox.getChildren().addAll(distanceSecondInput, secondMetre);
-        inputForm.add(shbox, 1,4, 1, 1);
+        inputForm.add(distanceSecondInput, 1,4);
 
         //TAKE OFF AWAY/OVER
         Label directionLabel = new Label("Direction: ");
@@ -189,33 +171,11 @@ public class CalculationsScene extends BaseScene {
         });
         inputForm.add(directionSelect, 1,5);
 
-        //Calculate Button
         Button calculateButton = new Button("Calculate");
         calculateButton.setOnAction(e -> recalculateValues());
         inputForm.add(calculateButton,0,6,2,1);
         calculateButton.setMaxWidth(Double.MAX_VALUE);
         GridPane.setFillWidth(calculateButton,true);
-
-        thresholdSelect = new ComboBox<>();
-        thresholdSelect.setItems(FXCollections.observableArrayList(runwaySelect.getValue().getRunways()));
-        thresholdSelect.getSelectionModel().selectFirst();
-        thresholdSelect.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(Runway runway) {
-                if (runway == null ) return "Select Runway";
-                return runway.getName();
-            }
-            @Override
-            public Runway fromString(String s) {
-                return null;
-            }
-        });
-        inputForm.add(thresholdSelect, 0, 7, 2, 1);
-
-
-        inputForm.getColumnConstraints().add(new ColumnConstraints(125));
-        inputForm.getColumnConstraints().add(new ColumnConstraints(150));
-
 
         // back button
         Button backButton = new Button("Back");
@@ -223,11 +183,13 @@ public class CalculationsScene extends BaseScene {
         backButton.setMaxWidth(Double.MAX_VALUE);
 
 
+
         AnchorPane.setLeftAnchor(inputForm,0d);
         AnchorPane.setTopAnchor(inputForm,0d);
 
 
-        //Opening Views
+        //test values
+
         Button sideOn = new Button("Side");
         sideOn.setOnAction(e -> {
             SideViewScene scene = new SideViewScene(app);
@@ -258,35 +220,43 @@ public class CalculationsScene extends BaseScene {
             stage.setTitle("Top Down");
             stage.setScene(sce);
             stage.show();
+
+
         });
         AnchorPane.setRightAnchor(s1, 0d);
         AnchorPane.setBottomAnchor(s1, 0d);
 
 
-        distanceFirstLabel.setText("Distance to " + runwaySelect.getValue().getFirst().getName() + ":");
-        distanceSecondLabel.setText("Distance to " + runwaySelect.getValue().getSecond().getName() + ":");
+        distanceFirstLabel.setText("Distance to " + runwaySelect.getValue().getFirst().getName());
+        distanceSecondLabel.setText("Distance to " + runwaySelect.getValue().getSecond().getName());
+
 
         root.getChildren().addAll(sideOn, s1, inputForm,backButton);
     }
 
     private void recalculateValues(){
-        Runway chosenRunway = thresholdSelect.getValue();
-        Obstacle chosenObstacle = obstacleSelect.getValue();
+        Runway chosenRunway = runwaySelect.getValue().getFirst();
+
         int chosenDistanceFromCentreLine = 0;
         int chosenDistance;
-
+        Direction  direction;
         try {
             chosenDistance = Integer.parseInt(distanceFirstInput.getCharacters().toString());
-            chosenRunway.setObstacle(new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+            ObstacleOnRunway chosenObstacle = new ObstacleOnRunway(obstacleSelect.getValue(),chosenDistance,chosenDistanceFromCentreLine);
+            chosenRunway.setObstacle(chosenObstacle);
             if (directionSelect.getValue()){
-                currentRunway = Calculator.TowardsObstacle(chosenRunway);
+                direction=Direction.TOWARDS;
+                chosenRunway = Calculator.TowardsObstacle(chosenRunway,chosenObstacle);
+
             } else {
-                currentRunway = Calculator.AwayFromObstacle(chosenRunway);
+                direction=Direction.AWAYOVER;
+                chosenRunway = Calculator.AwayFromObstacle(chosenRunway,chosenObstacle);
             }
-            for (RunwayUpdatedListener r : runwayUpdatedListeners) {
+            currentRunway=new RedeclaredRunway(chosenRunway,chosenObstacle,direction);
+            for (RunwayUpdatedListener r : runwayUpdatedListeners){
                 r.runwayUpdated(currentRunway);
             }
-        } catch(Exception e) {
+        }catch(Exception e) {
             e.printStackTrace();
         }
 

@@ -40,27 +40,29 @@ public class Calculator {
     /**
      * Calculates runway landing parameters if the plane is landing towards the obstacle
      * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway LandingTowardsObstacle (Runway runway) throws IncorrectObstacleException {
-        ObstacleOnRunway obs = runway.getObstacle();
+    public static Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
-       Runway runwayWithObstacle = new Runway(runway);
-       int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
-       int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
-       runwayWithObstacle.setLDA(newLDA);
+        Runway runwayWithObstacle = new Runway(runway);
+        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
+        int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
+        runwayWithObstacle.setLDA(newLDA);
 
 
-       return runwayWithObstacle;
-   }
+        return runwayWithObstacle;
+    }
+
+
 
     /**
      * Calculates runway landing parameters if the plane is landing over the obstacle
      * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway LandingOverObstacle (Runway runway) throws IncorrectObstacleException {
-        ObstacleOnRunway obs = runway.getObstacle();
+    public static Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
@@ -76,11 +78,10 @@ public class Calculator {
     /**
      * Calculates take off parameters if the plane is taking off towards the obstacle
      * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway TakeOffAwayFromObstacle (Runway runway) throws IncorrectObstacleException {
-
-        ObstacleOnRunway obs = runway.getObstacle();
+    public static Runway TakeOffAwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
@@ -98,10 +99,10 @@ public class Calculator {
     /**
      * Calculates take off parameters if the plane is taking off away from an obstacle
      * @param runway the runway the plane is landing on
+     * @param obs the obstacle on the runway
      * @returns updated runway values
      */
-    public static Runway TakeOffTowardsObstacle (Runway runway) throws IncorrectObstacleException {
-        ObstacleOnRunway obs = runway.getObstacle();
+    public static Runway TakeOffTowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
@@ -119,28 +120,29 @@ public class Calculator {
     /**
      * Performs all the calculations if the planes are taking off and landing towards the obstacle
      * @param runway the runway for the calculations to be performed on
+     * @param obs the obstacle on the runway
      * @return a runway with updated parameters
      * @throws IncorrectObstacleException
      */
-    public static   Runway TowardsObstacle (Runway runway) throws IncorrectObstacleException {
-        ObstacleOnRunway obs = runway.getObstacle();
+    public static   Runway TowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
-        return LandingTowardsObstacle(TakeOffTowardsObstacle(runway));
+        return LandingTowardsObstacle(TakeOffTowardsObstacle(runway ,obs),obs);
 
     }
 
     /**
      * Performs all the calculations if the planes are taking off and landing away from the obstacle
      * @param runway the runway for the calculations to be performed on
+     * @param obs the obstacle on the runway
      * @return a runway with updated parameters
      * @throws IncorrectObstacleException
      */
-    public  static Runway AwayFromObstacle (Runway runway) throws IncorrectObstacleException {
-        ObstacleOnRunway obs = runway.getObstacle();
+    public  static Runway AwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
-        return LandingOverObstacle(TakeOffAwayFromObstacle(runway));
+        return LandingOverObstacle(TakeOffAwayFromObstacle(runway ,obs),obs);
 
     }
+
 
     /**
      * Checks to make sure the obstacle provided has been given valid parameters

@@ -2,7 +2,9 @@ package uk.ac.soton.comp2211.scene;
 
 import javafx.scene.layout.StackPane;
 import uk.ac.soton.comp2211.App;
+import uk.ac.soton.comp2211.airport.Direction;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
+import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.TopDownRunway;
 
@@ -21,7 +23,7 @@ public class TopDownScene extends BaseScene {
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,50,0, 0, 0);
         runway.setObstacle(obstacle);
 
-        top = new TopDownRunway(runway);
+        top = new TopDownRunway(new RedeclaredRunway(runway,obstacle, Direction.TOWARDS));
 
         root.getChildren().add(top);
 

@@ -103,14 +103,23 @@ public class XMLUtil {
      */
     public static ArrayList<Obstacle> readObstacles(){
         Obstacle tree = new Obstacle("Tree",5,50,2);
+        Obstacle smallTree = new Obstacle("Small Tree",5,70,5);
+        Obstacle largeTree = new Obstacle("Large Tree",20,70,5);
         Obstacle civilianPlane = new Obstacle("Civilian Small Plane",3,8,5);
         Obstacle smallPlane = new Obstacle("Small Commercial Plane", 11, 30,10);
         Obstacle largePlane = new Obstacle("Large Commercial Plane",19,64,30);
+        Obstacle car = new Obstacle("Car",2,5,5);
+        Obstacle truck = new Obstacle("Car",3,11,6);
         ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
         obstacles.add(tree);
         obstacles.add(civilianPlane);
         obstacles.add(smallPlane);
         obstacles.add(largePlane);
+        obstacles.add(tree);
+        obstacles.add(smallTree);
+        obstacles.add(largeTree);
+        obstacles.add(car);
+        obstacles.add(truck);
         return obstacles;
 
     }
