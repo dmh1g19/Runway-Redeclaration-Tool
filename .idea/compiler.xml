@@ -11,7 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="17">
       <module name="group-11-runway-re-declaration" target="17" />
-      <module name="RunwayTool" target="17" />
+      <module name="RunwayTool" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

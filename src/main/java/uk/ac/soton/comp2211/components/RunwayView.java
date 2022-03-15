@@ -4,17 +4,17 @@ import javafx.scene.canvas.Canvas;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.airport.State;
 
 public abstract class RunwayView extends Canvas {
 
     private RedeclaredRunway runway;
 
-    RunwayView (RedeclaredRunway runway, double width, double height){
-        this.runway = runway;
+    RunwayView (double width, double height){
         setWidth(width);
         setHeight(height);
     }
 
-    public abstract void runwayUpdated(RedeclaredRunway runway);
+    public abstract void runwayUpdated(RedeclaredRunway runway, State state);
 
 }
