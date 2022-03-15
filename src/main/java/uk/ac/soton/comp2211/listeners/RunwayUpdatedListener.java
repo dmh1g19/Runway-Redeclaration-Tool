@@ -1,7 +1,8 @@
 package uk.ac.soton.comp2211.listeners;
 
-import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.airport.RedeclaredRunway;
+
 
 public interface RunwayUpdatedListener {
-     void runwayUpdated(Runway runway);
+     void runwayUpdated(RedeclaredRunway runway);
 }

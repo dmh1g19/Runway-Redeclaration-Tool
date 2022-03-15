@@ -19,7 +19,7 @@ import uk.ac.soton.comp2211.utility.Calculator;
 import java.util.*;
 
 public class CalculationsScene extends BaseScene {
-    private Runway currentRunway;
+    private RedeclaredRunway currentRunway;
     private ArrayList<RunwayUpdatedListener> runwayUpdatedListeners = new ArrayList<>();
     private ComboBox<Obstacle> obstacleSelect;
     private ComboBox<PhysicalRunway> runwaySelect;
@@ -41,10 +41,9 @@ public class CalculationsScene extends BaseScene {
         Runway runwa1 = new Runway("Runway02", 4500, 50, 18, 3902, 3902, 3902, 3595, 5);
         //setting default current runway values provided to views if they are opened without first doing a calculation
         //TODO remove these and replace them with error handeling so you cant expand views without first defining a runway
-        currentRunway = runwa;
-        currentRunway.setObstacle( new ObstacleOnRunway("test", 12, 0, 3646, 0,5));
+        currentRunway= new RedeclaredRunway(runwa, new ObstacleOnRunway("test", 12, 0, 3646, 0,5),Direction.TOWARDS);
         try{
-            currentRunway = Calculator.TowardsObstacle(currentRunway);
+            currentRunway = new RedeclaredRunway(Calculator.TowardsObstacle(currentRunway.getRunway(),currentRunway.getObstacle()),currentRunway.getObstacle(),Direction.TOWARDS) ;
         }catch(Exception ignored) {}
 
 
@@ -237,18 +236,23 @@ public class CalculationsScene extends BaseScene {
 
     private void recalculateValues(){
         Runway chosenRunway = runwaySelect.getValue().getFirst();
-        Obstacle chosenObstacle = obstacleSelect.getValue();
+
         int chosenDistanceFromCentreLine = 0;
         int chosenDistance;
-
+        Direction  direction;
         try {
             chosenDistance = Integer.parseInt(distanceFirstInput.getCharacters().toString());
-            chosenRunway.setObstacle(new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+            ObstacleOnRunway chosenObstacle = new ObstacleOnRunway(obstacleSelect.getValue(),chosenDistance,chosenDistanceFromCentreLine);
+            chosenRunway.setObstacle(chosenObstacle);
             if (directionSelect.getValue()){
-                currentRunway = Calculator.TowardsObstacle(chosenRunway);
+                direction=Direction.TOWARDS;
+                chosenRunway = Calculator.TowardsObstacle(chosenRunway,chosenObstacle);
+
             } else {
-                currentRunway = Calculator.AwayFromObstacle(chosenRunway);
+                direction=Direction.AWAYOVER;
+                chosenRunway = Calculator.AwayFromObstacle(chosenRunway,chosenObstacle);
             }
+            currentRunway=new RedeclaredRunway(chosenRunway,chosenObstacle,direction);
             for (RunwayUpdatedListener r : runwayUpdatedListeners){
                 r.runwayUpdated(currentRunway);
             }
