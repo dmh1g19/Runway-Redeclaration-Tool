@@ -31,17 +31,11 @@ public class SideOnRunway extends Canvas {
     private GraphicsContext gc;
 
     public SideOnRunway(Runway runway, double width, double height){
-
-
         this.width = width;
         this.height = height;
 
-
-
         setWidth(width);
         setHeight(height);
-
-
 
         representView(runway);
 

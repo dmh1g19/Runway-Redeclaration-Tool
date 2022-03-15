@@ -89,6 +89,9 @@
     -fx-padding: 0;
 }
 
+.inputs HBox {
+    -fx-spacing: 2;
+}
 .headerCalc {
     -fx-font-size: 24;
     -fx-font-weight: bold;
@@ -99,4 +102,8 @@ AnchorPane {
 }
 .inputs Button {
     -fx-cursor: hand;
+}
+.metre {
+    -fx-fill: white;
+    -fx-padding: 0 0 0 12;
 }

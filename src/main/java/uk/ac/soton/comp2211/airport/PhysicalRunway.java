@@ -20,8 +20,10 @@ public class PhysicalRunway {
     }
 
     public PhysicalRunway(Runway f, Runway s) {
-        this.first = f;
-        this.second = s;
+        Runway[] runways = new Runway[]{f, s};
+        Arrays.sort(runways, Comparator.comparing(Runway::getName));
+        this.first = runways[0];
+        this.second = runways[1];
     }
 
     public String getName() {
@@ -46,9 +48,7 @@ public class PhysicalRunway {
     }
 
     public Runway[] getRunways() {
-        Runway[] runways = new Runway[]{first, second};
-        Arrays.sort(runways, Comparator.comparing(Runway::getName));
-        return runways;
+        return new Runway[]{first, second};
     }
 
 
@@ -58,5 +58,6 @@ public class PhysicalRunway {
         }
         return second.getName();
     }
+
 
 }
