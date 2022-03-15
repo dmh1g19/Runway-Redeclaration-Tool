@@ -45,21 +45,11 @@ public class App extends Application {
     public void start(Stage stage)  {
         this.stage = stage;
 
+
         stage.setMinWidth(width);
         stage.setMinHeight(height);
 
         stage.setTitle("Runway Re-declaration Tool");
-
-        loadAirports();
-
-        defaultScene();
-        loadSelection();
-
-
-
-
-        stage.show();
-
 
         // INPUT RUNWAYS MANUALLY
         Runway r09L = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
@@ -93,6 +83,19 @@ public class App extends Application {
             System.out.println(e);
             System.out.println("Error");
         }
+
+        loadAirports();
+
+        defaultScene();
+        loadSelection();
+
+
+
+
+        stage.show();
+
+
+
 
     }
 
