@@ -40,11 +40,12 @@ class CalculatorTest {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, 0, -50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 0, 3646, 0);
+        obs.setPosition(obs.getPosition()-runways[2].getDTL());
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[2], obs);
+
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
         Runway runway2 = Calculator.TakeOffTowardsObstacle(runways[3], obs2);
         runway2 = Calculator.LandingTowardsObstacle(runway2, obs2);
-        Assertions.assertTrue(3346 == runway1.getTORA(), "09L TORA Incorrect " + (runway1.getTORA()));
         Assertions.assertTrue(3346 == runway1.getASDA(), "09L ASDA Incorrect " + (runway1.getASDA()));
         Assertions.assertTrue(3346 == runway1.getTODA(), "09L TODA Incorrect " + (runway1.getTODA()));
         Assertions.assertTrue(2985 == runway1.getLDA(), "09L LDA Incorrect " + runway1.getLDA());
@@ -67,7 +68,9 @@ class CalculatorTest {
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 25, 0, 0,2853, 0);
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[1], obs);
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
+        obs2.setPosition(obs2.getPosition()-runways[0].getDTL());
         Runway runway2 = Calculator.TakeOffTowardsObstacle(runways[0], obs2);
+
         runway2 = Calculator.LandingTowardsObstacle(runway2, obs2);
         //09R
         Assertions.assertTrue(1850 == runway2.getTORA(), "09R TORA Incorrect " + (runway2.getTORA()));
@@ -95,8 +98,10 @@ class CalculatorTest {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 15, 0, 0, 150, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 15,0, 0, 3203, 0);
+        obs.setPosition(obs.getPosition()-runways[0].getDTL());
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[0], obs);
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
+
         Runway runway2 = Calculator.TakeOffTowardsObstacle(runways[1], obs2);
         runway2 = Calculator.LandingTowardsObstacle(runway2, obs2);
         Assertions.assertTrue(2903 == runway1.getTORA(), "09R TORA Incorrect " + (runway1.getTORA()));
@@ -121,10 +126,12 @@ class CalculatorTest {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 20, 0,0, 50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 20, 0, 0, 3546, 0);
+        obs2.setPosition(obs2.getPosition()-runways[2].getDTL());
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[3], obs);
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
         Runway runway2 = Calculator.TakeOffTowardsObstacle(runways[2], obs2);
         runway2 = Calculator.LandingTowardsObstacle(runway2, obs2);
+
         //09L
         Assertions.assertTrue(2792 == runway2.getTORA(), "09L TORA Incorrect " + (runway2.getTORA()));
         Assertions.assertTrue(2792 == runway2.getASDA(), "09L ASDA Incorrect " + (runway2.getASDA()));
@@ -143,7 +150,9 @@ class CalculatorTest {
     @Test
     void awayFromObstacleTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0,0, -50, 0);
+        obs.setPosition(obs.getPosition()-runways[2].getDTL());
         Runway runway1 = Calculator.AwayFromObstacle(runways[2],obs);
+        obs.setPosition(obs.getPosition()-runways[2].getDTL());
         Assertions.assertTrue(3346 == runway1.getTORA(), "09L TORA Incorrect " + (runway1.getTORA()));
         Assertions.assertTrue(3346 == runway1.getASDA(), "09L ASDA Incorrect " + (runway1.getASDA()));
         Assertions.assertTrue(3346 == runway1.getTODA(), "09L TODA Incorrect " + (runway1.getTODA()));
@@ -153,6 +162,7 @@ class CalculatorTest {
     @Test
     void towardsObstacleTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 0,  3646,0);
+
         Runway runway2 = Calculator.TowardsObstacle(runways[3],obs2);
         Assertions.assertTrue(2986 == runway2.getTORA(), "27R TORA Incorrect " + (runway2.getTORA()));
         Assertions.assertTrue(2986 == runway2.getASDA(), "27R ASDA Incorrect " + (runway2.getASDA()));

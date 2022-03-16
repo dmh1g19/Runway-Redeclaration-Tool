@@ -46,7 +46,7 @@ public class Calculator {
     public static Runway LandingTowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
-        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
+        int obstaclePosition = obs.getPosition()+ runway.getDTL(); //obstacle position should represent how far down the runway it is
         int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
         runwayWithObstacle.setLDA(newLDA);
 
@@ -65,7 +65,7 @@ public class Calculator {
     public static Runway LandingOverObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
-        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
+        int obstaclePosition = obs.getPosition()+ runway.getDTL(); //obstacle position should represent how far down the runway  the highest point is
         int obstacleLength = obs.getLength();
         int obstacleHeight = obs.getHeight();
         int newLDA = (runway.getLDA() - obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
@@ -85,7 +85,7 @@ public class Calculator {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
-        int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
+        int obstaclePosition = obs.getPosition()+ runway.getDTL(); //obstacle position should represent how far down the runway it is
         int clearway = runway.getTODA() -runway.getTORA();
         int stopway = runway.getASDA() - runway.getTORA();
         int newTORA = runway.getTORA() -blastProtectionDistance - obstaclePosition - runway.getDTL() ;
@@ -106,7 +106,7 @@ public class Calculator {
         validateObstacle(obs);
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
-        int obstaclePosition = obs.getPosition();//obstacle position should represent how far down the runway it is
+        int obstaclePosition = obs.getPosition()+ runway.getDTL();//obstacle position should represent how far down the runway it is
         int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - Integer.max((RESA + obs.getLength()) , (obstacleHeight *50));
 
         runwayWithObstacle.setTORA(newTORA);
