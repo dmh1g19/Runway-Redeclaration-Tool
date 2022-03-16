@@ -1,24 +1,44 @@
 package uk.ac.soton.comp2211.components;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
-import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
-import uk.ac.soton.comp2211.airport.RedeclaredRunway;
-import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.airport.*;
 
-public class TopDownRunway extends Canvas {
+public class TopDownRunway extends RunwayView {
 
     //scaled down runway dimension
     double runwayLen = 650;
     double runwayWidth = 50;
 
+    GraphicsContext gc = getGraphicsContext2D();
+
     private Runway runway;
     private ObstacleOnRunway obstacle;
 
-    public TopDownRunway(RedeclaredRunway runway) {
+    double halfHeight;
+    double halfWidth;
+    double startOfRunwayX;
+    double startOfRunwayY;
+    double endOfRunwayX;
+
+    double scaledASDA;
+    double scaledDTL;
+    double scaledRESA;
+    double scaledLDA;
+    double scaledTORA;
+    double scaledTODA;
+    double scaledObjPos;
+    double scaledObjLen;
+    double scaledObjDFCL;
+    double scaledObjWidth;
+
+    public TopDownRunway(RedeclaredRunway runway, double width, double height) {
+        super(runway,width, height);
+
         this.runway = runway.getRunway();
         this.obstacle = runway.getObstacle();
 
@@ -28,36 +48,28 @@ public class TopDownRunway extends Canvas {
         draw(runway);
     }
 
-    public double scaleToRunwayLength (double object) {
-        return (runwayLen/runway.getLength())*object;
-    }
-
-    public double scaleToRunwayWidth (double object) {
-        return (runwayWidth/runway.getWidth())*object;
-    }
-
     public void draw(RedeclaredRunway runway1) {
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
 
+        runway.setDTL(0);
 
-        double halfHeight = getHeight()/2;
-        double halfWidth = getWidth()/2;
-        double startOfRunwayX = halfWidth-(runwayLen/2);
-        double startOfRunwayY = halfHeight-(runwayWidth/2);
-        double endOfRunwayX = halfWidth+(runwayLen/2);
+        this.halfHeight = getHeight()/2;
+        this.halfWidth = getWidth()/2;
+        this.startOfRunwayX = halfWidth-(runwayLen/2);
+        this.startOfRunwayY = halfHeight-(runwayWidth/2);
+        this.endOfRunwayX = halfWidth+(runwayLen/2);
 
-        double scaledDTL = scaleToRunwayLength(runway.getDTL());
-        double scaledRESA = scaleToRunwayLength(240);
-        double scaledLDA = scaleToRunwayLength(runway.getLDA());
-        double scaledTORA = scaleToRunwayLength(runway.getTORA());
-        double scaledTODA = scaleToRunwayLength(runway.getTODA());
-        double scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
-        double scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
-        double scaledObjLen = scaleToRunwayLength(obstacle.getLength());
-        double scaledObjWidth = scaleToRunwayWidth(obstacle.getLength());
-
-        var gc = getGraphicsContext2D();
+        this.scaledASDA = scaleToRunwayLength(runway.getASDA());
+        this.scaledDTL = scaleToRunwayLength(runway.getDTL());
+        this.scaledRESA = scaleToRunwayLength(240);
+        this.scaledLDA = scaleToRunwayLength(runway.getLDA());
+        this.scaledTORA = scaleToRunwayLength(runway.getTORA());
+        this.scaledTODA = scaleToRunwayLength(runway.getTODA());
+        this.scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
+        this.scaledObjLen = scaleToRunwayLength(obstacle.getLength());
+        this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
+        this.scaledObjWidth = scaleToRunwayWidth(obstacle.getLength());
 
         //viewport
         gc.setFill(Color.GREY);
@@ -86,30 +98,14 @@ public class TopDownRunway extends Canvas {
         gc.strokeLine(startOfRunwayX,halfHeight,startOfRunwayX+runwayLen,halfHeight);
 
         //LEFT THR MARKING
-        gc.save();
-        gc.setFill(Color.WHITE);
-        gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+scaledDTL+15,halfHeight-(runwayWidth/2)+15)));
-        gc.setFont(new Font(30));
-        gc.fillText("L", startOfRunwayX+scaledRESA+scaledDTL+20,halfHeight-25);
-        gc.setFont(new Font(25));
-        gc.fillText("09", startOfRunwayX+scaledRESA+scaledDTL+10,halfHeight-50);
-        gc.restore();
-
+        thresholdL("09","L");
         //RIGHT THR MARKING
-        gc.save();
-        gc.setFill(Color.WHITE);
-        gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
-        gc.setFont(new Font(30));
-        gc.fillText("R", endOfRunwayX-scaledRESA-35,halfHeight-25);
-        gc.setFont(new Font(25));
-        gc.fillText("27", endOfRunwayX-scaledRESA-40,halfHeight-50);
-        gc.restore();
+        thresholdR("27","R");
 
-        //RESA1
         gc.setFill(Color.WHITE);
+        //RESA1
         gc.fillRect(startOfRunwayX+scaledDTL, startOfRunwayY, scaledRESA, runwayWidth);
         //RESA2
-        gc.setFill(Color.WHITE);
         gc.fillRect(endOfRunwayX-scaledRESA, startOfRunwayY, scaledRESA, runwayWidth);
 
         //disp thres
@@ -120,20 +116,87 @@ public class TopDownRunway extends Canvas {
         gc.setFill(Color.RED);
         gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjWidth,scaledObjLen);
 
-        //TODA
-        gc.setStroke(Color.RED);
+        landingAndTakeOffTowardsObj_LowestThreshold();
+        //landingAndTakeOffAwayFromObj_LowestThreshold();
+
+        legend();
+    }
+
+    public void legend() {
+        gc.setFill(Color.RED);
+        gc.fillRoundRect(startOfRunwayX,300, 10,10,5,5);
+        gc.fillText(": TODA " + runway.getTODA(),startOfRunwayX+15,310);
+        gc.setFill(Color.BLUE);
+        gc.fillRoundRect(startOfRunwayX,320, 10,10,5,5);
+        gc.fillText(": TORA " + runway.getTORA(),startOfRunwayX+15,330);
+        gc.setFill(Color.YELLOW);
+        gc.fillRoundRect(startOfRunwayX,340, 10,10,5,5);
+        gc.fillText(": LDA " + runway.getLDA(),startOfRunwayX+15,350);
+        gc.setFill(Color.GREEN);
+        gc.fillRoundRect(startOfRunwayX,360, 10,10,5,5);
+        gc.fillText(": RESA " + runway.getClearwayLength(),startOfRunwayX+15,370);
+        gc.setFill(Color.ORANGE);
+        gc.fillRoundRect(startOfRunwayX,380, 10,10,5,5);
+        gc.fillText(": ASDA " + runway.getASDA(),startOfRunwayX+15,390);
+    }
+
+    public void landingAndTakeOffTowardsObj_LowestThreshold() {
         gc.setLineWidth(2);
         gc.setLineDashes(0);
-        gc.strokeLine(startOfRunwayX,halfHeight-50,startOfRunwayX+scaledTODA,halfHeight-50);
+        //TODA
+        gc.setStroke(Color.RED);
+        lineMarking(startOfRunwayX, 50, startOfRunwayX, scaledTODA);
         //TORA
         gc.setStroke(Color.BLUE);
-        gc.strokeLine(startOfRunwayX,halfHeight-70,startOfRunwayX+scaledTORA,halfHeight-70);
+        lineMarking(startOfRunwayX, 70, startOfRunwayX, scaledTORA);
         //LDA
         gc.setStroke(Color.YELLOW);
-        gc.strokeLine(startOfRunwayX,halfHeight-90,startOfRunwayX+scaledLDA,halfHeight-90);
+        lineMarking(startOfRunwayX, 90, startOfRunwayX, scaledLDA);
         //RESA
         gc.setStroke(Color.GREEN);
-        gc.strokeLine(startOfRunwayX,halfHeight-110,startOfRunwayX+scaledRESA,halfHeight-110);
+        lineMarking(startOfRunwayX, 90, startOfRunwayX, scaledRESA);
+        //ASDA
+        gc.setStroke(Color.ORANGE);
+        lineMarking(startOfRunwayX, 110, startOfRunwayX, scaledASDA);
+    }
+
+    public double scaleToRunwayLength (double object) {
+        return (runwayLen/runway.getLength())*object;
+    }
+
+    public double scaleToRunwayWidth (double object) {
+        return (runwayWidth/runway.getWidth())*object;
+    }
+
+    public void lineMarking(double start, double spacing, double end, double distance) {
+        if (distance < 0) {
+            distance = 0;
+        }
+        else {
+            gc.strokeLine(start,halfHeight-spacing,end+distance,halfHeight-spacing);
+        }
+    }
+
+    public void thresholdL(String thr, String pos) {
+        gc.save();
+        gc.setFill(Color.WHITE);
+        gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+scaledDTL+15,halfHeight-(runwayWidth/2)+15)));
+        gc.setFont(new Font(30));
+        gc.fillText(pos, startOfRunwayX+scaledRESA+scaledDTL+20,halfHeight-25);
+        gc.setFont(new Font(25));
+        gc.fillText(thr, startOfRunwayX+scaledRESA+scaledDTL+10,halfHeight-50);
+        gc.restore();
+    }
+
+    public void thresholdR(String thr, String pos) {
+        gc.save();
+        gc.setFill(Color.WHITE);
+        gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
+        gc.setFont(new Font(30));
+        gc.fillText("R", endOfRunwayX-scaledRESA-35,halfHeight-25);
+        gc.setFont(new Font(25));
+        gc.fillText("27", endOfRunwayX-scaledRESA-40,halfHeight-50);
+        gc.restore();
     }
 
     public void runwayUpdated(RedeclaredRunway runway){
