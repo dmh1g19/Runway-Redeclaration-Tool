@@ -1,15 +1,11 @@
 package uk.ac.soton.comp2211.components;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
-import org.junit.platform.engine.support.hierarchical.OpenTest4JAwareThrowableCollector;
 import uk.ac.soton.comp2211.airport.*;
 
 public class TopDownRunway extends RunwayView {
@@ -18,15 +14,10 @@ public class TopDownRunway extends RunwayView {
     double runwayLen = 650;
     double runwayWidth = 50;
 
-    private double windowWidth;
-    private double windowHeight;
-
-    private final Canvas runwayCanvas = new Canvas();
-    private final Canvas UICanvas = new Canvas();
+    GraphicsContext gc = getGraphicsContext2D();
 
     private Runway runway;
     private ObstacleOnRunway obstacle;
-
 
     double halfHeight;
     double halfWidth;
@@ -51,33 +42,17 @@ public class TopDownRunway extends RunwayView {
         this.runway = runway.getRunway();
         this.obstacle = runway.getObstacle();
 
-        this.windowWidth = width;
-        this.windowHeight = height;
+        setWidth(700);
+        setHeight(400);
 
-        UICanvas.setWidth(700); UICanvas.setHeight(400);
-
-       // draw() -- Do not need to draw here as runwayUpdated() is called, which draws
+        draw(runway);
     }
 
-    public void runwayUpdated(RedeclaredRunway runway){
-        draw(runway,100,-100, runway.getRunway().getBearing(),0.5);
-    }
-
-    public void draw(RedeclaredRunway runway1, double x, double y, double bearing, double scale) {
-
-        runwayCanvas.setWidth((windowWidth)/scale); runwayCanvas.setHeight((windowHeight/scale));
-        double rotDegrees = bearing-90;
-        double runwayCentreX = x+runwayCanvas.getWidth()/2;
-        double runwayCentreY = y+runwayCanvas.getHeight()/2;
-        runwayCanvas.getGraphicsContext2D().transform(new Affine(new Scale(scale,scale,runwayCentreX,runwayCentreY)));
-        runwayCanvas.getGraphicsContext2D().transform(new Affine(new Rotate(rotDegrees,runwayCentreX,runwayCentreY)));
-        runwayCanvas.setTranslateX(x); runwayCanvas.setTranslateY(y);
-
-
+    public void draw(RedeclaredRunway runway1) {
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
 
-        runway.setDTL(0);
+        runway.setDTL(300);
 
         this.halfHeight = getHeight()/2;
         this.halfWidth = getWidth()/2;
@@ -96,10 +71,8 @@ public class TopDownRunway extends RunwayView {
         this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
         this.scaledObjWidth = scaleToRunwayWidth(obstacle.getLength());
 
-
-        GraphicsContext gc = runwayCanvas.getGraphicsContext2D();
         //viewport
-        gc.setFill(Color.GREY);
+        gc.setFill(Color.color(0.1,0.1,0.1));
         gc.fillRect(0,0, getWidth(), getHeight());
 
         //graded area
@@ -141,7 +114,7 @@ public class TopDownRunway extends RunwayView {
 
         //Object
         gc.setFill(Color.RED);
-        gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjWidth,scaledObjLen);
+        gc.fillRect(startOfRunwayX+scaledObjPos+scaledDTL, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjWidth,scaledObjLen);
 
         landingAndTakeOffTowardsObj_LowestThreshold();
         //landingAndTakeOffAwayFromObj_LowestThreshold();
@@ -150,7 +123,6 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void legend() {
-        GraphicsContext gc = UICanvas.getGraphicsContext2D();
         gc.setFill(Color.RED);
         gc.fillRoundRect(startOfRunwayX,300, 10,10,5,5);
         gc.fillText(": TODA " + runway.getTODA(),startOfRunwayX+15,310);
@@ -169,7 +141,6 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void landingAndTakeOffTowardsObj_LowestThreshold() {
-        GraphicsContext gc = runwayCanvas.getGraphicsContext2D();
         gc.setLineWidth(2);
         gc.setLineDashes(0);
         //TODA
@@ -180,13 +151,13 @@ public class TopDownRunway extends RunwayView {
         lineMarking(startOfRunwayX, 70, startOfRunwayX, scaledTORA);
         //LDA
         gc.setStroke(Color.YELLOW);
-        lineMarking(startOfRunwayX, 90, startOfRunwayX, scaledLDA);
-        //RESA
-        gc.setStroke(Color.GREEN);
-        lineMarking(startOfRunwayX, 90, startOfRunwayX, scaledRESA);
+        lineMarking(startOfRunwayX+scaledDTL, 90, startOfRunwayX+scaledDTL, scaledLDA);
         //ASDA
         gc.setStroke(Color.ORANGE);
         lineMarking(startOfRunwayX, 110, startOfRunwayX, scaledASDA);
+        //RESA
+        gc.setStroke(Color.GREEN);
+        lineMarking(startOfRunwayX+scaledDTL, 130, startOfRunwayX+scaledDTL, scaledRESA);
     }
 
     public double scaleToRunwayLength (double object) {
@@ -202,12 +173,11 @@ public class TopDownRunway extends RunwayView {
             distance = 0;
         }
         else {
-            runwayCanvas.getGraphicsContext2D().strokeLine(start,halfHeight-spacing,end+distance,halfHeight-spacing);
+            gc.strokeLine(start,halfHeight-spacing,end+distance,halfHeight-spacing);
         }
     }
 
     public void thresholdL(String thr, String pos) {
-        GraphicsContext gc = runwayCanvas.getGraphicsContext2D();
         gc.save();
         gc.setFill(Color.WHITE);
         gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+scaledDTL+15,halfHeight-(runwayWidth/2)+15)));
@@ -219,7 +189,6 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void thresholdR(String thr, String pos) {
-        GraphicsContext gc = runwayCanvas.getGraphicsContext2D();
         gc.save();
         gc.setFill(Color.WHITE);
         gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
@@ -230,8 +199,7 @@ public class TopDownRunway extends RunwayView {
         gc.restore();
     }
 
-
-    public Canvas getRunwayCanvas() { return runwayCanvas; }
-    public Canvas getUICanvas() { return UICanvas; }
-
+    public void runwayUpdated(RedeclaredRunway runway){
+        draw(runway);
+    }
 }
