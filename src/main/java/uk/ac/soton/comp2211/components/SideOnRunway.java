@@ -11,6 +11,8 @@ import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
 import uk.ac.soton.comp2211.scene.CalculationsScene;
 
+import java.util.Optional;
+
 public class SideOnRunway extends RunwayView {
 
     /**
@@ -29,7 +31,7 @@ public class SideOnRunway extends RunwayView {
     private double RESALen;
     private double ALSUp;
     private double ALSAcross;
-    private GraphicsContext gc;
+    private GraphicsContext gc =  getGraphicsContext2D();
 
     public SideOnRunway(RedeclaredRunway runway, double width, double height){
         super(runway,width,height );
@@ -47,6 +49,9 @@ public class SideOnRunway extends RunwayView {
         this.runway = runway1;
         this.obstacle = runway.getObstacle();
 
+        width=getWidth();
+        height= getHeight();
+
         obPos = (((double) obstacle.getPosition())/runway.getRunway().getLength())*width; //relative position of object
         obLen = (((double)obstacle.getLength())/runway.getRunway().getLength())*width; //relative length of object
         obHeight = (((double)obstacle.getHeight())/runway.getRunway().getLength())*height; //relative height of object
@@ -57,17 +62,19 @@ public class SideOnRunway extends RunwayView {
         sixtyLen = (60.0/runway.getRunway().getLength())*width;
         RESALen = (240.0/runway.getRunway().getLength())*width;
 
+
         // length and height of ALS slope relative to view size are calculated.
         ALSUp = 4 * obstacle.getHeight();
         ALSAcross = 50 * ALSUp;
         ALSUp = (ALSUp / runway.getRunway().getLength()) * height * 10;
         ALSAcross = (ALSAcross /runway.getRunway().getLength()) * height;
-        gc = getGraphicsContext2D();
+
 
         //Original Function
 
         gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
+
 
         gc.setFill(Color.BLACK);
         gc.fillRect(0, (height - 20), width, 20);
@@ -144,6 +151,8 @@ public class SideOnRunway extends RunwayView {
             gc.strokeLine(TODALen,(height - 20),TODALen + ALSAcross ,(height - 20) - ALSUp );
 
         }
+        gc.save();
+
     }
 
     public void landingView(){
