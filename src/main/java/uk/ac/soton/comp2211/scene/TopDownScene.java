@@ -19,7 +19,7 @@ public class TopDownScene extends BaseScene {
     public void build() {
         root = new StackPane();
 
-        Runway runway = new Runway("Runway01",0,0,10,0,0,0,0, 0);
+        Runway runway = new Runway("Runway01",0,0,0,0,0,0,0, 0);
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,0,0, 0, 0);
         runway.setObstacle(obstacle);
 

@@ -46,14 +46,18 @@ public class TopDownRunway extends RunwayView {
         this.runway = runway.getRunway();
         this.obstacle = runway.getObstacle();
 
-        runwayCanvas.setWidth(700); runwayCanvas.setHeight(400);
+        double scale = 0.5;
+
+        runwayCanvas.setWidth(width/scale); runwayCanvas.setHeight(height/scale);
 
         UICanvas.setWidth(700); UICanvas.setHeight(400);
 
-        double rotDegrees = this.runway.getBearing()-90;
-        double runwayCentreX = runwayCanvas.getWidth()/2;
-        double runwayCentreY = runwayCanvas.getHeight()/2;
+        double bearing = 32.5; //this.runway.getBearing();
+        double rotDegrees = bearing-90;
+        double runwayCentreX = runwayCanvas.getTranslateX()+runwayCanvas.getWidth()/2;
+        double runwayCentreY = runwayCanvas.getTranslateY()+runwayCanvas.getHeight()/2;
         runwayCanvas.getGraphicsContext2D().transform(new Affine(new Rotate(rotDegrees,runwayCentreX,runwayCentreY)));
+        runwayCanvas.setScaleX(scale); runwayCanvas.setScaleY(scale); runwayCanvas.setScaleZ(scale);
         draw(runway);
     }
 
