@@ -33,7 +33,7 @@ public class SideOnRunway extends RunwayView {
     private double ALSUp;
     private double ALSAcross;
     private GraphicsContext gc =  getGraphicsContext2D();
-    private boolean r2L = false;
+    private boolean r2L = true;
 
     public SideOnRunway(RedeclaredRunway runway, double width, double height){
         super(runway,width,height );
