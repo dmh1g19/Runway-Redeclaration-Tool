@@ -26,6 +26,8 @@ public class TopDownScene extends BaseScene {
         top = new TopDownRunway(new RedeclaredRunway(runway,obstacle, Direction.TOWARDS),app.getScene().getWidth(), app.getScene().getHeight());
 
         root.getChildren().add(top);
+        root.getChildren().add(top.getRunwayCanvas());
+        root.getChildren().add(top.getUICanvas());
 
         root.setStyle("-fx-background-color: #81c483");
     }
