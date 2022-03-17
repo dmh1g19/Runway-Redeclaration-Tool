@@ -47,11 +47,14 @@ public class TopDownRunway extends RunwayView {
         this.obstacle = runway.getObstacle();
 
         runwayCanvas.setWidth(700); runwayCanvas.setHeight(400);
+
         UICanvas.setWidth(700); UICanvas.setHeight(400);
 
-        //runwayCanvas.getGraphicsContext2D().rotate(this.runway.getBearing()-90);
+        double rotDegrees = this.runway.getBearing()-90;
+        double runwayCentreX = runwayCanvas.getWidth()/2;
+        double runwayCentreY = runwayCanvas.getHeight()/2;
+        runwayCanvas.getGraphicsContext2D().transform(new Affine(new Rotate(rotDegrees,runwayCentreX,runwayCentreY)));
         draw(runway);
-
     }
 
     public void draw(RedeclaredRunway runway1) {
@@ -210,6 +213,7 @@ public class TopDownRunway extends RunwayView {
         gc.fillText("27", endOfRunwayX-scaledRESA-40,halfHeight-50);
         gc.restore();
     }
+
 
     public Canvas getRunwayCanvas() { return runwayCanvas; }
     public Canvas getUICanvas() { return UICanvas; }
