@@ -45,6 +45,8 @@ public class TopDownRunway extends RunwayView {
         setWidth(700);
         setHeight(400);
 
+        System.out.println(this.runway.getBearing()-90);
+        gc.rotate(this.runway.getBearing()-90);
         draw(runway);
     }
 
