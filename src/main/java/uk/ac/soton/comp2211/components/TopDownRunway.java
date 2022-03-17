@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import org.junit.platform.engine.support.hierarchical.OpenTest4JAwareThrowableCollector;
 import uk.ac.soton.comp2211.airport.*;
 
@@ -17,11 +18,15 @@ public class TopDownRunway extends RunwayView {
     double runwayLen = 650;
     double runwayWidth = 50;
 
+    private double windowWidth;
+    private double windowHeight;
+
     private final Canvas runwayCanvas = new Canvas();
     private final Canvas UICanvas = new Canvas();
 
     private Runway runway;
     private ObstacleOnRunway obstacle;
+
 
     double halfHeight;
     double halfWidth;
@@ -46,22 +51,29 @@ public class TopDownRunway extends RunwayView {
         this.runway = runway.getRunway();
         this.obstacle = runway.getObstacle();
 
-        double scale = 0.5;
-
-        runwayCanvas.setWidth(width/scale); runwayCanvas.setHeight(height/scale);
+        this.windowWidth = width;
+        this.windowHeight = height;
 
         UICanvas.setWidth(700); UICanvas.setHeight(400);
 
-        double bearing = 32.5; //this.runway.getBearing();
-        double rotDegrees = bearing-90;
-        double runwayCentreX = runwayCanvas.getTranslateX()+runwayCanvas.getWidth()/2;
-        double runwayCentreY = runwayCanvas.getTranslateY()+runwayCanvas.getHeight()/2;
-        runwayCanvas.getGraphicsContext2D().transform(new Affine(new Rotate(rotDegrees,runwayCentreX,runwayCentreY)));
-        runwayCanvas.setScaleX(scale); runwayCanvas.setScaleY(scale); runwayCanvas.setScaleZ(scale);
-        draw(runway);
+       // draw() -- Do not need to draw here as runwayUpdated() is called, which draws
     }
 
-    public void draw(RedeclaredRunway runway1) {
+    public void runwayUpdated(RedeclaredRunway runway){
+        draw(runway,100,-100, runway.getRunway().getBearing(),0.5);
+    }
+
+    public void draw(RedeclaredRunway runway1, double x, double y, double bearing, double scale) {
+
+        runwayCanvas.setWidth((windowWidth)/scale); runwayCanvas.setHeight((windowHeight/scale));
+        double rotDegrees = bearing-90;
+        double runwayCentreX = x+runwayCanvas.getWidth()/2;
+        double runwayCentreY = y+runwayCanvas.getHeight()/2;
+        runwayCanvas.getGraphicsContext2D().transform(new Affine(new Scale(scale,scale,runwayCentreX,runwayCentreY)));
+        runwayCanvas.getGraphicsContext2D().transform(new Affine(new Rotate(rotDegrees,runwayCentreX,runwayCentreY)));
+        runwayCanvas.setTranslateX(x); runwayCanvas.setTranslateY(y);
+
+
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
 
@@ -222,7 +234,4 @@ public class TopDownRunway extends RunwayView {
     public Canvas getRunwayCanvas() { return runwayCanvas; }
     public Canvas getUICanvas() { return UICanvas; }
 
-    public void runwayUpdated(RedeclaredRunway runway){
-        draw(runway);
-    }
 }
