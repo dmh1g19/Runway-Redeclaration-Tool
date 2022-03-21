@@ -151,7 +151,7 @@ class CalculatorTest {
     void awayFromObstacleTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0,0, -50, 0);
         obs.setPosition(obs.getPosition()+runways[2].getDTL());
-        Runway runway1 = Calculator.AwayFromObstacle(runways[2],obs);
+        Runway runway1 = Calculator.AwayFromObstacle(runways[2],obs).getRunway();
         obs.setPosition(obs.getPosition()+runways[2].getDTL());
         Assertions.assertTrue(3346 == runway1.getTORA(), "09L TORA Incorrect " + (runway1.getTORA()));
         Assertions.assertTrue(3346 == runway1.getASDA(), "09L ASDA Incorrect " + (runway1.getASDA()));
@@ -163,7 +163,7 @@ class CalculatorTest {
     void towardsObstacleTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 0,  3646,0);
 
-        Runway runway2 = Calculator.TowardsObstacle(runways[3],obs2);
+        Runway runway2 = Calculator.TowardsObstacle(runways[3],obs2).getRunway();
         Assertions.assertTrue(2986 == runway2.getTORA(), "27R TORA Incorrect " + (runway2.getTORA()));
         Assertions.assertTrue(2986 == runway2.getASDA(), "27R ASDA Incorrect " + (runway2.getASDA()));
         Assertions.assertTrue(2986 == runway2.getTODA(), "27R TODA Incorrect " + (runway2.getTODA()));

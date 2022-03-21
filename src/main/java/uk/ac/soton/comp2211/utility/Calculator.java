@@ -1,9 +1,7 @@
 package uk.ac.soton.comp2211.utility;
 
 
-import uk.ac.soton.comp2211.airport.Obstacle;
-import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
-import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.airport.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +66,7 @@ public class Calculator {
         int obstaclePosition = obs.getPosition() - runway.getDTL(); //obstacle position should represent how far down the runway  the highest point is
         int obstacleLength = obs.getLength();
         int obstacleHeight = obs.getHeight();
-        int newLDA = (runway.getLDA() - obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
+        int newLDA = Integer.min (runway.getLDA(),runway.getLDA() - obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
         runwayWithObstacle.setLDA(newLDA);
 
 
@@ -124,9 +122,9 @@ public class Calculator {
      * @return a runway with updated parameters
      * @throws IncorrectObstacleException
      */
-    public static   Runway TowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+    public static RedeclaredRunway TowardsObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
-        return LandingTowardsObstacle(TakeOffTowardsObstacle(runway ,obs),obs);
+        return new RedeclaredRunway(LandingTowardsObstacle(TakeOffTowardsObstacle(runway ,obs),obs),obs, Direction.TOWARDS) ;
 
     }
 
@@ -137,9 +135,9 @@ public class Calculator {
      * @return a runway with updated parameters
      * @throws IncorrectObstacleException
      */
-    public  static Runway AwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
+    public  static RedeclaredRunway AwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
-        return LandingOverObstacle(TakeOffAwayFromObstacle(runway ,obs),obs);
+        return new RedeclaredRunway(LandingOverObstacle(TakeOffAwayFromObstacle(runway ,obs),obs) , obs,Direction.AWAYOVER) ;
 
     }
 
@@ -178,10 +176,10 @@ public class Calculator {
             int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
             int RESA = 240;
             int distanceToStripEnd = 60;
-            int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
+            int newLDA = obstaclePosition - runway.getDTL() - (RESA + distanceToStripEnd);
             StringBuilder s = new StringBuilder();
-            s.append("LDA= Distance From Threshold - Strip End - RESA\n");
-            s.append("   = "+ obs.getPosition() + " - 60 - 240 \n");
+            s.append("LDA= Distance From Threshold - Displaced Threshold - Strip End - RESA\n");
+            s.append("   = "+ obs.getPosition() +" - "+ runway.getDTL() + " - 60 - 240 \n");
             s.append("   = "+newLDA);
             map.put("LDA",s.toString());
 
@@ -196,10 +194,13 @@ public class Calculator {
             int distanceToStripEnd = 60;
             int obstacleHeight = obs.getHeight();
             //int newLDA = (obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
-            int newLDA = runway.getLDA() -obstaclePosition -distanceToStripEnd -  (obstacleHeight *50);
+            int newLDA = Integer.min(runway.getLDA(),runway.getLDA() + runway.getDTL() - obstaclePosition   -distanceToStripEnd -  Integer.max((RESA + obstacleLength) , (obstacleHeight *50)) ) ;
             StringBuilder s = new StringBuilder();
-            s.append("LDA = Original LDA - Distance from Threshold – Strip End - Slope Calculation\n");
-            s.append("     = "+runway.getLDA() +" - "+ obs.getPosition() + " - 60 " + "- ( 50 * " +obstacleHeight+ ")\n");
+            s.append("LDA = Min(Original LDA , Original LDA + Displacement Threshold - Obstacle Position  – Strip End - Max (Runway parametrs, Slope Calculation))\n");
+            if(newLDA != runway.getLDA()){
+                s.append("     = "+runway.getLDA() +" + "+ runway.getDTL() + " - "+ obs.getPosition() + " - 60 " + "- ( 50 * " +obstacleHeight+ ")\n");
+            }
+
             s.append("     = "+newLDA);
             map.put("LDA",s.toString());
         }
@@ -218,12 +219,18 @@ public class Calculator {
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
         int RESA = 240;
         int distanceToStripEnd = 60;
-        int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - (obstacleHeight *50);
+        int newTORA = obstaclePosition  - distanceToStripEnd - Integer.max (RESA+obs.getLength(),obstacleHeight *50);
 
         StringBuilder s = new StringBuilder();
-        s.append(name+"= Distance from Threshold + Displaced Threshold - Slope Calculation - Strip End \n");
-        s.append("    = "+obs.getPosition() +" + "+runway.getDTL() + " - 60 " + "- ( 50 * " +obstacleHeight+ ") \n");
+        s.append(name+"= Distance from Threshold - Strip end -  Max( Slope Calculation, RESA + Obstacle Length )\n");
+        if(RESA+obs.getLength()<=obstacleHeight *50){
+            s.append("    = "+obs.getPosition() +" - 60 " + "- ( 50 * " +obstacleHeight+ ") \n");
+
+        }else{
+            s.append("    = "+obs.getPosition() +" - 60 " + "- " +RESA+  "- "+ obs.getLength() +  " \n");
+        }
         s.append("    = "+newTORA);
+
         return  s.toString();
     }
 
@@ -240,7 +247,7 @@ public class Calculator {
         int clearway = runway.getTODA() - runway.getTORA();
         int stopway = runway.getASDA() - runway.getTORA();
         int blastProtection = 300;
-        int newTORA = runway.getTORA() - (Integer.max(300,blastProtection)) - obstaclePosition - runway.getDTL();
+        int newTORA = runway.getTORA() - (Integer.max(300,blastProtection)) - obstaclePosition ;
         StringBuilder s = new StringBuilder();
         s.append(name+"= Original TORA - (Max of Blast Protection and (RESA+srip end)) - Distance from Threshold - Displaced Threshold");
         switch (extra) {
@@ -251,7 +258,7 @@ public class Calculator {
 
             }
         }
-        s.append("    = "+runway.getTORA() +" - "+ (Integer.max(300,blastProtection)) + " - " + obs.getPosition() + " - "+ runway.getDTL() );
+        s.append("    = "+runway.getTORA() +" - "+ (Integer.max(300,blastProtection)) + " - " + obs.getPosition());
         switch (extra) {
             case 1 -> s.append(clearway+" \n").append("    +"+(newTORA+clearway));
             case 2 -> s.append(stopway+ "\n").append("    +"+(newTORA+stopway));

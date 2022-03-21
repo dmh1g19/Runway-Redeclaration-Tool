@@ -42,7 +42,7 @@ public class CalculationsScene extends BaseScene {
         currentRunway = runwa;
         currentRunway.setObstacle( new ObstacleOnRunway("test", 12, 0, 3646, 0,5));
         try{
-            currentRunway = Calculator.TowardsObstacle(currentRunway, new ObstacleOnRunway("test", 12, 0, 3646, 0,5));
+            currentRunway = Calculator.TowardsObstacle(currentRunway, new ObstacleOnRunway("test", 12, 0, 3646, 0,5)).getRunway();
         }catch(Exception ignored) {}
 
 
