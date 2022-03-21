@@ -49,6 +49,7 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void draw(RedeclaredRunway runway1) {
+
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
 
@@ -115,6 +116,7 @@ public class TopDownRunway extends RunwayView {
         //Object
         gc.setFill(Color.RED);
         gc.fillRect(startOfRunwayX+scaledObjPos+scaledDTL, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjWidth,scaledObjLen);
+        System.out.println("drawing runway "+runway.getName());
 
         landingAndTakeOffTowardsObj_LowestThreshold();
         //landingAndTakeOffAwayFromObj_LowestThreshold();
@@ -200,6 +202,8 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void runwayUpdated(RedeclaredRunway runway){
+        System.out.println("runway Updated");
+        System.out.println(runway.getRunway().getName());
         draw(runway);
     }
 

@@ -35,7 +35,7 @@ public class CalculationsScene extends BaseScene {
     public void build() {
         root = new AnchorPane();
 
-        Runway runwa = new Runway("Runway01", 4500, 50, 18, 3902, 3902, 3902, 3595, 240, 5);
+        Runway runwa = new Runway("Runway01", 4500, 50, 9, 3902, 3902, 3902, 3595, 240, 5);
         Runway runwa1 = new Runway("Runway02", 4500, 50, 18, 3902, 3902, 3902, 3595, 240, 5);
         //setting default current runway values provided to views if they are opened without first doing a calculation
         //TODO remove these and replace them with error handeling so you cant expand views without first defining a runway
