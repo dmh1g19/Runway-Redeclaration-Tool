@@ -8,7 +8,7 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.*;
 
-public class TopDownRunway extends Canvas {
+public class TopDownRunway extends RunwayView {
 
     //scaled down runway dimension
     double runwayLen = 650;
@@ -36,7 +36,7 @@ public class TopDownRunway extends Canvas {
     double scaledObjDFCL;
     double scaledObjWidth;
 
-    public TopDownRunway( double width, double height) {
+    public TopDownRunway( double width, double height)  {
         super(width, height);
 
         this.runway = null;
