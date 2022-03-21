@@ -40,7 +40,7 @@ class CalculatorTest {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, 0, -50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 0, 3646, 0);
-        obs.setPosition(obs.getPosition()-runways[2].getDTL());
+        obs.setPosition(obs.getPosition()+runways[2].getDTL());
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[2], obs);
 
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
@@ -68,7 +68,7 @@ class CalculatorTest {
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 25, 0, 0,2853, 0);
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[1], obs);
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
-        obs2.setPosition(obs2.getPosition()-runways[0].getDTL());
+        obs2.setPosition(obs2.getPosition()+runways[0].getDTL());
         Runway runway2 = Calculator.TakeOffTowardsObstacle(runways[0], obs2);
 
         runway2 = Calculator.LandingTowardsObstacle(runway2, obs2);
@@ -98,7 +98,7 @@ class CalculatorTest {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 15, 0, 0, 150, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 15,0, 0, 3203, 0);
-        obs.setPosition(obs.getPosition()-runways[0].getDTL());
+        obs.setPosition(obs.getPosition()+runways[0].getDTL());
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[0], obs);
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
 
@@ -126,7 +126,7 @@ class CalculatorTest {
 
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 20, 0,0, 50, 0);
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 20, 0, 0, 3546, 0);
-        obs2.setPosition(obs2.getPosition()-runways[2].getDTL());
+        obs2.setPosition(obs2.getPosition()+runways[2].getDTL());
         Runway runway1 = Calculator.TakeOffAwayFromObstacle(runways[3], obs);
         runway1 = Calculator.LandingOverObstacle(runway1, obs);
         Runway runway2 = Calculator.TakeOffTowardsObstacle(runways[2], obs2);
@@ -150,9 +150,9 @@ class CalculatorTest {
     @Test
     void awayFromObstacleTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0,0, -50, 0);
-        obs.setPosition(obs.getPosition()-runways[2].getDTL());
+        obs.setPosition(obs.getPosition()+runways[2].getDTL());
         Runway runway1 = Calculator.AwayFromObstacle(runways[2],obs);
-        obs.setPosition(obs.getPosition()-runways[2].getDTL());
+        obs.setPosition(obs.getPosition()+runways[2].getDTL());
         Assertions.assertTrue(3346 == runway1.getTORA(), "09L TORA Incorrect " + (runway1.getTORA()));
         Assertions.assertTrue(3346 == runway1.getASDA(), "09L ASDA Incorrect " + (runway1.getASDA()));
         Assertions.assertTrue(3346 == runway1.getTODA(), "09L TODA Incorrect " + (runway1.getTODA()));
