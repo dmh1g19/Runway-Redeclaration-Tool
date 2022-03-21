@@ -2,9 +2,7 @@ package uk.ac.soton.comp2211.scene;
 
 import javafx.scene.layout.StackPane;
 import uk.ac.soton.comp2211.App;
-import uk.ac.soton.comp2211.airport.Direction;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
-import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.SideOnRunway;
 import uk.ac.soton.comp2211.utility.Calculator;
@@ -30,7 +28,7 @@ public class SideViewScene extends BaseScene {
         catch(Exception e){
 
         }
-        sideOn = new SideOnRunway(new RedeclaredRunway(runway,obstacle, Direction.TOWARDS),app.getScene().getWidth(), app.getScene().getHeight());
+        sideOn = new SideOnRunway(app.getScene().getWidth(), app.getScene().getHeight());
 
         root.getChildren().add(sideOn);
 

@@ -8,6 +8,7 @@ import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.airport.State;
 
 public class TopDownRunway extends Canvas {
 
@@ -139,4 +140,9 @@ public class TopDownRunway extends Canvas {
     public void runwayUpdated(RedeclaredRunway runway){
         draw(runway);
     }
+
+    public void stateChanged(State state) {
+
+    }
+
 }

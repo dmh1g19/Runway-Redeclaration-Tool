@@ -8,6 +8,7 @@ import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
+import uk.ac.soton.comp2211.airport.State;
 import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
 import uk.ac.soton.comp2211.scene.CalculationsScene;
 
@@ -31,8 +32,8 @@ public class SideOnRunway extends RunwayView {
     private double ALSAcross;
     private GraphicsContext gc;
 
-    public SideOnRunway(RedeclaredRunway runway, double width, double height){
-        super(runway,width,height );
+    public SideOnRunway(double width, double height){
+        super(width,height );
 
 
 
@@ -193,7 +194,7 @@ public class SideOnRunway extends RunwayView {
         }
 
         @Override
-        public void runwayUpdated(RedeclaredRunway runway){
+        public void runwayUpdated(RedeclaredRunway runway, State state){
             representView(runway);
         }
     }

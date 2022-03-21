@@ -30,15 +30,6 @@ public class PhysicalRunway {
         return first.getName() + "/" + second.getName();
     }
 
-    public void setFirst(Runway f) {
-        this.first = f;
-    }
-
-    public void setSecond(Runway s) {
-        this.second = s;
-    }
-
-
     public Runway getFirst() {
         return first;
     }
@@ -53,9 +44,10 @@ public class PhysicalRunway {
 
 
     public String getLowerThreshold() {
-        if (first.getName().compareTo(second.getName()) <= 0) {
-            return first.getName();
-        }
+        return first.getName();
+    }
+
+    public String getUpperThreshold() {
         return second.getName();
     }
 
