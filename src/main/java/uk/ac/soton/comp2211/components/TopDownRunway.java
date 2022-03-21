@@ -46,14 +46,13 @@ public class TopDownRunway extends RunwayView {
         draw(new RedeclaredRunway(runway,obstacle,Direction.TOWARDS), State.TAKEOFF);
     }
 
-
     @Override
     public void draw(RedeclaredRunway runway1, State state) {
 
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
 
-        runway.setDTL(300);
+        //runway.setDTL(300);
 
         this.halfHeight = getHeight()/2;
         this.halfWidth = getWidth()/2;
@@ -70,9 +69,9 @@ public class TopDownRunway extends RunwayView {
         this.scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
         this.scaledObjLen = scaleToRunwayLength(obstacle.getLength());
         this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
-        this.scaledObjWidth = scaleToRunwayWidth(obstacle.getLength());
+        this.scaledObjWidth = scaleToRunwayWidth(obstacle.getWidth());
 
-        //viewport
+        //background
         gc.setFill(Color.color(0.1,0.1,0.1));
         gc.fillRect(0,0, getWidth(), getHeight());
 
@@ -115,11 +114,13 @@ public class TopDownRunway extends RunwayView {
 
         //Object
         gc.setFill(Color.RED);
-        gc.fillRect(startOfRunwayX+scaledObjPos+scaledDTL, (halfHeight-(scaledObjLen/2))+scaledObjDFCL,scaledObjWidth,scaledObjLen);
-        System.out.println("drawing runway "+runway.getName());
+        gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjWidth/2))+scaledObjDFCL,scaledObjLen,scaledObjWidth);
 
-        landingAndTakeOffTowardsObj_LowestThreshold();
-        //landingAndTakeOffAwayFromObj_LowestThreshold();
+        //Draw distances according to what the plane is doing
+        gc.setLineWidth(2);
+        gc.setLineDashes(0);
+        //landingAndTakeOffTowardsObj_LowestThreshold();
+        landingAndTakeOffAwayFromObj_LowestThreshold();
 
         legend();
     }
@@ -142,9 +143,7 @@ public class TopDownRunway extends RunwayView {
         gc.fillText(": ASDA " + runway.getASDA(),startOfRunwayX+15,390);
     }
 
-    public void landingAndTakeOffTowardsObj_LowestThreshold() {
-        gc.setLineWidth(2);
-        gc.setLineDashes(0);
+    public void landingAndTakeOffAwayFromObj_LowestThreshold() {
         //TODA
         gc.setStroke(Color.RED);
         lineMarking(startOfRunwayX, 50, startOfRunwayX, scaledTODA);
@@ -153,7 +152,25 @@ public class TopDownRunway extends RunwayView {
         lineMarking(startOfRunwayX, 70, startOfRunwayX, scaledTORA);
         //LDA
         gc.setStroke(Color.YELLOW);
-        lineMarking(startOfRunwayX+scaledDTL, 90, startOfRunwayX+scaledDTL, scaledLDA);
+        lineMarking(startOfRunwayX+scaledDTL, 90, startOfRunwayX, scaledLDA);
+        //ASDA
+        gc.setStroke(Color.ORANGE);
+        lineMarking(startOfRunwayX, 110, startOfRunwayX, scaledASDA);
+        //RESA
+        gc.setStroke(Color.GREEN);
+        lineMarking(startOfRunwayX+scaledDTL, 130, startOfRunwayX+scaledDTL, scaledRESA);
+    }
+
+    public void landingAndTakeOffTowardsObj_LowestThreshold() {
+        //TODA
+        gc.setStroke(Color.RED);
+        lineMarking(startOfRunwayX, 50, startOfRunwayX, scaledTODA);
+        //TORA
+        gc.setStroke(Color.BLUE);
+        lineMarking(startOfRunwayX, 70, startOfRunwayX, scaledTORA);
+        //LDA
+        gc.setStroke(Color.YELLOW);
+        lineMarking(startOfRunwayX+scaledDTL, 90, startOfRunwayX, scaledLDA);
         //ASDA
         gc.setStroke(Color.ORANGE);
         lineMarking(startOfRunwayX, 110, startOfRunwayX, scaledASDA);
@@ -171,8 +188,13 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void lineMarking(double start, double spacing, double end, double distance) {
-        if (distance < 0) {
-            distance = 0;
+        //set all markings to 0 if there is no object on the runway
+        if (scaledObjPos <= 0) {
+            scaledASDA = 0;
+            scaledRESA = 0;
+            scaledLDA = 0;
+            scaledTODA = 0;
+            scaledTORA = 0;
         }
         else {
             gc.strokeLine(start,halfHeight-spacing,end+distance,halfHeight-spacing);
@@ -200,9 +222,4 @@ public class TopDownRunway extends RunwayView {
         gc.fillText("27", endOfRunwayX-scaledRESA-40,halfHeight-50);
         gc.restore();
     }
-
-
-
-   
-
 }
