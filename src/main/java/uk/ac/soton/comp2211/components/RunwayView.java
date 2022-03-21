@@ -15,6 +15,6 @@ public abstract class RunwayView extends Canvas {
         setHeight(height);
     }
 
-    public abstract void runwayUpdated(RedeclaredRunway runway, State state);
+    public abstract void draw(RedeclaredRunway runway, State state);
 
 }

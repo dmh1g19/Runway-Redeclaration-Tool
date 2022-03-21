@@ -48,6 +48,11 @@ public class TopDownRunway extends RunwayView {
         draw(runway);
     }
 
+    @Override
+    public void runwayUpdated(RedeclaredRunway runway, State state) {
+
+    }
+
     public void draw(RedeclaredRunway runway1) {
 
         this.runway = runway1.getRunway();

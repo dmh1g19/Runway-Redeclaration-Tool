@@ -36,8 +36,8 @@ public class SideOnRunway extends RunwayView {
     private GraphicsContext gc =  getGraphicsContext2D();
     private boolean r2L = true;
 
-    public SideOnRunway(double width, double height){
-        super(width,height );
+    public SideOnRunway(RedeclaredRunway runway ,double width, double height){
+        super(runway,width,height);
 
 
 
