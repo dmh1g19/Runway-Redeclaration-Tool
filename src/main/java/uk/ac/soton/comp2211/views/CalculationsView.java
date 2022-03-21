@@ -45,6 +45,9 @@ public class CalculationsView extends BaseView {
 
     private Button backButton = new Button("Back");
 
+    private Button topDownView = new Button("Top Down View");
+    private Button sideOnView = new Button("Side On View");
+
     public ComboBox<PhysicalRunway> getRunwaySelect() {
         return runwaySelect;
     }
@@ -55,6 +58,14 @@ public class CalculationsView extends BaseView {
 
     public TextField getObstacleHeight() {
         return obstacleHeight;
+    }
+
+    public Button getTopDownView() {
+        return topDownView;
+    }
+
+    public Button getSideOnView() {
+        return sideOnView;
     }
 
     public TextField getObstacleWidth() {
@@ -123,9 +134,7 @@ public class CalculationsView extends BaseView {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(24);
 
-        Button sideOnView = new Button("Side On View");
         sideOnView.getStyleClass().add("viewButton");
-        Button topDownView = new Button("Top Down View");
         topDownView.getStyleClass().add("viewButton");
 
         vbox.getChildren().addAll(sideOnView, topDownView);
