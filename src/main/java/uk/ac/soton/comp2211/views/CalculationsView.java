@@ -198,7 +198,7 @@ public class CalculationsView extends BaseView {
 
         //Constraints
         ColumnConstraints col1 = new ColumnConstraints(140);
-        ColumnConstraints col2 = new ColumnConstraints(150);
+        ColumnConstraints col2 = new ColumnConstraints(160);
         inputForm.getColumnConstraints().addAll(col1,col2);
 
         return new Group(inputForm);

@@ -109,6 +109,7 @@ public class App extends Application {
         try {
 
             AirportModel model = new AirportModel(XMLUtil.importAirports("airports.xml"));
+            model.setPreDefinedObstacles(XMLUtil.importObstacles("obstacles.xml"));
 
             SelectionView view = new SelectionView();
             SelectionController controller = new SelectionController(view, model);

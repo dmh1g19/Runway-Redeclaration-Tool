@@ -139,11 +139,8 @@ public class XMLUtil {
         xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         try {
             xmlMapper.writeValue(new File("obstacles.xml"), obstacles.toArray());
-
-
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Error");
+            e.printStackTrace();
         }
     }
 
@@ -151,6 +148,12 @@ public class XMLUtil {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         return xmlMapper.readValue(new File(fileName), Airport[].class);
+    }
+
+    public static Obstacle[] importObstacles(String fileName) throws IOException {
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return xmlMapper.readValue(new File(fileName), Obstacle[].class);
     }
 
 }

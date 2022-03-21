@@ -124,3 +124,6 @@ AnchorPane {
 .viewButton {
     -fx-font-size: 14;
 }
+.error {
+    -fx-text-box-border: red;
+}

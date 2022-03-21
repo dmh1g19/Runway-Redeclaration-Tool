@@ -42,9 +42,6 @@ public class TopDownRunway extends RunwayView {
         this.runway = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
         this.obstacle = new ObstacleOnRunway("test", 12, 0, 3646, 0,5);
 
-        setWidth(700);
-        setHeight(400);
-
         //Arguably we could remove this cus its not nessesarry to draw
         draw(new RedeclaredRunway(runway,obstacle,Direction.TOWARDS), State.TAKEOFF);
     }

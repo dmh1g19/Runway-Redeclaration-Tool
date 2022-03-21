@@ -22,25 +22,17 @@ public class AirportModel {
     private SimpleObjectProperty<State> state = new SimpleObjectProperty<>();
 
 
-    public AirportModel() {
-
-    }
+    public AirportModel() {}
 
     public AirportModel(Airport[] airportList) {
         this.airportList.setValue(FXCollections.observableArrayList(airportList));
     }
 
-    public SimpleObjectProperty<RedeclaredRunway> redeclaredRunwayProperty() {
-        return redeclaredRunway;
-    }
 
     public void setRedeclaredRunway(RedeclaredRunway redeclaredRunway) {
         this.redeclaredRunway.set(redeclaredRunway);
     }
 
-    public SimpleObjectProperty<State> stateProperty() {
-        return state;
-    }
 
     public void setState(State state) {
         this.state.set(state);
@@ -60,6 +52,18 @@ public class AirportModel {
 
     public SimpleObjectProperty<Airport> selectedAirportProperty() {
         return selectedAirport;
+    }
+
+    public SimpleListProperty<Obstacle> preDefinedObstaclesProperty() {
+        return preDefinedObstacles;
+    }
+
+    public SimpleObjectProperty<RedeclaredRunway> redeclaredRunwayProperty() {
+        return redeclaredRunway;
+    }
+
+    public SimpleObjectProperty<State> stateProperty() {
+        return state;
     }
 
 }
