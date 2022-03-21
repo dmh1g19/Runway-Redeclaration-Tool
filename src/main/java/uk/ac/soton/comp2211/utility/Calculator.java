@@ -69,7 +69,6 @@ public class Calculator {
         int newLDA = Integer.min (runway.getLDA(),runway.getLDA() - obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
         runwayWithObstacle.setLDA(newLDA);
 
-
         return runwayWithObstacle;
     }
 
@@ -91,7 +90,6 @@ public class Calculator {
         runwayWithObstacle.setTODA(newTORA+clearway);
         runwayWithObstacle.setASDA(newTORA+stopway);
 
-
         return runwayWithObstacle;
     }
     /**
@@ -110,7 +108,6 @@ public class Calculator {
         runwayWithObstacle.setTORA(newTORA);
         runwayWithObstacle.setTODA(newTORA);
         runwayWithObstacle.setASDA(newTORA);
-
 
         return runwayWithObstacle;
     }
@@ -269,7 +266,6 @@ public class Calculator {
         }
         return s.toString();
     }
-
 
 
 
