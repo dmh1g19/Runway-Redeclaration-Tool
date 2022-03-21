@@ -36,22 +36,23 @@ public class TopDownRunway extends RunwayView {
     double scaledObjDFCL;
     double scaledObjWidth;
 
-    public TopDownRunway(RedeclaredRunway runway, double width, double height) {
-        super(runway,width, height);
+    public TopDownRunway( double width, double height) {
+        super(width, height);
 
-        this.runway = runway.getRunway();
+        this.runway = null;
         this.obstacle = runway.getObstacle();
 
         setWidth(700);
         setHeight(400);
 
-        draw(runway);
+        draw(null);
     }
 
     @Override
-    public void runwayUpdated(RedeclaredRunway runway, State state) {
+    public void draw(RedeclaredRunway runway, State state) {
 
     }
+
 
     public void draw(RedeclaredRunway runway1) {
 

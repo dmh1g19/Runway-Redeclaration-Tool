@@ -190,35 +190,21 @@ public class CalculationsScene extends BaseScene {
 
         //test values
 
-        Button sideOn = new Button("Side");
-        sideOn.setOnAction(e -> {
-            SideViewScene scene = new SideViewScene(app);
-            scene.build();
-           // runwayUpdatedListeners.add(scene.getView()::runwayUpdated);
-            //scene.getView().runwayUpdated(currentRunway, currentRunway.getObstacle());
-            Scene sce = scene.setScene();
-            Stage stage = new Stage();
-            stage.setTitle("Side on");
-            stage.setScene(sce);
-            stage.show();
-        });
 
-        AnchorPane.setRightAnchor(sideOn, 0d);
-        AnchorPane.setTopAnchor(sideOn, 0d);
+
+
         AnchorPane.setBottomAnchor(backButton,0d);
         AnchorPane.setLeftAnchor(backButton,0d);
 
 
         Button s1 = new Button("Top");
         s1.setOnAction(e -> {
-            TopDownScene scene = new TopDownScene(app);
-            scene.build();
+
         //    runwayUpdatedListeners.add(scene.getView()::runwayUpdated);
           //  scene.getView().runwayUpdated(currentRunway);
-            Scene sce = scene.setScene();
             Stage stage = new Stage();
             stage.setTitle("Top Down");
-            stage.setScene(sce);
+
             stage.show();
 
 
@@ -231,7 +217,7 @@ public class CalculationsScene extends BaseScene {
         distanceSecondLabel.setText("Distance to " + runwaySelect.getValue().getSecond().getName());
 
 
-        root.getChildren().addAll(sideOn, s1, inputForm,backButton);
+
     }
 
     private void recalculateValues(){

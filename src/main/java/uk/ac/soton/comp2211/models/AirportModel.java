@@ -20,6 +20,8 @@ public class AirportModel {
     private SimpleObjectProperty<Airport> selectedAirport = new SimpleObjectProperty<>();
     private final SimpleListProperty<Obstacle> preDefinedObstacles = new SimpleListProperty<>();
 
+
+
     public AirportModel() {
 
     }

@@ -23,7 +23,7 @@ public class TopDownScene extends BaseScene {
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,0,0, 0, 0);
         runway.setObstacle(obstacle);
 
-        top = new TopDownRunway(new RedeclaredRunway(runway,obstacle, Direction.TOWARDS),app.getScene().getWidth(), app.getScene().getHeight());
+        top = new TopDownRunway(app.getScene().getWidth(), app.getScene().getHeight());
 
         root.getChildren().add(top);
         //root.getChildren().add(top.getRunwayCanvas());

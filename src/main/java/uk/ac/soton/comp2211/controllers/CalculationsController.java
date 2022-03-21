@@ -12,7 +12,7 @@ import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
 
-public class CalculationsController extends BaseController {
+public class CalculationsController {
 
     //Model
     AirportModel model;
@@ -21,7 +21,9 @@ public class CalculationsController extends BaseController {
     CalculationsView view;
 
     public CalculationsController(CalculationsView view, AirportModel model) {
-        super(view, model);
+        this.view = view;
+        this.model = model;
+        initialise();
     }
 
     public void initialise() {
@@ -84,5 +86,11 @@ public class CalculationsController extends BaseController {
             loadMenu();
         });
     }
+    public void loadMenu() {
+        MenuView menuView = new MenuView();
+        MenuController menuController = new MenuController(menuView, model);
+        view.getView().getScene().setRoot(menuView.getView());
+    }
+
 
 }

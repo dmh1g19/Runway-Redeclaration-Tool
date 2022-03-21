@@ -36,12 +36,17 @@ public class SideOnRunway extends RunwayView {
     private GraphicsContext gc =  getGraphicsContext2D();
     private boolean r2L = true;
 
-    public SideOnRunway(RedeclaredRunway runway ,double width, double height){
-        super(runway,width,height);
+    public SideOnRunway(double width, double height){
+        super(width,height);
 
 
 
         representView(runway);
+
+    }
+
+    @Override
+    public void draw(RedeclaredRunway runway, State state) {
 
     }
 
@@ -267,7 +272,7 @@ public class SideOnRunway extends RunwayView {
             gc.restore();
         }
 
-        @Override
+
         public void runwayUpdated(RedeclaredRunway runway, State state){
             representView(runway);
         }

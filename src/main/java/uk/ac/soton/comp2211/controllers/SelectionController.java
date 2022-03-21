@@ -11,8 +11,10 @@ import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.SelectionView;
 
+import java.awt.*;
 
-public class SelectionController extends BaseController {
+
+public class SelectionController {
 
     //Model
     AirportModel model;
@@ -21,7 +23,9 @@ public class SelectionController extends BaseController {
     SelectionView view;
 
     public SelectionController(SelectionView view, AirportModel model) {
-        super(view, model);
+        this.view = view;
+        this.model = model;
+        initialise();
     }
 
     public void initialise() {
@@ -52,6 +56,12 @@ public class SelectionController extends BaseController {
             loadMenu();
         });
 
+    }
+
+    public void loadMenu() {
+        MenuView menuView = new MenuView();
+        MenuController menuController = new MenuController(menuView, model);
+        view.getView().getScene().setRoot(menuView.getView());
     }
 
 }

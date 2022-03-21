@@ -10,7 +10,7 @@ import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.SelectionView;
 
-public class MenuController extends BaseController {
+public class MenuController {
 
     //Model
     AirportModel model;
@@ -18,8 +18,10 @@ public class MenuController extends BaseController {
     //View
     MenuView view;
 
-    public MenuController(BaseView view, AirportModel model) {
-        super(view, model);
+    public MenuController(MenuView view, AirportModel model) {
+        this.view = view;
+        this.model = model;
+        initialise();
     }
 
 
@@ -34,5 +36,16 @@ public class MenuController extends BaseController {
         view.getExitButton().setOnMouseClicked(e -> Platform.exit());
     }
 
+    public void loadSelection() {
+        SelectionView selectionView = new SelectionView();
+        SelectionController selectionController = new SelectionController(selectionView, model);
+        view.getView().getScene().setRoot(selectionView.getView());
+    }
+
+    public void loadCalculations() {
+        CalculationsView calculationsView = new CalculationsView();
+        CalculationsController calculationsController = new CalculationsController(calculationsView, model);
+        view.getView().getScene().setRoot(calculationsView.getView());
+    }
 
 }
