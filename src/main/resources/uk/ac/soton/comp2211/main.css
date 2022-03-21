@@ -65,11 +65,11 @@
     -fx-padding: 12 12 2 4;
 }
 .inputs {
-    -fx-padding: 12;
-    -fx-font-size: 16;
+    -fx-padding: 14;
+    -fx-font-size: 14;
     -fx-background-color: rgb(50, 50, 50);
-    -fx-background-radius: 2;
-    -fx-vgap: 12;
+    -fx-background-radius: 4;
+    -fx-vgap: 10;
     -fx-hgap: 8;
 }
 .inputs Label {
@@ -81,9 +81,10 @@
 
 .inputs ComboBox,
 .inputs TextField {
-    -fx-pref-width: 150;
     -fx-padding: 4;
     -fx-font-size: 14;
+    -fx-max-width: 9999999;
+    -fx-alignment: CENTER_RIGHT;
 }
 .inputs ComboBox {
     -fx-padding: 0;
@@ -105,5 +106,21 @@ AnchorPane {
 }
 .metre {
     -fx-fill: white;
-    -fx-padding: 0 0 0 12;
+    -fx-padding: 4 0 0 12;
+}
+.obstacleInfo {
+    -fx-font-size: 14;
+    -fx-vgap: 8;
+    -fx-hgap: 6;
+    -fx-padding: 8 0 0 20;
+}
+.obstacleInfo TextField {
+    -fx-pref-width: 140;
+    -fx-alignment: CENTER_RIGHT;
+}
+.thr {
+    -fx-font-weight: bold;
+}
+.viewButton {
+    -fx-font-size: 14;
 }

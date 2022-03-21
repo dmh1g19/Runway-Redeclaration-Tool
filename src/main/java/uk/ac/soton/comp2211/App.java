@@ -1,11 +1,17 @@
 package uk.ac.soton.comp2211;
 
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.google.inject.Binder;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import javafx.application.Application;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,12 +26,17 @@ import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.PredefinedObstacles;
+import uk.ac.soton.comp2211.controllers.SelectionController;
+import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.scene.*;
 import uk.ac.soton.comp2211.utility.XMLUtil;
+import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JavaFX App
@@ -38,8 +49,8 @@ public class App extends Application {
     private Airport selectedAirport;
     private Airport[] airports;
 
-    private final int height = 500;
-    private final int width = 700;
+    private final int height = 600;
+    private final int width = 800;
 
     @Override
     public void start(Stage stage)  {
@@ -75,6 +86,8 @@ public class App extends Application {
 
             XmlMapper mapper = new XmlMapper();
 
+
+
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             Airport[] ports = mapper.readValue(new File("airports.xml"), Airport[].class);
             System.out.println(ports[0].getRunways()[0].getFirst().getName());
@@ -84,18 +97,34 @@ public class App extends Application {
             System.out.println("Error");
         }
 
-        loadAirports();
+        //loadAirports();
 
-        defaultScene();
-        loadSelection();
+        //defaultScene();
+        //loadSelection();
+
+        try {
+
+            AirportModel model = new AirportModel(XMLUtil.importAirports("airports.xml"));
+
+            SelectionView view = new SelectionView();
+            SelectionController controller = new SelectionController(view, model);
+
+            Scene scene = new Scene(view.getView(), width, height);
+            scene.getStylesheets().add(App.class.getResource("main.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
+        SimpleObjectProperty<Airport> airportLL = new SimpleObjectProperty<>(heathrow);
+        if (airportLL.isNull().get()) {
+            System.out.println("TESTING");
+        }
 
 
-        stage.show();
-
-
-
+        //stage.show();
 
     }
 
