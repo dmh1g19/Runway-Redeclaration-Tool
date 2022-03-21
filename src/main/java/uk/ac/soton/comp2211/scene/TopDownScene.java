@@ -19,13 +19,15 @@ public class TopDownScene extends BaseScene {
     public void build() {
         root = new StackPane();
 
-        Runway runway = new Runway("Runway01",4500,50,18,4400,4000,3902,3595, 5);
-        ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,50,0, 0, 0);
+        Runway runway = new Runway("Runway01",0,0,0,0,0,0,0, 0);
+        ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",0,0,0, 0, 0);
         runway.setObstacle(obstacle);
 
-        top = new TopDownRunway(new RedeclaredRunway(runway,obstacle, Direction.TOWARDS));
+        top = new TopDownRunway(new RedeclaredRunway(runway,obstacle, Direction.TOWARDS),app.getScene().getWidth(), app.getScene().getHeight());
 
         root.getChildren().add(top);
+        //root.getChildren().add(top.getRunwayCanvas());
+        //root.getChildren().add(top.getUICanvas());
 
         root.setStyle("-fx-background-color: #81c483");
     }

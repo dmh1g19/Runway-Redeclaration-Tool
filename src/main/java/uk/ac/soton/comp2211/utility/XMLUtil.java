@@ -1,7 +1,10 @@
 package uk.ac.soton.comp2211.utility;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.platform.engine.discovery.ClasspathResourceSelector;
 import org.springframework.context.ApplicationContext;
@@ -15,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class XMLUtil {
     
@@ -102,25 +106,24 @@ public class XMLUtil {
      * @return an array list of obstacles
      */
     public static ArrayList<Obstacle> readObstacles(){
-        Obstacle tree = new Obstacle("Tree",5,50,2);
-        Obstacle smallTree = new Obstacle("Small Tree",5,70,5);
-        Obstacle largeTree = new Obstacle("Large Tree",20,70,5);
-        Obstacle civilianPlane = new Obstacle("Civilian Small Plane",3,8,5);
-        Obstacle smallPlane = new Obstacle("Small Commercial Plane", 11, 30,10);
-        Obstacle largePlane = new Obstacle("Large Commercial Plane",19,64,30);
-        Obstacle car = new Obstacle("Car",2,5,5);
-        Obstacle truck = new Obstacle("Car",3,11,6);
-        ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
-        obstacles.add(tree);
-        obstacles.add(civilianPlane);
-        obstacles.add(smallPlane);
-        obstacles.add(largePlane);
-        obstacles.add(tree);
-        obstacles.add(smallTree);
-        obstacles.add(largeTree);
-        obstacles.add(car);
-        obstacles.add(truck);
-        return obstacles;
+        XmlMapper xmlMapper = new XmlMapper();
+
+        try {
+
+            XmlMapper mapper = new XmlMapper();
+
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            Obstacle[] obs = mapper.readValue(new File("obstacles.xml"), Obstacle[].class);
+            System.out.println("Good");
+            return new ArrayList<>(List.of(obs));
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error");
+        }
+
+        return null;
+
 
     }
 
@@ -130,7 +133,18 @@ public class XMLUtil {
      * @param obstacles the new list of obstacles
      */
     public static void writeObstacles (ArrayList<Obstacle> obstacles){
-        // TODO write obstacles to xml file
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            xmlMapper.writeValue(new File("obstacles.xml"), obstacles.toArray());
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error");
+        }
     }
 
     public static Airport[] importAirports(String fileName) throws IOException {

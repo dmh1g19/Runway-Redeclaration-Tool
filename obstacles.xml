@@ -1,0 +1,56 @@
+<Objects>
+  <item>
+    <name>Tree</name>
+    <height>5</height>
+    <length>50</length>
+    <width>2</width>
+  </item>
+  <item>
+    <name>Civilian Small Plane</name>
+    <height>3</height>
+    <length>8</length>
+    <width>5</width>
+  </item>
+  <item>
+    <name>Small Commercial Plane</name>
+    <height>11</height>
+    <length>30</length>
+    <width>10</width>
+  </item>
+  <item>
+    <name>Large Commercial Plane</name>
+    <height>19</height>
+    <length>64</length>
+    <width>30</width>
+  </item>
+  <item>
+    <name>Tree</name>
+    <height>5</height>
+    <length>50</length>
+    <width>2</width>
+  </item>
+  <item>
+    <name>Small Tree</name>
+    <height>5</height>
+    <length>70</length>
+    <width>5</width>
+  </item>
+  <item>
+    <name>Large Tree</name>
+    <height>20</height>
+    <length>70</length>
+    <width>5</width>
+  </item>
+  <item>
+    <name>Car</name>
+    <height>2</height>
+    <length>5</length>
+    <width>5</width>
+  </item>
+  <item>
+    <name>Truck</name>
+    <height>3</height>
+    <length>11</length>
+    <width>6</width>
+  </item>
+</Objects>

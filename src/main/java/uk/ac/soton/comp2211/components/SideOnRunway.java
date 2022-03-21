@@ -5,12 +5,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.airport.State;
 import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
 import uk.ac.soton.comp2211.scene.CalculationsScene;
+
+import java.util.Optional;
 
 public class SideOnRunway extends RunwayView {
 
@@ -30,7 +33,8 @@ public class SideOnRunway extends RunwayView {
     private double RESALen;
     private double ALSUp;
     private double ALSAcross;
-    private GraphicsContext gc;
+    private GraphicsContext gc =  getGraphicsContext2D();
+    private boolean r2L = true;
 
     public SideOnRunway(double width, double height){
         super(width,height );
@@ -44,9 +48,16 @@ public class SideOnRunway extends RunwayView {
     //need to add stopway and clearway to the view.
     public void representView(RedeclaredRunway runway1) {
 
+        if (r2L){
+            this.setScaleX(-1);
+        }
         //Moved from constructor
         this.runway = runway1;
         this.obstacle = runway.getObstacle();
+
+
+        width=getWidth();
+        height= getHeight();
 
         obPos = (((double) obstacle.getPosition())/runway.getRunway().getLength())*width; //relative position of object
         obLen = (((double)obstacle.getLength())/runway.getRunway().getLength())*width; //relative length of object
@@ -58,22 +69,34 @@ public class SideOnRunway extends RunwayView {
         sixtyLen = (60.0/runway.getRunway().getLength())*width;
         RESALen = (240.0/runway.getRunway().getLength())*width;
 
+
         // length and height of ALS slope relative to view size are calculated.
         ALSUp = 4 * obstacle.getHeight();
         ALSAcross = 50 * ALSUp;
         ALSUp = (ALSUp / runway.getRunway().getLength()) * height * 10;
         ALSAcross = (ALSAcross /runway.getRunway().getLength()) * height;
-        gc = getGraphicsContext2D();
+
 
         //Original Function
 
         gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
 
+
         gc.setFill(Color.BLACK);
         gc.fillRect(0, (height - 20), width, 20);
 
-        gc.fillText("Width : Height = 1 : 10",0,15);
+        if(r2L){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,70,50)));
+            gc.fillText("Width : Height = 1 : 10",0,15);
+            gc.restore();
+        }else{
+            gc.fillText("Width : Height = 1 : 10",0,15);
+        }
+
+
+
 
         //the obstructions dimensions relative to the view size are calculated.
         gc.setFill(Color.RED);
@@ -83,7 +106,15 @@ public class SideOnRunway extends RunwayView {
         double[] xPoints = {obPos,obPos+5,obPos-5};
         double[] yPoints = {(height - 58),(height - 65), (height - 65) };
         gc.fillPolygon(xPoints ,yPoints , 3);
-        gc.fillText("Obstacle",obPos - 25, (height - 85));
+
+        if(r2L){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,obPos,(height - 85) )));
+            gc.fillText("Obstacle",obPos - 25, (height - 85));
+            gc.restore();
+        }else{
+            gc.fillText("Obstacle",obPos - 25, (height - 85));
+        }
 
         //A compass in the top right of the screen that shows the bearing of the runway
         gc.setFill(Color.WHITE);
@@ -94,9 +125,18 @@ public class SideOnRunway extends RunwayView {
         gc.transform(new Affine(new Rotate(runway.getRunway().getBearing()*10,(width - 75),(height/10 +25))));
         gc.strokeLine(width - 75, height/10 +25, width - 75, height/10 + 7  );
         gc.restore();
-        gc.setFill(Color.BLACK);
-        gc.fillText("Bearing" ,width - 45,height/10 +30 );
-        gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+        gc.setFill(Color.RED);
+        if(r2L){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,width - 75,height/10 + 7 )));
+            gc.fillText("Bearing" ,width - 45,height/10 +30 );
+            gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+            gc.restore();
+        }else{
+            gc.fillText("Bearing" ,width - 45,height/10 +30 );
+            gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+        }
+
 
         //right now just shows take off view but buttons will be installed to switch between the two
         takeOffView();
@@ -104,6 +144,9 @@ public class SideOnRunway extends RunwayView {
 
     //shows planes taking off away from and towards and obstruction.
     public void takeOffView(){
+
+        gc.setFill(Color.BLACK);
+
         gc.setLineWidth(3);
         gc.setStroke(Color.DARKGREEN);
         //taking off away from an obstruction
@@ -112,20 +155,35 @@ public class SideOnRunway extends RunwayView {
             gc.setLineWidth(3);
             gc.setStroke(Color.ORANGE);
             gc.strokeLine(obPos+(obLen/2), (height - 50),obPos+(obLen/2) + blastAllowance ,(height - 50));
-            gc.fillText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) );
+            if(r2L){
+                reflectText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) );
+            }else{
+                gc.fillText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) );
+            }
 
             gc.setStroke(Color.DARKGREEN);
             gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -50),obPos+(obLen/2) + blastAllowance+TODALen, (height - 50));
-            gc.fillText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65));
+
+            if(r2L){
+                reflectText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65));
+            }else{
+                gc.fillText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65));
+            }
         }
         //taking off towards an obstruction
         else{
             gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
-            gc.fillText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65));
+            if(r2L){
+                reflectText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65));
+            }else{
+                gc.fillText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65));
+            }
+
 
             //if the RESA is less than the distance of runway taken away by the obstacle then that distance is used instead of RESA
             if ((( obstacle.getPosition() - (obstacle.getLength()/2)) - runway.getRunway().getTODA()  ) > 300){
                 gc.setStroke(Color.ORANGE);
+
                 gc.strokeLine( (obPos-(obLen/2)),
                         (height - 50),
                         TODALen ,
@@ -137,7 +195,14 @@ public class SideOnRunway extends RunwayView {
 
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine((TODALen + sixtyLen + 1),(height - 50),(TODALen + sixtyLen +RESALen - 1),(height - 50));
-                gc.fillText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65));
+
+                if(r2L){
+                    reflectText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65));
+                }else{
+                    gc.fillText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65));
+                }
+
+
             }
 
             gc.setLineWidth(2);
@@ -145,6 +210,8 @@ public class SideOnRunway extends RunwayView {
             gc.strokeLine(TODALen,(height - 20),TODALen + ALSAcross ,(height - 20) - ALSUp );
 
         }
+
+
     }
 
     public void landingView(){
@@ -191,6 +258,13 @@ public class SideOnRunway extends RunwayView {
             gc.strokeLine((LDALen + sixtyLen + 1),(height - 50),(LDALen + sixtyLen +RESALen - 1),(height - 50));
             gc.fillText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65));
             }
+        }
+
+        private void reflectText (String s, double x , double y){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,x,y)));
+            gc.fillText(s,x,y);
+            gc.restore();
         }
 
         @Override

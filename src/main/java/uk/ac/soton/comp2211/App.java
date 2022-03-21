@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import uk.ac.soton.comp2211.airport.Airport;
+import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.PredefinedObstacles;
@@ -34,6 +35,7 @@ import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,7 +99,9 @@ public class App extends Application {
             System.out.println("Error");
         }
 
-        //loadAirports();
+
+        PredefinedObstacles.init();
+        loadAirports();
 
         //defaultScene();
         //loadSelection();
@@ -213,7 +217,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        PredefinedObstacles.init();
+
         launch();
     }
 
