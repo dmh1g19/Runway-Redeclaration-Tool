@@ -39,22 +39,19 @@ public class TopDownRunway extends RunwayView {
     public TopDownRunway( double width, double height)  {
         super(width, height);
 
-        this.runway = null;
-        this.obstacle = runway.getObstacle();
+        this.runway = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
+        this.obstacle = new ObstacleOnRunway("test", 12, 0, 3646, 0,5);
 
         setWidth(700);
         setHeight(400);
 
-        draw(null);
+        //Arguably we could remove this cus its not nessesarry to draw
+        draw(new RedeclaredRunway(runway,obstacle,Direction.TOWARDS), State.TAKEOFF);
     }
+
 
     @Override
-    public void draw(RedeclaredRunway runway, State state) {
-
-    }
-
-
-    public void draw(RedeclaredRunway runway1) {
+    public void draw(RedeclaredRunway runway1, State state) {
 
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
@@ -207,14 +204,8 @@ public class TopDownRunway extends RunwayView {
         gc.restore();
     }
 
-    public void runwayUpdated(RedeclaredRunway runway){
-        System.out.println("runway Updated");
-        System.out.println(runway.getRunway().getName());
-        draw(runway);
-    }
 
-    public void stateChanged(State state) {
 
-    }
+   
 
 }

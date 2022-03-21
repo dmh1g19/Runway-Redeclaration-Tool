@@ -41,17 +41,13 @@ public class SideOnRunway extends RunwayView {
 
 
 
-        representView(runway);
 
     }
 
-    @Override
-    public void draw(RedeclaredRunway runway, State state) {
-
-    }
 
     //need to add stopway and clearway to the view.
-    public void representView(RedeclaredRunway runway1) {
+    @Override
+    public void draw(RedeclaredRunway runway1, State state) {
 
         if (r2L){
             this.setScaleX(-1);
@@ -144,7 +140,12 @@ public class SideOnRunway extends RunwayView {
 
 
         //right now just shows take off view but buttons will be installed to switch between the two
-        takeOffView();
+        if(state==State.TAKEOFF){
+            takeOffView();
+        }else{
+            landingView();
+        }
+
     }
 
     //shows planes taking off away from and towards and obstruction.
@@ -273,8 +274,6 @@ public class SideOnRunway extends RunwayView {
         }
 
 
-        public void runwayUpdated(RedeclaredRunway runway, State state){
-            representView(runway);
-        }
+
     }
 
