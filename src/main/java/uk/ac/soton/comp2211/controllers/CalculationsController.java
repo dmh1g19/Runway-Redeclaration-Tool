@@ -1,12 +1,15 @@
 package uk.ac.soton.comp2211.controllers;
 
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.xml.SimpleConstructorNamespaceHandler;
 import uk.ac.soton.comp2211.airport.*;
@@ -71,6 +74,20 @@ public class CalculationsController {
             view.getObstacleHeight().setText(String.valueOf(newObs.getHeight()));
             view.getObstacleWidth().setText(String.valueOf(newObs.getWidth()));
             view.getObstacleLength().setText(String.valueOf(newObs.getLength()));
+
+
+            view.getObstacleHeight().setStyle("-fx-text-box-border: cyan;");
+            view.getObstacleWidth().setStyle("-fx-text-box-border: cyan;");
+            view.getObstacleLength().setStyle("-fx-text-box-border: cyan;");
+            PauseTransition pauseTransition = new PauseTransition(
+                    Duration.seconds(1)
+            );
+            pauseTransition.setOnFinished(e -> {
+                view.getObstacleHeight().setStyle(null);
+                view.getObstacleWidth().setStyle(null);
+                view.getObstacleLength().setStyle(null);
+            });
+            pauseTransition.play();
         });
 
         //Obstacle Info
@@ -169,12 +186,23 @@ public class CalculationsController {
             int obstacleWidth = Integer.parseInt(view.getObstacleWidth().getText());
             int obstacleLength = Integer.parseInt(view.getObstacleLength().getText());
 
+            int distance = Integer.parseInt(view.getDistanceLowerThreshold().getText());
+            ObstacleOnRunway obstacleOnRunway = new ObstacleOnRunway("Obs", obstacleHeight, obstacleLength, obstacleWidth, distance, 0);
+
 
             if (view.getSectionLowerThreshold().getValue().equals(Direction.TOWARDS)) {
-                int distance = Integer.parseInt(view.getDistanceLowerThreshold().getText());
-                ObstacleOnRunway obstacleOnRunway = new ObstacleOnRunway("Obs", obstacleHeight, obstacleLength, obstacleWidth, distance, 0);
-                try {
+             try {
                     RedeclaredRunway redeclaredRunway = Calculator.TowardsObstacle(view.getRunwaySelect().getValue().getFirst(), obstacleOnRunway);
+
+                    model.setRedeclaredRunway(redeclaredRunway);
+                    model.setState(State.LANDING);
+                } catch (Calculator.IncorrectObstacleException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (view.getSectionLowerThreshold().getValue().equals(Direction.AWAYOVER)) {
+                try {
+                    RedeclaredRunway redeclaredRunway = Calculator.AwayFromObstacle(view.getRunwaySelect().getValue().getFirst(), obstacleOnRunway);
 
                     model.setRedeclaredRunway(redeclaredRunway);
                     model.setState(State.LANDING);
