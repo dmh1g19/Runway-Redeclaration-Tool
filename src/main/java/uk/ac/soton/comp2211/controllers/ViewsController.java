@@ -30,7 +30,9 @@ public class ViewsController {
             view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), newV);
         });
 
-
+        if (!(model.redeclaredRunwayProperty().get() == null) && !(model.stateProperty().get() == null)) {
+            view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.stateProperty().get());
+        }
     }
 
 }

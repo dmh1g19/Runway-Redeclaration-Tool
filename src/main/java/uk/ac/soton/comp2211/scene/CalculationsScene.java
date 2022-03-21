@@ -40,7 +40,7 @@ public class CalculationsScene extends BaseScene {
         //setting default current runway values provided to views if they are opened without first doing a calculation
         //TODO remove these and replace them with error handeling so you cant expand views without first defining a runway
         currentRunway = runwa;
-        currentRunway.setObstacle( new ObstacleOnRunway("test", 12, 0, 3646, 0,5));
+        //currentRunway.setObstacle( new ObstacleOnRunway("test", 12, 0, 3646, 0,5));
         try{
             currentRunway = Calculator.TowardsObstacle(currentRunway, new ObstacleOnRunway("test", 12, 0, 3646, 0,5)).getRunway();
         }catch(Exception ignored) {}
@@ -228,7 +228,7 @@ public class CalculationsScene extends BaseScene {
 
         try {
             chosenDistance = Integer.parseInt(distanceFirstInput.getCharacters().toString());
-            chosenRunway.setObstacle(new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
+            //chosenRunway.setObstacle(new ObstacleOnRunway(chosenObstacle,chosenDistance,chosenDistanceFromCentreLine));
             if (directionSelect.getValue()){
             //    currentRunway = Calculator.TowardsObstacle(chosenRunway);
             } else {

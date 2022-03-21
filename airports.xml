@@ -16,7 +16,6 @@
           <clearwayLength>0</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </first>
         <second>
           <name>27R</name>
@@ -31,7 +30,6 @@
           <clearwayLength>78</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </second>
       </runways>
       <runways>
@@ -48,7 +46,6 @@
           <clearwayLength>0</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </first>
         <second>
           <name>27L</name>
@@ -63,7 +60,6 @@
           <clearwayLength>0</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </second>
       </runways>
     </runways>
@@ -85,7 +81,6 @@
           <clearwayLength>0</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </first>
         <second>
           <name>27R</name>
@@ -100,7 +95,6 @@
           <clearwayLength>78</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </second>
       </runways>
       <runways>
@@ -117,7 +111,6 @@
           <clearwayLength>0</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </first>
         <second>
           <name>27L</name>
@@ -132,7 +125,6 @@
           <clearwayLength>0</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
-          <obstacle/>
         </second>
       </runways>
     </runways>

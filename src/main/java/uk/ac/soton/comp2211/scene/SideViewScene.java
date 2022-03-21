@@ -20,10 +20,10 @@ public class SideViewScene extends BaseScene {
 
         Runway runway = new Runway("Runway01",3500,35,25,2602,1902,1902,1595, 10);
         ObstacleOnRunway obstacle = new ObstacleOnRunway("Box",10,100,0, 2000, 5);
-        runway.setObstacle(obstacle);
+        //runway.setObstacle(obstacle);
         try{
             runway = Calculator.TakeOffTowardsObstacle(runway,obstacle);
-            runway.setObstacle(obstacle);
+            //runway.setObstacle(obstacle);
         }
         catch(Exception e){
 

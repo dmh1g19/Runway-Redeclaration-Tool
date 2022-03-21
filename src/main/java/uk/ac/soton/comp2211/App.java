@@ -111,6 +111,8 @@ public class App extends Application {
             AirportModel model = new AirportModel(XMLUtil.importAirports("airports.xml"));
             model.setPreDefinedObstacles(XMLUtil.importObstacles("obstacles.xml"));
 
+            System.out.println(model.airportListProperty().get(0).getRunways()[0].getFirst().getTORA());
+
             SelectionView view = new SelectionView();
             SelectionController controller = new SelectionController(view, model);
 

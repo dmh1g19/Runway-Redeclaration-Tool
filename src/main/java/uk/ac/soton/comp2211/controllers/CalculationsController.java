@@ -189,6 +189,7 @@ public class CalculationsController {
             int distance = Integer.parseInt(view.getDistanceLowerThreshold().getText());
             ObstacleOnRunway obstacleOnRunway = new ObstacleOnRunway("Obs", obstacleHeight, obstacleLength, obstacleWidth, distance, 0);
 
+            System.out.println(view.getRunwaySelect().getValue().getFirst().getLDA());
 
             if (view.getSectionLowerThreshold().getValue().equals(Direction.TOWARDS)) {
              try {
@@ -231,6 +232,7 @@ public class CalculationsController {
         newWindow.setScene(new Scene(viewsView.getView(), width, height));
         newWindow.setResizable(false);
         newWindow.show();
+
     }
 
     public void loadSideOnView() {

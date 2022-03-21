@@ -1,5 +1,8 @@
 package uk.ac.soton.comp2211.airport;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,24 +13,19 @@ public class Runway {
     protected int width;
     protected double bearing;
 
+    @JacksonXmlProperty
     protected int TORA;
+    @JacksonXmlProperty
     protected int TODA;
+    @JacksonXmlProperty
     protected int ASDA;
+    @JacksonXmlProperty
     protected int LDA;
+    @JacksonXmlProperty
     protected int displacedThreshold = 0;
     protected int clearwayLength;
     protected int stopwayLength;
     protected int stopwayWidth;
-    protected ObstacleOnRunway obstacle;
-
-    public ObstacleOnRunway getObstacle() {
-        return obstacle;
-    }
-
-    public void setObstacle(ObstacleOnRunway obstacle) {
-        this.obstacle = obstacle;
-    }
-
 
     public String getName() {
         return name;
@@ -147,9 +145,6 @@ public class Runway {
         LDA = runway.getLDA();
         clearwayLength = runway.getClearwayLength();
         displacedThreshold = runway.getDTL();
-        if(runway.getObstacle() != null){
-            obstacle = runway.getObstacle();
-        }
     }
 
 }
