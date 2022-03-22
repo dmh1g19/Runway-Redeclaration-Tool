@@ -8,6 +8,8 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import uk.ac.soton.comp2211.airport.*;
 
+import static java.lang.Math.round;
+
 public class TopDownRunway extends RunwayView {
 
     //scaled down runway dimension
@@ -36,6 +38,8 @@ public class TopDownRunway extends RunwayView {
     double scaledObjDFCL;
     double scaledObjWidth;
 
+    double bearing;
+
     Direction direction;
 
     public TopDownRunway( double width, double height)  {
@@ -43,9 +47,6 @@ public class TopDownRunway extends RunwayView {
 
         this.runway = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
         this.obstacle = new ObstacleOnRunway("test", 12, 0, 3646, 0,5);
-
-        //Arguably we could remove this cus its not nessesarry to draw
-        draw(new RedeclaredRunway(runway,obstacle,Direction.TOWARDS), State.TAKEOFF);
     }
 
     @Override
@@ -57,6 +58,7 @@ public class TopDownRunway extends RunwayView {
 
         //runway.setDTL(300);
 
+        this.bearing = runway.getBearing();
         this.halfHeight = getHeight()/2;
         this.halfWidth = getWidth()/2;
         this.startOfRunwayX = halfWidth-(runwayLen/2);
@@ -101,6 +103,7 @@ public class TopDownRunway extends RunwayView {
         gc.strokeLine(startOfRunwayX,halfHeight,startOfRunwayX+runwayLen,halfHeight);
 
         //LEFT THR MARKING
+        //thresholdL(String.valueOf(round(bearing)),"L");
         thresholdL("09","L");
         //RIGHT THR MARKING
         thresholdR("27","R");
@@ -128,44 +131,87 @@ public class TopDownRunway extends RunwayView {
         else if (direction == Direction.AWAYOVER) {
             landingAndTakeOffAwayFromObj_LowestThreshold();
         }
+        //else if (for when direction TOWARDS for highest threshold) {
+        //    landingAndTakeOffTowardsObj_HighestThreshold();
+        //}
+        //else if (for when direction AWAY for highest threshold) {
+        //    landingAndTakeOffAwayFromObj_HighestThreshold();
+        //}
 
-        legend();
+
+    legend();
     }
 
     public void landingAndTakeOffAwayFromObj_LowestThreshold() {
         //TODA
         gc.setStroke(Color.RED);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,50,startOfRunwayX+scaledObjPos+scaledObjLen,scaledTODA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,50,scaledTODA);
         //TORA
         gc.setStroke(Color.BLUE);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,70,startOfRunwayX+scaledObjPos+scaledObjLen,scaledTORA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,70,scaledTORA);
         //LDA
         gc.setStroke(Color.YELLOW);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL,90,startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL,scaledLDA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL,90,scaledLDA);
         //ASDA
         gc.setStroke(Color.ORANGE);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,110,startOfRunwayX+scaledObjPos+scaledObjLen,scaledASDA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,110,scaledASDA);
         //RESA
         gc.setStroke(Color.GREEN);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL, 130, startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL, scaledRESA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL, 130,scaledRESA);
     }
 
     public void landingAndTakeOffTowardsObj_LowestThreshold() {
         //TODA
         gc.setStroke(Color.RED);
-        lineMarking(startOfRunwayX, 50, startOfRunwayX, scaledTODA);
+        lineMarking(startOfRunwayX, 90, scaledTODA);
         //TORA
         gc.setStroke(Color.BLUE);
-        lineMarking(startOfRunwayX, 70, startOfRunwayX, scaledTORA);
+        lineMarking(startOfRunwayX, 70, scaledTORA);
         //LDA
         gc.setStroke(Color.YELLOW);
-        lineMarking(startOfRunwayX+scaledDTL, 90, startOfRunwayX+scaledDTL, scaledLDA);
+        lineMarking(startOfRunwayX+scaledDTL, 50, scaledLDA);
         //ASDA
         gc.setStroke(Color.ORANGE);
-        lineMarking(startOfRunwayX, 110, startOfRunwayX, scaledASDA);
+        lineMarking(startOfRunwayX, 110, scaledASDA);
         //RESA
-        gc.setStroke(Color.GREEN);
-        lineMarking(startOfRunwayX+scaledDTL, 130, startOfRunwayX+scaledDTL, scaledRESA);
+        gc.setStroke(Color.WHITE);
+        lineMarking((startOfRunwayX-scaledRESA)+scaledObjPos, 50, scaledRESA);
+    }
+
+    public void landingAndTakeOffTowardsObj_HighestThreshold() {
+        //TODA
+        gc.setStroke(Color.RED);
+        lineMarking(endOfRunwayX-scaledTODA, 90, scaledTODA);
+        //TORA
+        gc.setStroke(Color.BLUE);
+        lineMarking(endOfRunwayX-scaledTODA, 70, scaledTORA);
+        //LDA
+        gc.setStroke(Color.YELLOW);
+        lineMarking(endOfRunwayX-scaledLDA+scaledDTL, 50, scaledLDA);
+        //ASDA
+        gc.setStroke(Color.ORANGE);
+        lineMarking(endOfRunwayX-scaledASDA, 110, scaledASDA);
+        //RESA
+        gc.setStroke(Color.WHITE);
+        lineMarking(endOfRunwayX-scaledRESA, 50, scaledRESA);
+    }
+
+    public void landingAndTakeOffAwayFromObj_HighestThreshold() {
+        //TODA
+        gc.setStroke(Color.RED);
+        lineMarking(startOfRunwayX-scaledTODA+scaledObjPos, 90, scaledTODA);
+        //TORA
+        gc.setStroke(Color.BLUE);
+        lineMarking(startOfRunwayX-scaledTORA+scaledObjPos, 70, scaledTORA);
+        //LDA
+        gc.setStroke(Color.YELLOW);
+        lineMarking(startOfRunwayX-scaledLDA+scaledObjPos+scaledDTL, 50, scaledLDA);
+        //ASDA
+        gc.setStroke(Color.ORANGE);
+        lineMarking(startOfRunwayX-scaledASDA+scaledObjPos, 110, scaledASDA);
+        //RESA
+        gc.setStroke(Color.WHITE);
+        lineMarking(startOfRunwayX-scaledRESA+scaledObjPos, 50, scaledRESA);
     }
 
     public double scaleToRunwayLength (double object) {
@@ -176,13 +222,13 @@ public class TopDownRunway extends RunwayView {
         return (runwayWidth/runway.getWidth())*object;
     }
 
-    public void lineMarking(double start, double spacing, double end, double distance) {
+    public void lineMarking(double start, double spacing, double distance) {
         //set all markings to 0 if there is no object on the runway
         if (distance <= 0) {
             distance = 0;
         }
         else {
-            gc.strokeLine(start,halfHeight-spacing,end+distance,halfHeight-spacing);
+            gc.strokeLine(start,halfHeight-spacing,start+distance,halfHeight-spacing);
         }
     }
 
@@ -218,7 +264,7 @@ public class TopDownRunway extends RunwayView {
         gc.setFill(Color.YELLOW);
         gc.fillRoundRect(startOfRunwayX,340, 10,10,5,5);
         gc.fillText(": LDA " + runway.getLDA(),startOfRunwayX+15,350);
-        gc.setFill(Color.GREEN);
+        gc.setFill(Color.WHITE);
         gc.fillRoundRect(startOfRunwayX,360, 10,10,5,5);
         gc.fillText(": RESA " + runway.getClearwayLength(),startOfRunwayX+15,370);
         gc.setFill(Color.ORANGE);
