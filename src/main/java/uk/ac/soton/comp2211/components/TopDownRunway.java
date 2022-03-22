@@ -1,6 +1,5 @@
 package uk.ac.soton.comp2211.components;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -45,8 +44,11 @@ public class TopDownRunway extends RunwayView {
     public TopDownRunway( double width, double height)  {
         super(width, height);
 
-        this.runway = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
-        this.obstacle = new ObstacleOnRunway("test", 12, 0, 3646, 0,5);
+        this.runway = new Runway("09L",3000,0,0,0,0,0,0,0,0);
+        this.obstacle = new ObstacleOnRunway("test", 0, 0, 0, 0,0);
+
+        //tmp screen with nothing on it
+        draw(new RedeclaredRunway(runway,obstacle,Direction.TOWARDS), State.TAKEOFF);
     }
 
     @Override
@@ -175,7 +177,12 @@ public class TopDownRunway extends RunwayView {
         lineMarking(startOfRunwayX, 110, scaledASDA);
         //RESA
         gc.setStroke(Color.WHITE);
-        lineMarking((startOfRunwayX-scaledRESA)+scaledObjPos, 50, scaledRESA);
+        if (scaledObjPos > 0) {
+            lineMarking((startOfRunwayX-scaledRESA)+scaledObjPos+scaledDTL, 50, scaledRESA);
+        }
+        else {
+            lineMarking(startOfRunwayX+scaledDTL, 50, scaledRESA);
+        }
     }
 
     public void landingAndTakeOffTowardsObj_HighestThreshold() {
@@ -257,18 +264,18 @@ public class TopDownRunway extends RunwayView {
     public void legend() {
         gc.setFill(Color.RED);
         gc.fillRoundRect(startOfRunwayX,300, 10,10,5,5);
-        gc.fillText(": TODA " + runway.getTODA(),startOfRunwayX+15,310);
+        gc.fillText(": TODA " + runway.getTODA() + "m",startOfRunwayX+15,310);
         gc.setFill(Color.BLUE);
         gc.fillRoundRect(startOfRunwayX,320, 10,10,5,5);
-        gc.fillText(": TORA " + runway.getTORA(),startOfRunwayX+15,330);
+        gc.fillText(": TORA " + runway.getTORA() + "m",startOfRunwayX+15,330);
         gc.setFill(Color.YELLOW);
         gc.fillRoundRect(startOfRunwayX,340, 10,10,5,5);
-        gc.fillText(": LDA " + runway.getLDA(),startOfRunwayX+15,350);
+        gc.fillText(": LDA " + runway.getLDA() + "m",startOfRunwayX+15,350);
         gc.setFill(Color.WHITE);
         gc.fillRoundRect(startOfRunwayX,360, 10,10,5,5);
-        gc.fillText(": RESA " + runway.getClearwayLength(),startOfRunwayX+15,370);
+        gc.fillText(": RESA " + 240 + "m",startOfRunwayX+15,370);
         gc.setFill(Color.ORANGE);
         gc.fillRoundRect(startOfRunwayX,380, 10,10,5,5);
-        gc.fillText(": ASDA " + runway.getASDA(),startOfRunwayX+15,390);
+        gc.fillText(": ASDA " + runway.getASDA() + "m",startOfRunwayX+15,390);
     }
 }
