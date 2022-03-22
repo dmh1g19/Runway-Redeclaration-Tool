@@ -127,3 +127,7 @@ AnchorPane {
 .error {
     -fx-text-box-border: red;
 }
+.runwayToShow {
+    -fx-pref-width: 150;
+    -fx-font-size: 14;
+}

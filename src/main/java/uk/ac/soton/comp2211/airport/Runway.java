@@ -1,11 +1,13 @@
 package uk.ac.soton.comp2211.airport;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import java.util.Map;
 import java.util.Optional;
-
 
 public class Runway {
     protected String name;
@@ -21,7 +23,6 @@ public class Runway {
     protected int ASDA;
     @JacksonXmlProperty
     protected int LDA;
-    @JacksonXmlProperty
     protected int displacedThreshold = 0;
     protected int clearwayLength;
     protected int stopwayLength;

@@ -16,9 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import uk.ac.soton.comp2211.airport.Direction;
-import uk.ac.soton.comp2211.airport.Obstacle;
-import uk.ac.soton.comp2211.airport.PhysicalRunway;
+import javafx.util.Pair;
+import uk.ac.soton.comp2211.airport.*;
 
 import java.awt.*;
 
@@ -47,6 +46,7 @@ public class CalculationsView extends BaseView {
 
     private Button topDownView = new Button("Top Down View");
     private Button sideOnView = new Button("Side On View");
+    private ComboBox<Pair<Runway, State>> runwayToShow = new ComboBox<>();
 
     public ComboBox<PhysicalRunway> getRunwaySelect() {
         return runwaySelect;
@@ -108,6 +108,10 @@ public class CalculationsView extends BaseView {
         return backButton;
     }
 
+    public ComboBox<Pair<Runway, State>> getRunwayToShow() {
+        return runwayToShow;
+    }
+
     public CalculationsView() {
         view = createView();
     }
@@ -136,8 +140,9 @@ public class CalculationsView extends BaseView {
 
         sideOnView.getStyleClass().add("viewButton");
         topDownView.getStyleClass().add("viewButton");
+        runwayToShow.getStyleClass().add("runwayToShow");
 
-        vbox.getChildren().addAll(sideOnView, topDownView);
+        vbox.getChildren().addAll(sideOnView, topDownView, runwayToShow);
 
         return vbox;
     }

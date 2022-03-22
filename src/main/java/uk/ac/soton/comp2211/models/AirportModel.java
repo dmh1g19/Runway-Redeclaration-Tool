@@ -9,8 +9,11 @@ import javafx.beans.property.adapter.JavaBeanObjectProperty;
 import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 import uk.ac.soton.comp2211.airport.*;
 import uk.ac.soton.comp2211.views.SelectionView;
+
+import java.util.HashMap;
 
 public class AirportModel {
 
@@ -21,6 +24,8 @@ public class AirportModel {
     private SimpleObjectProperty<RedeclaredRunway> redeclaredRunway = new SimpleObjectProperty<>();
     private SimpleObjectProperty<State> state = new SimpleObjectProperty<>();
 
+    private SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
+
 
     public AirportModel() {}
 
@@ -28,11 +33,19 @@ public class AirportModel {
         this.airportList.setValue(FXCollections.observableArrayList(airportList));
     }
 
+    public Pair<Runway,State>[] getRunwayStates(PhysicalRunway physicalRunway) {
+        Pair<Runway,State>[] runwayStates = new Pair[4];
+        runwayStates[0] = new Pair(physicalRunway.getFirst(), State.LANDING);
+        runwayStates[1] = new Pair(physicalRunway.getFirst(), State.TAKEOFF);
+        runwayStates[2] = new Pair(physicalRunway.getSecond(), State.LANDING);
+        runwayStates[3] = new Pair(physicalRunway.getSecond(), State.TAKEOFF);
+        return runwayStates;
+    }
+
 
     public void setRedeclaredRunway(RedeclaredRunway redeclaredRunway) {
         this.redeclaredRunway.set(redeclaredRunway);
     }
-
 
     public void setState(State state) {
         this.state.set(state);
@@ -64,6 +77,10 @@ public class AirportModel {
 
     public SimpleObjectProperty<State> stateProperty() {
         return state;
+    }
+
+    public SimpleObjectProperty<Pair<RedeclaredRunway, RedeclaredRunway>> redeclaredRunwaysProperty() {
+        return redeclaredRunways;
     }
 
 }

@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.xml.SimpleConstructorNamespaceHandler;
 import uk.ac.soton.comp2211.airport.*;
@@ -20,6 +21,8 @@ import uk.ac.soton.comp2211.utility.Calculator;
 import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.ViewsView;
+
+import java.util.Objects;
 
 public class CalculationsController {
 
@@ -55,6 +58,7 @@ public class CalculationsController {
         view.getRunwaySelect().valueProperty().addListener((observableValue, oldR, newR) -> {
             view.getLowerThreshold().setText(newR.getLowerThreshold());
             view.getUpperThreshold().setText(newR.getUpperThreshold());
+            view.getRunwayToShow().setItems(FXCollections.observableArrayList(model.getRunwayStates(newR)));
         });
 
         //Obstacle
@@ -149,6 +153,31 @@ public class CalculationsController {
         view.getTopDownView().setOnAction(e -> loadTopDownView());
         view.getSideOnView().setOnAction(e -> loadSideOnView());
 
+        //RunwayToShow
+        view.getRunwayToShow().setItems(FXCollections.observableArrayList(
+                model.getRunwayStates(view.getRunwaySelect().getValue())));
+        view.getRunwayToShow().getSelectionModel().selectFirst();
+        view.getRunwayToShow().setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Pair<Runway, State> runwayStatePair) {
+                return runwayStatePair.getKey().getName() + " " + runwayStatePair.getValue().toString();
+            }
+
+            @Override
+            public Pair<Runway, State> fromString(String s) {
+                return null;
+            }
+        });
+        view.getRunwayToShow().valueProperty().addListener((observableValue, oldPair, newPair) -> {
+            if (model.redeclaredRunwaysProperty().get() == null) return;
+            if (Objects.equals(model.redeclaredRunwaysProperty().get().getKey().getRunway().getName(), newPair.getKey().getName())) {
+                model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getKey());
+            } else {
+                model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getValue());
+            }
+            model.stateProperty().set(newPair.getValue());
+        });
+
         //Calculate Button
         view.getCalculateButton().setOnAction(e -> {
             view.getObstacleLength().getStyleClass().remove("error");
@@ -186,32 +215,51 @@ public class CalculationsController {
             int obstacleWidth = Integer.parseInt(view.getObstacleWidth().getText());
             int obstacleLength = Integer.parseInt(view.getObstacleLength().getText());
 
-            int distance = Integer.parseInt(view.getDistanceLowerThreshold().getText());
-            ObstacleOnRunway obstacleOnRunway = new ObstacleOnRunway("Obs", obstacleHeight, obstacleLength, obstacleWidth, distance, 0);
+            int lowerDistance = Integer.parseInt(view.getDistanceLowerThreshold().getText());
+            int upperDistance = Integer.parseInt(view.getDistanceUpperThreshold().getText());
+            ObstacleOnRunway lowerObstacleOnRunway = new ObstacleOnRunway
+                    ("lowerObs", obstacleHeight, obstacleLength, obstacleWidth, lowerDistance, 0);
 
-            System.out.println(view.getRunwaySelect().getValue().getFirst().getLDA());
+            ObstacleOnRunway upperObstacleOnRunway = new ObstacleOnRunway
+                    ("upperObs", obstacleHeight, obstacleLength, obstacleWidth, upperDistance, 0);
 
+            RedeclaredRunway redeclaredRunwayLower = null;
             if (view.getSectionLowerThreshold().getValue().equals(Direction.TOWARDS)) {
-             try {
-                    RedeclaredRunway redeclaredRunway = Calculator.TowardsObstacle(view.getRunwaySelect().getValue().getFirst(), obstacleOnRunway);
-
-                    model.setRedeclaredRunway(redeclaredRunway);
-                    model.setState(State.LANDING);
-                } catch (Calculator.IncorrectObstacleException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            if (view.getSectionLowerThreshold().getValue().equals(Direction.AWAYOVER)) {
                 try {
-                    RedeclaredRunway redeclaredRunway = Calculator.AwayFromObstacle(view.getRunwaySelect().getValue().getFirst(), obstacleOnRunway);
-
-                    model.setRedeclaredRunway(redeclaredRunway);
-                    model.setState(State.LANDING);
+                    redeclaredRunwayLower = Calculator.TowardsObstacle(view.getRunwaySelect().getValue().getFirst(), lowerObstacleOnRunway);
+                } catch (Calculator.IncorrectObstacleException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                try {
+                    redeclaredRunwayLower = Calculator.AwayFromObstacle(view.getRunwaySelect().getValue().getFirst(), lowerObstacleOnRunway);
                 } catch (Calculator.IncorrectObstacleException ex) {
                     ex.printStackTrace();
                 }
             }
+            RedeclaredRunway redeclaredRunwayUpper = null;
+            if (view.getSectionUpperThreshold().getValue().equals(Direction.TOWARDS)) {
+                try {
+                    redeclaredRunwayUpper = Calculator.TowardsObstacle(view.getRunwaySelect().getValue().getSecond(), upperObstacleOnRunway);
+                } catch (Calculator.IncorrectObstacleException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                try {
+                    redeclaredRunwayUpper = Calculator.AwayFromObstacle(view.getRunwaySelect().getValue().getSecond(), upperObstacleOnRunway);
+                } catch (Calculator.IncorrectObstacleException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
+            if (Objects.equals(model.redeclaredRunwaysProperty().get().getKey().getRunway().getName(),
+                    view.getRunwayToShow().getValue().getKey().getName())) {
+                model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getKey());
+            } else {
+                model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getValue());
+            }
+            model.stateProperty().set(view.getRunwayToShow().getValue().getValue());
         });
     }
 
