@@ -11,7 +11,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import org.junit.jupiter.api.Test;
 import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.controllers.SelectionController;
@@ -24,6 +26,7 @@ public class SelectionView extends BaseView {
     //View Nodes
     ComboBox<Airport> airportSelectionList = new ComboBox<>();
     Button selectButton = new Button("Select");
+    Text obsButton;
 
     public SelectionView() {
         view = createView();
@@ -37,6 +40,8 @@ public class SelectionView extends BaseView {
         return selectButton;
     }
 
+    public Text getObsButton() {return  obsButton;}
+
     public Parent createView() {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
@@ -49,8 +54,11 @@ public class SelectionView extends BaseView {
         vbox.getChildren().add(createSelection());
 
         gridPane.add(vbox, 1, 1);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(gridPane);
+        borderPane.setTop(createObsButton());
 
-        return gridPane;
+        return borderPane;
     }
 
     private Node createTitle() {
@@ -75,5 +83,14 @@ public class SelectionView extends BaseView {
 
         return hbox;
     }
+
+
+    private Node createObsButton() {
+        obsButton = new Text("Create Obstacle");
+        obsButton.getStyleClass().add( "airportIndicator");
+
+        return obsButton ;
+    }
+
 
 }

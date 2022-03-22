@@ -131,3 +131,7 @@ AnchorPane {
     -fx-pref-width: 150;
     -fx-font-size: 14;
 }
+
+.scroll-pane .viewport {
+    -fx-background-color: rgb(50, 50, 50);
+}

@@ -9,6 +9,7 @@ import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.views.MenuView;
+import uk.ac.soton.comp2211.views.ObstacleCreationView;
 import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.awt.*;
@@ -56,12 +57,22 @@ public class SelectionController {
             loadMenu();
         });
 
+        //Obstacle Button
+        view.getObsButton().setOnMouseClicked(e->{
+            loadObsCreation();
+        });
+
     }
 
     public void loadMenu() {
         MenuView menuView = new MenuView();
         MenuController menuController = new MenuController(menuView, model);
         view.getView().getScene().setRoot(menuView.getView());
+    }
+    public void loadObsCreation(){
+        ObstacleCreationView obstacleCreationView = new ObstacleCreationView();
+        ObstacleCreationController controller= new ObstacleCreationController(obstacleCreationView, model);
+        view.getView().getScene().setRoot(obstacleCreationView.getView());
     }
 
 }

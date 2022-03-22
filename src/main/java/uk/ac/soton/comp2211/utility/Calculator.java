@@ -134,6 +134,8 @@ public class Calculator {
      */
     public  static RedeclaredRunway AwayFromObstacle (Runway runway, ObstacleOnRunway obs) throws IncorrectObstacleException {
         validateObstacle(obs);
+       
+
         return new RedeclaredRunway(LandingOverObstacle(TakeOffAwayFromObstacle(runway ,obs),obs) , obs,Direction.AWAYOVER) ;
 
     }
