@@ -59,6 +59,7 @@ public class CalculationsController {
             view.getLowerThreshold().setText(newR.getLowerThreshold());
             view.getUpperThreshold().setText(newR.getUpperThreshold());
             view.getRunwayToShow().setItems(FXCollections.observableArrayList(model.getRunwayStates(newR)));
+            view.getRunwayToShow().getSelectionModel().selectFirst();
         });
 
         //Obstacle
@@ -160,6 +161,7 @@ public class CalculationsController {
         view.getRunwayToShow().setConverter(new StringConverter<>() {
             @Override
             public String toString(Pair<Runway, State> runwayStatePair) {
+                if (runwayStatePair == null) return "Select RWY in use";
                 return runwayStatePair.getKey().getName() + " " + runwayStatePair.getValue().toString();
             }
 
@@ -170,6 +172,7 @@ public class CalculationsController {
         });
         view.getRunwayToShow().valueProperty().addListener((observableValue, oldPair, newPair) -> {
             if (model.redeclaredRunwaysProperty().get() == null) return;
+            if (newPair == null) return;
             if (Objects.equals(model.redeclaredRunwaysProperty().get().getKey().getRunway().getName(), newPair.getKey().getName())) {
                 model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getKey());
             } else {
