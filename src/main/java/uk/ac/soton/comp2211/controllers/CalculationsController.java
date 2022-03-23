@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -211,6 +212,77 @@ public class CalculationsController {
             if (view.getDistanceUpperThreshold().getText().equals("")) {
                 view.getDistanceUpperThreshold().getStyleClass().add("error");
                 error = true;
+            }
+
+
+            try {
+                int test = Integer.parseInt(view.getObstacleHeight().getText());
+                if(test >= 1000){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Height too large");
+                    a.show();
+                }
+                if(test <= 0){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Height too small");
+                    a.show();
+                }
+
+            }
+            catch(Exception y) {
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid Height parameter.");
+                a.show();
+            }
+
+
+            try {
+                int test = Integer.parseInt(view.getObstacleLength().getText());
+                if(test >= 1000){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Length too large");
+                    a.show();
+                }
+                if(test <= 0){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Length too small");
+                    a.show();
+                }
+
+            }
+            catch(Exception y) {
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid Length parameter.");
+                a.show();
+            }
+
+
+            try {
+                int test = Integer.parseInt(view.getObstacleWidth().getText());
+                if (test >= 1000) {
+                    error = true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Width too large");
+                    a.show();
+                }
+                if (test <= 0) {
+                    error = true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Width too small");
+                    a.show();
+                }
+            }
+            catch(Exception y) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid Width parameter.");
+                error=true;
+                a.show();
             }
             if (error) return;
 
