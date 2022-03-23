@@ -20,7 +20,7 @@ public class ObstacleCreationController {
         initialise();
     }
     public void initialise(){
-
+        model.preDefinedObstaclesProperty().set(PredefinedObstacles.getObstacles());
 
 
 
