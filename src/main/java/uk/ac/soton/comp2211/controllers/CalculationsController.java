@@ -110,7 +110,7 @@ public class CalculationsController {
         //Lower Threshold
         view.getLowerThreshold().setText(view.getRunwaySelect().getValue().getLowerThreshold());
         view.getDistanceLowerThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
+            if (!newV.matches("-?\\d*(\\.\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
         });
 
         view.getSectionLowerThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -130,7 +130,7 @@ public class CalculationsController {
         //Upper Threshold
         view.getUpperThreshold().setText(view.getRunwaySelect().getValue().getUpperThreshold());
         view.getDistanceUpperThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
+            if (!newV.matches("-?\\d*(\\.\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
         });
 
         view.getSectionUpperThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
