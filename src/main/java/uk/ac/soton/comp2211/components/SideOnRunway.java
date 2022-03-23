@@ -38,6 +38,7 @@ public class SideOnRunway extends RunwayView {
     private double overallLength;
     private Direction dToObstacle;//direction relative to obstacle
     private Character rwayDirection; //direction of the runway
+    private boolean reflected =false;
 
     private GraphicsContext gc =  getGraphicsContext2D();
 
@@ -60,6 +61,14 @@ public class SideOnRunway extends RunwayView {
         this.obstacle = runway.getObstacle();
         this.dToObstacle = runway.getDirection();
         this.rwayDirection = runway.getRunway().getName().charAt(2);
+
+        if(runway.getRunway().getBearing() >181){
+            reflected=true;
+            this.setScaleX(-1);
+        }
+
+
+
 
 
         width=getWidth();
@@ -101,7 +110,15 @@ public class SideOnRunway extends RunwayView {
         gc.fillRect(width - clearwayLength,(height - 20),clearwayLength,20 );
 
         gc.setFill(Color.BLACK);
-        gc.fillText("Width : Height = 1 : 10",0,15);
+        if(reflected){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,70,50)));
+            gc.fillText("Width : Height = 1 : 10",0,15);
+            gc.restore();
+        }else{
+            gc.fillText("Width : Height = 1 : 10",0,15);
+        }
+
 
 
 
@@ -116,7 +133,15 @@ public class SideOnRunway extends RunwayView {
         double[] yPoints = {(height - 58),(height - 65), (height - 65) };
         gc.fillPolygon(xPoints ,yPoints , 3);
 
-        gc.fillText("Obstacle",obPos - 25, (height - 85));
+        if(reflected){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,obPos,(height - 85) )));
+            gc.fillText("Obstacle",obPos - 25, (height - 85));
+            gc.restore();
+        }else{
+            gc.fillText("Obstacle",obPos - 25, (height - 85));
+        }
+
 
 
         //A compass in the top right of the screen that shows the bearing of the runway
@@ -130,8 +155,17 @@ public class SideOnRunway extends RunwayView {
         gc.restore();
         gc.setFill(Color.RED);
 
-        gc.fillText("Bearing" ,width - 45,height/10 +30 );
-        gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+        if(reflected){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,width - 75,height/10 + 7 )));
+            gc.fillText("Bearing" ,width - 45,height/10 +30 );
+            gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+            gc.restore();
+        }else{
+            gc.fillText("Bearing" ,width - 45,height/10 +30 );
+            gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+        }
+
 
 
 
@@ -157,18 +191,18 @@ public class SideOnRunway extends RunwayView {
             gc.setLineWidth(3);
             gc.setStroke(Color.ORANGE);
             gc.strokeLine(obPos+(obLen/2), (height - 50),obPos+(obLen/2) + blastAllowance ,(height - 50));
-            gc.fillText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) );
+            writeText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) ,reflected );
 
 
             gc.setStroke(Color.DARKGREEN);
             gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -50),obPos+(obLen/2) + blastAllowance+TODALen, (height - 50));
-            gc.fillText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65));
+            writeText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65),reflected);
 
         }
         //taking off towards an obstruction
         else{
             gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
-            gc.fillText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65));
+            writeText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65),reflected);
 
 
 
@@ -188,7 +222,7 @@ public class SideOnRunway extends RunwayView {
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine((TODALen + sixtyLen + 1),(height - 50),(TODALen + sixtyLen +RESALen - 1),(height - 50));
 
-                gc.fillText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65));
+                writeText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65),reflected);
 
 
 
@@ -209,7 +243,7 @@ public class SideOnRunway extends RunwayView {
             gc.setLineWidth(3);
             gc.setStroke(Color.DARKGREEN);
             gc.strokeLine(width -1 ,(height - 50), (width - LDALen + 1) ,(height - 50));
-            gc.fillText(("LDA:" + runway.getRunway().getLDA() + "m"), (width - (LDALen / 2)) ,(height - 65));
+            writeText(("LDA:" + runway.getRunway().getLDA() + "m"), (width - (LDALen / 2)) ,(height - 65),reflected);
 
             //if the RESA is less than the distance of runway taken away by the obstacle then that distance is used instead of RESA
             if ((runway.getRunway().getLength() - runway.getRunway().getLDA() - (obPos + (obPos/2) )) > 300){
@@ -227,7 +261,7 @@ public class SideOnRunway extends RunwayView {
 
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine((width -(LDALen + sixtyLen + 1)),(height - 50),(width -(LDALen + sixtyLen + RESALen - 1)),(height - 50));
-                gc.fillText(("RESA: 240m"), (width -(LDALen + sixtyLen + (RESALen/2))) ,(height - 65));
+                writeText(("RESA: 240m"), (width -(LDALen + sixtyLen + (RESALen/2))) ,(height - 65),reflected);
             }
 
             gc.setLineWidth(2);
@@ -238,14 +272,23 @@ public class SideOnRunway extends RunwayView {
         //landing towards an object
         else{
             gc.strokeLine(1,(height - 50), (LDALen-1) ,(height - 50));
-            gc.fillText(("LDA:" + runway.getRunway().getLDA() + "m"), (LDALen / 2) ,(height - 65));
+            writeText(("LDA:" + runway.getRunway().getLDA() + "m"), (LDALen / 2) ,(height - 65),reflected);
 
             gc.setStroke(Color.YELLOW);
             gc.strokeLine((LDALen+1),(height - 50),(LDALen + sixtyLen - 1),(height - 50));
 
             gc.setStroke(Color.ORANGE);
             gc.strokeLine((LDALen + sixtyLen + 1),(height - 50),(LDALen + sixtyLen +RESALen - 1),(height - 50));
-            gc.fillText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65));
+            writeText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65),reflected);
+            }
+        }
+
+        private void writeText(String s, double x , double y , boolean reflected){
+            if (reflected){
+                reflectText(s,x,y);
+
+            }else{
+                gc.fillText(s,x,y);
             }
         }
 
