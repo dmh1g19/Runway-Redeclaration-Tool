@@ -282,6 +282,7 @@ public class SideOnRunway extends RunwayView {
             writeText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65),reflected);
             }
         }
+        
 
         private void writeText(String s, double x , double y , boolean reflected){
             if (reflected){

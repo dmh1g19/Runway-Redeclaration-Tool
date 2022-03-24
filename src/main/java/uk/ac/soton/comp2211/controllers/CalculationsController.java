@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -111,7 +112,7 @@ public class CalculationsController {
         //Lower Threshold
         view.getLowerThreshold().setText(view.getRunwaySelect().getValue().getLowerThreshold());
         view.getDistanceLowerThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
+            if (!newV.matches("-?\\d*(\\.\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
         });
 
         view.getSectionLowerThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -131,7 +132,7 @@ public class CalculationsController {
         //Upper Threshold
         view.getUpperThreshold().setText(view.getRunwaySelect().getValue().getUpperThreshold());
         view.getDistanceUpperThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
+            if (!newV.matches("-?\\d*(\\.\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
         });
 
         view.getSectionUpperThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -212,6 +213,77 @@ public class CalculationsController {
             if (view.getDistanceUpperThreshold().getText().equals("")) {
                 view.getDistanceUpperThreshold().getStyleClass().add("error");
                 error = true;
+            }
+
+
+            try {
+                int test = Integer.parseInt(view.getObstacleHeight().getText());
+                if(test >= 1000){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Height too large");
+                    a.show();
+                }
+                if(test <= 0){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Height too small");
+                    a.show();
+                }
+
+            }
+            catch(Exception y) {
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid Height parameter.");
+                a.show();
+            }
+
+
+            try {
+                int test = Integer.parseInt(view.getObstacleLength().getText());
+                if(test >= 1000){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Length too large");
+                    a.show();
+                }
+                if(test <= 0){
+                    error=true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Length too small");
+                    a.show();
+                }
+
+            }
+            catch(Exception y) {
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid Length parameter.");
+                a.show();
+            }
+
+
+            try {
+                int test = Integer.parseInt(view.getObstacleWidth().getText());
+                if (test >= 1000) {
+                    error = true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Width too large");
+                    a.show();
+                }
+                if (test <= 0) {
+                    error = true;
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Width too small");
+                    a.show();
+                }
+            }
+            catch(Exception y) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid Width parameter.");
+                error=true;
+                a.show();
             }
             if (error) return;
 

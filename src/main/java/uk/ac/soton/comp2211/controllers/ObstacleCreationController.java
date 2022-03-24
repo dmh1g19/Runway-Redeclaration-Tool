@@ -26,13 +26,13 @@ public class ObstacleCreationController {
 
         //Obstacle data only contains numbers
         view.getObstacleHeight().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getObstacleHeight().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleHeight().setText(oldV);
         });
         view.getObstacleWidth().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getObstacleWidth().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleWidth().setText(oldV);
         });
         view.getObstacleLength().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getObstacleLength().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleLength().setText(oldV);
         });
 
         view.getAddObstacle().setOnMouseClicked(e->{
@@ -88,6 +88,78 @@ public class ObstacleCreationController {
             view.getObstacleHeight().getStyleClass().add("error");
             error = true;
         }
+
+        try {
+            int test = Integer.parseInt(view.getObstacleHeight().getText());
+            if(test >= 1000){
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Height to large");
+                a.show();
+            }
+            if(test <= 0){
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Height to small");
+                a.show();
+            }
+
+        }
+        catch(Exception e) {
+            error=true;
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Invalid Height parameter.");
+            a.show();
+        }
+
+
+        try {
+            int test = Integer.parseInt(view.getObstacleLength().getText());
+            if(test >= 1000){
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Length to large");
+                a.show();
+            }
+            if(test <= 0){
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Length to small");
+                a.show();
+            }
+
+        }
+        catch(Exception e) {
+            error=true;
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Invalid Length parameter.");
+            a.show();
+        }
+
+
+        try {
+            int test = Integer.parseInt(view.getObstacleWidth().getText());
+            if(test >= 1000){
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Width to large");
+                a.show();
+            }
+            if(test <= 0){
+                error=true;
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Width to small");
+                a.show();
+            }
+
+        }
+        catch(Exception e) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Invalid Width parameter.");
+            error=true;
+            a.show();
+        }
+
         if(!error){
             try {
                 Obstacle obstacle = new Obstacle(view.getObstacleName().getText(),Integer.parseInt(view.getObstacleHeight().getText()),Integer.parseInt(view.getObstacleLength().getText()),Integer.parseInt(view.getObstacleWidth().getText()));
