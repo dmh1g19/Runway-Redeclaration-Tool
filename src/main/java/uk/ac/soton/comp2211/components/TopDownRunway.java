@@ -1,11 +1,13 @@
 package uk.ac.soton.comp2211.components;
 
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import uk.ac.soton.comp2211.airport.*;
 
 import static java.lang.Math.round;
@@ -15,8 +17,10 @@ public class TopDownRunway extends RunwayView {
     //scaled down runway dimension
     double runwayLen = 650;
     double runwayWidth = 50;
-    
-    GraphicsContext gc = getGraphicsContext2D();
+
+
+
+    GraphicsContext gc = this.getGraphicsContext2D();
 
     private Runway runway;
     private ObstacleOnRunway obstacle;
@@ -46,7 +50,6 @@ public class TopDownRunway extends RunwayView {
     public TopDownRunway( double width, double height)  {
         super(width, height);
 
-
         this.runway = new Runway("09L",3000,0,0,0,0,0,0,0,0);
         this.obstacle = new ObstacleOnRunway("test", 0, 0, 0, 0,0);
 
@@ -56,6 +59,7 @@ public class TopDownRunway extends RunwayView {
 
     @Override
     public void draw(RedeclaredRunway runway1, State state) {
+
 
         this.runway = runway1.getRunway();
         this.obstacle = runway1.getObstacle();
@@ -80,6 +84,13 @@ public class TopDownRunway extends RunwayView {
         this.scaledObjLen = scaleToRunwayLength(obstacle.getLength());
         this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
         this.scaledObjWidth = scaleToRunwayWidth(obstacle.getWidth());
+
+        //clear canvas before drawing -- for when you have to redraw
+        gc.clearRect(0,0, getWidth(), getHeight());
+
+        //this gc.save() is essential for rotating and scaling, dont remove x
+        gc.save();
+        transformRunway(bearing,0.8-((Math.sin(bearing)+1)/2)*0.25 /*temporary maths to make the runway scale within window*/);
 
         //background
         gc.setFill(Color.color(0.1,0.1,0.1));
@@ -143,11 +154,14 @@ public class TopDownRunway extends RunwayView {
         //    landingAndTakeOffAwayFromObj_HighestThreshold();
         //}
 
-
-    legend();
+        gc.restore();
+        legend();
     }
 
     public void landingAndTakeOffAwayFromObj_LowestThreshold() {
+
+
+
         //TODA
         gc.setStroke(TODA_COLOR);
         lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,50,scaledTODA);
@@ -166,6 +180,9 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void landingAndTakeOffTowardsObj_LowestThreshold() {
+
+
+
         //TODA
         gc.setStroke(TODA_COLOR);
         lineMarking(startOfRunwayX, 90, scaledTODA);
@@ -189,6 +206,9 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void landingAndTakeOffTowardsObj_HighestThreshold() {
+
+
+
         //TODA
         gc.setStroke(TODA_COLOR);
         lineMarking(endOfRunwayX-scaledTODA, 90, scaledTODA);
@@ -207,6 +227,9 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void landingAndTakeOffAwayFromObj_HighestThreshold() {
+
+
+
         //TODA
         gc.setStroke(TODA_COLOR);
         lineMarking(startOfRunwayX-scaledTODA+scaledObjPos, 90, scaledTODA);
@@ -238,11 +261,15 @@ public class TopDownRunway extends RunwayView {
             distance = 0;
         }
         else {
+
             gc.strokeLine(start,halfHeight-spacing,start+distance,halfHeight-spacing);
         }
     }
 
     public void thresholdL(String thr, String pos) {
+
+
+
         gc.save();
         gc.setFill(Color.WHITE);
         gc.transform(new Affine(new Rotate(90,startOfRunwayX+scaledRESA+scaledDTL+15,halfHeight-(runwayWidth/2)+15)));
@@ -254,6 +281,9 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void thresholdR(String thr, String pos) {
+
+
+
         gc.save();
         gc.setFill(Color.WHITE);
         gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
@@ -265,6 +295,7 @@ public class TopDownRunway extends RunwayView {
     }
 
     public void legend() {
+
         //TODA
         gc.setFill(TODA_COLOR);
         gc.fillRoundRect(startOfRunwayX,300, 10,10,5,5);
@@ -289,5 +320,13 @@ public class TopDownRunway extends RunwayView {
         gc.setFill(ASDA_COLOR);
         gc.fillRoundRect(startOfRunwayX,380, 10,10,5,5);
         gc.fillText(": ASDA " + runway.getASDA() + "m",startOfRunwayX+15,390);
+
     }
+
+    public void transformRunway(double rotDegrees, double scale)
+    {
+        gc.transform(new Affine(new Scale(scale,scale,this.halfWidth,halfHeight)));
+        gc.transform(new Affine(new Rotate(rotDegrees,this.halfWidth,halfHeight)));
+    }
+
 }

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -280,7 +281,9 @@ public class CalculationsController {
         ViewsController viewsController = new ViewsController(viewsView, model);
         Stage newWindow = new Stage();
         newWindow.setTitle("Top Down View");
+
         newWindow.setScene(new Scene(viewsView.getView(), width, height));
+        newWindow.getScene().setFill(Color.color(0.1,0.1,0.1));
         newWindow.setResizable(false);
         newWindow.show();
 
