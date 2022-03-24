@@ -90,7 +90,7 @@ public class TopDownRunway extends RunwayView {
 
         //this gc.save() is essential for rotating and scaling, dont remove x
         gc.save();
-        transformRunway(bearing,0.5 /*temporary scale to make the runway scale within window*/);
+        transformRunway(bearing-90,0.5 /*temporary scale to make the runway scale within window*/);
 
         //background
         gc.setFill(Color.color(0.1,0.1,0.1));
@@ -156,6 +156,7 @@ public class TopDownRunway extends RunwayView {
 
         gc.restore();
         legend();
+        compass();
     }
 
     public void landingAndTakeOffAwayFromObj_LowestThreshold() {
@@ -321,6 +322,33 @@ public class TopDownRunway extends RunwayView {
         gc.fillRoundRect(startOfRunwayX,380, 10,10,5,5);
         gc.fillText(": ASDA " + runway.getASDA() + "m",startOfRunwayX+15,390);
 
+    }
+
+    public void compass()
+    {
+        double width = getWidth();
+        double height = getHeight();
+        //A compass in the top right of the screen that shows the bearing of the runway
+        gc.setFill(Color.WHITE);
+        gc.fillOval(width - 100, height/10 , 50,50);
+        gc.strokeOval(width - 100, height/10 , 50,50);
+        gc.setStroke(Color.RED);
+        gc.save();
+        gc.transform(new Affine(new Rotate(bearing,(width - 75),(height/10 +25))));
+        gc.strokeLine(width - 75, height/10 +25, width - 75, height/10 + 7  );
+        gc.restore();
+        gc.setFill(Color.RED);
+
+//        if(reflected){
+//            gc.save();
+//            gc.transform(new Affine(new Scale(-1,1,width - 75,height/10 + 7 )));
+//            gc.fillText("Bearing" ,width - 45,height/10 +30 );
+//            gc.fillText(bearing+"",width - 45,height/10 + 20 );
+//            gc.restore();
+//        }else{
+            gc.fillText("Bearing" ,width - 45,height/10 +30 );
+            gc.fillText(bearing+"",width - 45,height/10 + 20 );
+//        }
     }
 
     public void transformRunway(double rotDegrees, double scale)
