@@ -26,25 +26,19 @@ public class ObstacleCreationView extends BaseView{
     private Button addObstacle = new Button("Add Obstacle");
     private HBox hBox = new HBox();
 
-
     private Button writeObstacles = new Button("Write Obstacles to XMl");
     private  ArrayList<Button> obstacleRemoveButtons = new ArrayList<>();
 
 
     public ObstacleCreationView(){
-        PredefinedObstacles.getObstacles().addListener((ListChangeListener<Obstacle>) change -> updateView() );
+        PredefinedObstacles.getObstacles().addListener((ListChangeListener<Obstacle>) change -> updateView());
         view=createView();
     }
-
-
-
 
     @Override
     public Parent createView() {
         BorderPane layout = new BorderPane();
         layout.setPadding(new Insets(8));
-
-
 
 
         hBox.getChildren().add(createInputForm());
@@ -111,9 +105,6 @@ public class ObstacleCreationView extends BaseView{
         inputForm.add(addObstacle,0,5);
 
 
-
-
-
         return new Group(inputForm);
     }
 
@@ -142,11 +133,6 @@ public class ObstacleCreationView extends BaseView{
         }
 
 
-
-
-
-
-
         return new Group(obsForm);
     }
 
@@ -156,7 +142,6 @@ public class ObstacleCreationView extends BaseView{
 
         scrollPane.setContent(createObsForm());
         hBox.getChildren().add(scrollPane);
-
     }
 
 
@@ -164,70 +149,32 @@ public class ObstacleCreationView extends BaseView{
         return obstacleRemoveButtons;
     }
 
-
-
-    public void setObstacleRemoveButtons(ArrayList<Button> obstacleRemoveButtons) {
-        this.obstacleRemoveButtons = obstacleRemoveButtons;
-    }
-
-
-
     public Text getBackButton() {
         return backButton;
-    }
-
-    public void setBackButton(Text backButton) {
-        this.backButton = backButton;
     }
 
     public TextField getObstacleName() {
         return obstacleName;
     }
 
-    public void setObstacleName(TextField obstacleName) {
-        this.obstacleName = obstacleName;
-    }
-
     public TextField getObstacleWidth() {
         return obstacleWidth;
-    }
-
-    public void setObstacleWidth(TextField obstacleWidth) {
-        this.obstacleWidth = obstacleWidth;
     }
 
     public TextField getObstacleHeight() {
         return obstacleHeight;
     }
 
-    public void setObstacleHeight(TextField obstacleHeight) {
-        this.obstacleHeight = obstacleHeight;
-    }
-
     public TextField getObstacleLength() {
         return obstacleLength;
-    }
-
-    public void setObstacleLength(TextField obstacleLength) {
-        this.obstacleLength = obstacleLength;
     }
 
     public Button getAddObstacle() {
         return addObstacle;
     }
 
-    public void setAddObstacle(Button addObstacle) {
-        this.addObstacle = addObstacle;
-    }
-
     public Button getWriteObstacles() {
         return writeObstacles;
     }
-
-    public void setWriteObstacles(Button writeObstacles) {
-        this.writeObstacles = writeObstacles;
-    }
-
-
 
 }

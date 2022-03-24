@@ -109,7 +109,6 @@ public class XMLUtil {
         XmlMapper xmlMapper = new XmlMapper();
 
         try {
-
             XmlMapper mapper = new XmlMapper();
 
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -123,8 +122,6 @@ public class XMLUtil {
         }
 
         return null;
-
-
     }
 
     /**

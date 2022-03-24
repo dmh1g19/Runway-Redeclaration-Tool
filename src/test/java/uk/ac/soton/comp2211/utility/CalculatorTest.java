@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import uk.ac.soton.comp2211.airport.Airport;
+import uk.ac.soton.comp2211.airport.Direction;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
@@ -251,7 +252,7 @@ class CalculatorTest {
     void towardsObstacleBreakdownTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 0, 3646, 0);
 
-        System.out.println( Calculator.calculationBreakdown(runways[3],obs2,true));
+        System.out.println( Calculator.calculationBreakdown(runways[3],obs2, Direction.TOWARDS));
         assertEquals(1,1);
 
     }
@@ -260,7 +261,7 @@ class CalculatorTest {
     @Test
     void awayFromObstacleBreakdownTest() throws Calculator.IncorrectObstacleException {
         ObstacleOnRunway obs = new ObstacleOnRunway("test", 12, 0, 0, -50, 0);
-        System.out.println(Calculator.calculationBreakdown(runways[2],obs,false));
+        System.out.println(Calculator.calculationBreakdown(runways[2],obs,Direction.AWAYOVER));
         assertEquals(1,1);
 
     }

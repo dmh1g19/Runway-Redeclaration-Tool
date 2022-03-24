@@ -1,20 +1,23 @@
 package uk.ac.soton.comp2211.views;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBoundsType;
 import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 import uk.ac.soton.comp2211.airport.*;
@@ -47,6 +50,25 @@ public class CalculationsView extends BaseView {
     private Button topDownView = new Button("Top Down View");
     private Button sideOnView = new Button("Side On View");
     private ComboBox<Pair<Runway, State>> runwayToShow = new ComboBox<>();
+
+    private TableView<Runway> originalRunways = new TableView();
+    private TableView<RedeclaredRunway> redeclaredRunways = new TableView();
+
+    private TextFlow breakdown = new TextFlow();
+
+    //GETTERS
+
+    public TextFlow getBreakdown() {
+        return breakdown;
+    }
+
+    public TableView<RedeclaredRunway> getRedeclaredRunways() {
+        return redeclaredRunways;
+    }
+
+    public TableView<Runway> getOriginalRunways() {
+        return originalRunways;
+    }
 
     public ComboBox<PhysicalRunway> getRunwaySelect() {
         return runwaySelect;
@@ -123,11 +145,92 @@ public class CalculationsView extends BaseView {
         layout.setLeft(createInputForm());
         layout.setCenter(createViewButtons());
         layout.setTop(createBackButton());
+        layout.setRight(createCalcInfoTable());
+
 
         return layout;
     }
 
-    public Node createBackButton () {
+    public Node createCalcInfoTable() {
+        //Original Runways
+        originalRunways.setEditable(false);
+        originalRunways.setPrefWidth(300);
+        originalRunways.setPrefHeight(75);
+        originalRunways.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<Runway, String> name = new TableColumn<>("THR");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        name.setSortable(false);
+
+        TableColumn<Runway,String> TORA = new TableColumn<>("TORA");
+        TORA.setCellValueFactory(new PropertyValueFactory<>("TORA"));
+        TORA.setSortable(false);
+
+        TableColumn<Runway,String> TODA = new TableColumn<>("TODA");
+        TODA.setCellValueFactory(new PropertyValueFactory<>("TODA"));
+        TODA.setSortable(false);
+
+        TableColumn<Runway,String> ASDA = new TableColumn<>("ASDA");
+        ASDA.setCellValueFactory(new PropertyValueFactory<>("ASDA"));
+        ASDA.setSortable(false);
+
+        TableColumn<Runway,String> LDA = new TableColumn<>("LDA");
+        LDA.setCellValueFactory(new PropertyValueFactory<>("LDA"));
+        LDA.setSortable(false);
+
+        originalRunways.getColumns().addAll(name,TORA, TODA, ASDA, LDA);
+
+        //Redeclared Runways
+        redeclaredRunways.setEditable(false);
+        redeclaredRunways.setPrefWidth(300);
+        redeclaredRunways.setPrefHeight(75);
+        redeclaredRunways.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<RedeclaredRunway, String> reName = new TableColumn<>("THR");
+        reName.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getRunway().getName()));
+        reName.setSortable(false);
+
+        TableColumn<RedeclaredRunway,String> reTORA = new TableColumn<>("TORA");
+        reTORA.setCellValueFactory(e -> new SimpleStringProperty(String.valueOf(e.getValue().getRunway().getTORA())));
+        reTORA.setSortable(false);
+
+        TableColumn<RedeclaredRunway,String> reTODA = new TableColumn<>("TODA");
+        reTODA.setCellValueFactory(e -> new SimpleStringProperty(String.valueOf(e.getValue().getRunway().getTODA())));
+        reTODA.setSortable(false);
+
+        TableColumn<RedeclaredRunway,String> reASDA = new TableColumn<>("ASDA");
+        reASDA.setCellValueFactory(e -> new SimpleStringProperty(String.valueOf(e.getValue().getRunway().getASDA())));
+        reASDA.setSortable(false);
+
+        TableColumn<RedeclaredRunway,String> reLDA = new TableColumn<>("LDA");
+        reLDA.setCellValueFactory(e -> new SimpleStringProperty(String.valueOf(e.getValue().getRunway().getLDA())));
+        reLDA.setSortable(false);
+
+        redeclaredRunways.getColumns().addAll(reName,reTORA,reTODA,reASDA,reLDA);
+
+        //Labels
+        Label originalRunwaysLabel = new Label("Original Runways");
+        originalRunwaysLabel.getStyleClass().add("valuesTableLabel");
+        Label redeclaredRunwaysLabel = new Label("Redeclared Runways");
+        redeclaredRunwaysLabel.getStyleClass().add("valuesTableLabel");
+
+        //Breakdown
+        breakdown.setPrefWidth(300);
+        breakdown.getStyleClass().add("breakdown");
+        breakdown.setMinHeight(270);
+        Label breakdownLabel = new Label("Calculator Breakdown");
+        breakdownLabel.getStyleClass().add("valuesTableLabel");
+
+        //Vbox
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.TOP_CENTER);
+        vbox.getStyleClass().add("calcInfo");
+        vbox.getChildren().addAll(originalRunwaysLabel,originalRunways,redeclaredRunwaysLabel,redeclaredRunways, breakdownLabel,breakdown);
+
+        return vbox;
+    }
+
+    public Node createBackButton() {
         BorderPane.setMargin(backButton, new Insets(0,0,8,0));
 
         return backButton;

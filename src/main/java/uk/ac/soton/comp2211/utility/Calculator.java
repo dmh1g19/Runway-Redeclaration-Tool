@@ -161,13 +161,13 @@ public class Calculator {
      * Provides a hashmap storing the calculations breakdown
      * @param runway the runway for the calculations to be performed on
      * @param obs the obstacle on the runway
-     * @param isTowards is the plane going towards the obstacle (used to decided which functions to use from calculater)
+     * @param direction is the plane going towards the obstacle (used to decided which functions to use from calculater)
      * @return returns a hashmap where  the keys are mapped to their calculations
      */
-    public static Map<String, String> calculationBreakdown (Runway runway, ObstacleOnRunway obs , boolean isTowards){
+    public static Map<String, String> calculationBreakdown (Runway runway, ObstacleOnRunway obs , Direction direction){
         Map<String, String>  map = new HashMap<>();
         String[] names = {"TORA","TODA","ASDA"};
-        if(isTowards){
+        if(direction == Direction.TOWARDS){
 
             for (String name : names){
                 map.put(name,TOTCalculationBuilder(name,runway,obs));
@@ -177,7 +177,7 @@ public class Calculator {
             int distanceToStripEnd = 60;
             int newLDA = obstaclePosition - runway.getDTL() - (RESA + distanceToStripEnd);
             StringBuilder s = new StringBuilder();
-            s.append("LDA= Distance From Threshold - Displaced Threshold - Strip End - RESA\n");
+            s.append("LDA = Distance From Threshold - Displaced Threshold - Strip End - RESA\n");
             s.append("   = "+ obs.getPosition() +" - "+ runway.getDTL() + " - 60 - 240 \n");
             s.append("   = "+newLDA);
             map.put("LDA",s.toString());
@@ -221,9 +221,9 @@ public class Calculator {
         int newTORA = obstaclePosition  - distanceToStripEnd - Integer.max (RESA+obs.getLength(),obstacleHeight *50);
 
         StringBuilder s = new StringBuilder();
-        s.append(name+"= Distance from Threshold - Strip end -  Max( Slope Calculation, RESA + Obstacle Length )\n");
+        s.append(name+"= Distance from Threshold - Strip end -  Max(Slope Calculation, RESA + Obstacle Length)\n");
         if(RESA+obs.getLength()<=obstacleHeight *50){
-            s.append("    = "+obs.getPosition() +" - 60 " + "- ( 50 * " +obstacleHeight+ ") \n");
+            s.append("    = "+obs.getPosition() +" - 60 " + "- (50 * " +obstacleHeight+ ") \n");
 
         }else{
             s.append("    = "+obs.getPosition() +" - 60 " + "- " +RESA+  "- "+ obs.getLength() +  " \n");
@@ -248,23 +248,17 @@ public class Calculator {
         int blastProtection = 300;
         int newTORA = runway.getTORA() - (Integer.max(300,blastProtection)) - obstaclePosition ;
         StringBuilder s = new StringBuilder();
-        s.append(name+"= Original TORA - (Max of Blast Protection and (RESA+srip end)) - Distance from Threshold - Displaced Threshold");
+        s.append(name+" = Original TORA - (Max of Blast Protection and (RESA+srip end)) - Distance from Threshold - Displaced Threshold");
         switch (extra) {
             case 1 -> s.append("+ Clearway \n");
             case 2 -> s.append("+ Stopway \n");
-            default -> {
-                s.append("\n");
-
-            }
+            default -> s.append("\n");
         }
         s.append("    = "+runway.getTORA() +" - "+ (Integer.max(300,blastProtection)) + " - " + obs.getPosition());
         switch (extra) {
             case 1 -> s.append(clearway+" \n").append("    +"+(newTORA+clearway));
             case 2 -> s.append(stopway+ "\n").append("    +"+(newTORA+stopway));
-            default -> {
-                s.append("\n").append("    +"+newTORA);
-
-            }
+            default -> s.append("\n").append("    +"+newTORA);
         }
         return s.toString();
     }

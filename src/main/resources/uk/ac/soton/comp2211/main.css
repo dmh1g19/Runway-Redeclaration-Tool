@@ -131,7 +131,27 @@ AnchorPane {
     -fx-pref-width: 150;
     -fx-font-size: 14;
 }
-
+.valuesTableLabel {
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+    -fx-padding: 12 0 0 0;
+}
 .scroll-pane .viewport {
     -fx-background-color: rgb(50, 50, 50);
+}
+.calcInfo {
+    -fx-background-color: rgba(0,0,0,0.7);
+    -fx-background-radius: 4;
+    -fx-padding: 8;
+}
+.calcInfo Text {
+    -fx-text-fill: white;
+}
+.breakdown {
+    -fx-border-color: grey;
+    -fx-border-width: 2;
+    -fx-padding: 2;
+    -fx-background-color: #d5d5d5;
+}
+.breakdown Text {
 }

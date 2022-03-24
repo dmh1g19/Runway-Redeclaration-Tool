@@ -52,7 +52,7 @@ public class App extends Application {
     private Airport[] airports;
 
     private final int height = 600;
-    private final int width = 800;
+    private final int width = 900;
 
     @Override
     public void start(Stage stage)  {

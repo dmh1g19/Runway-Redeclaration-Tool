@@ -1,5 +1,8 @@
 package uk.ac.soton.comp2211.controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import uk.ac.soton.comp2211.airport.Obstacle;
@@ -11,7 +14,11 @@ import uk.ac.soton.comp2211.views.SelectionView;
 import java.util.ArrayList;
 
 public class ObstacleCreationController {
+
+    //Model
     AirportModel model;
+
+    //View
     ObstacleCreationView view;
 
     public ObstacleCreationController(ObstacleCreationView obstacleCreationView, AirportModel model){
@@ -59,9 +66,6 @@ public class ObstacleCreationController {
             i+=1;
 
         }
-
-
-
 
     }
 
@@ -174,12 +178,7 @@ public class ObstacleCreationController {
                 a.show();
 
 
-
-
-
               initialise();
-
-
             }
             catch(Exception e) {
                 e.printStackTrace();

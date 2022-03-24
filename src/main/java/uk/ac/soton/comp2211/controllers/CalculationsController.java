@@ -1,20 +1,15 @@
 package uk.ac.soton.comp2211.controllers;
 
 import javafx.animation.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
-import org.springframework.beans.factory.xml.SimpleConstructorNamespaceHandler;
 import uk.ac.soton.comp2211.airport.*;
 import uk.ac.soton.comp2211.components.SideOnRunway;
 import uk.ac.soton.comp2211.components.TopDownRunway;
@@ -24,6 +19,7 @@ import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.ViewsView;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class CalculationsController {
@@ -43,11 +39,11 @@ public class CalculationsController {
     public void initialise() {
         //Runway Select
         view.getRunwaySelect().setItems(FXCollections.observableArrayList(model.selectedAirportProperty().get().getRunways()));
-        view.getRunwaySelect().getSelectionModel().selectFirst();
 
         view.getRunwaySelect().setConverter(new StringConverter<>() {
             @Override
             public String toString(PhysicalRunway physicalRunway) {
+                if (physicalRunway == null) return "Select Runway";
                 return physicalRunway.getName();
             }
 
@@ -60,9 +56,16 @@ public class CalculationsController {
         view.getRunwaySelect().valueProperty().addListener((observableValue, oldR, newR) -> {
             view.getLowerThreshold().setText(newR.getLowerThreshold());
             view.getUpperThreshold().setText(newR.getUpperThreshold());
+            //Runway To Show
             view.getRunwayToShow().setItems(FXCollections.observableArrayList(model.getRunwayStates(newR)));
             view.getRunwayToShow().getSelectionModel().selectFirst();
+
+            //Runway Values to be Shown
+            view.getOriginalRunways().getItems().clear();
+            view.getOriginalRunways().getItems().add(newR.getFirst());
+            view.getOriginalRunways().getItems().add(newR.getSecond());
         });
+        view.getRunwaySelect().getSelectionModel().selectFirst();
 
         //Obstacle
         view.getObstacleSelect().setItems(model.preDefinedObstaclesProperty());
@@ -99,20 +102,20 @@ public class CalculationsController {
 
         //Obstacle Info
         view.getObstacleHeight().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getObstacleHeight().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleHeight().setText(oldV);
         });
         view.getObstacleWidth().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getObstacleWidth().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleWidth().setText(oldV);
         });
         view.getObstacleLength().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\.\\d*)?")) view.getObstacleLength().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleLength().setText(oldV);
         });
 
 
         //Lower Threshold
         view.getLowerThreshold().setText(view.getRunwaySelect().getValue().getLowerThreshold());
         view.getDistanceLowerThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("-?\\d*(\\.\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
         });
 
         view.getSectionLowerThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -132,7 +135,7 @@ public class CalculationsController {
         //Upper Threshold
         view.getUpperThreshold().setText(view.getRunwaySelect().getValue().getUpperThreshold());
         view.getDistanceUpperThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("-?\\d*(\\.\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
+            if (!newV.matches("\\d*(\\\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
         });
 
         view.getSectionUpperThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -193,7 +196,7 @@ public class CalculationsController {
             view.getDistanceUpperThreshold().getStyleClass().remove("error");
 
             boolean error = false;
-
+            //Checking for empty inputs
             if (view.getObstacleLength().getText().equals("")) {
                 view.getObstacleLength().getStyleClass().add("error");
                 error = true;
@@ -215,7 +218,10 @@ public class CalculationsController {
                 error = true;
             }
 
+            if (error) return;
+            error = false;
 
+            //Testing for invalid inputs
             try {
                 int test = Integer.parseInt(view.getObstacleHeight().getText());
                 if(test >= 1000){
@@ -287,6 +293,7 @@ public class CalculationsController {
             }
             if (error) return;
 
+            //calculate values
             int obstacleHeight = Integer.parseInt(view.getObstacleHeight().getText());
             int obstacleWidth = Integer.parseInt(view.getObstacleWidth().getText());
             int obstacleLength = Integer.parseInt(view.getObstacleLength().getText());
@@ -329,6 +336,7 @@ public class CalculationsController {
             }
             model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
+            //Set model to calculated values
             if (Objects.equals(model.redeclaredRunwaysProperty().get().getKey().getRunway().getName(),
                     view.getRunwayToShow().getValue().getKey().getName())) {
                 model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getKey());
@@ -336,7 +344,24 @@ public class CalculationsController {
                 model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getValue());
             }
             model.stateProperty().set(view.getRunwayToShow().getValue().getValue());
+
+            //Redeclared Runway Values to Show
+            view.getRedeclaredRunways().getItems().clear();
+            view.getRedeclaredRunways().getItems().add(model.redeclaredRunwaysProperty().get().getKey());
+            view.getRedeclaredRunways().getItems().add(model.redeclaredRunwaysProperty().get().getValue());
+
+            //Show Breakdown
+            Map<String, String> lowerMap = Calculator.calculationBreakdown(view.getRunwaySelect().getValue().getFirst(),
+                    lowerObstacleOnRunway, view.getSectionLowerThreshold().getValue());
+            view.getBreakdown().getChildren().add(new Text(lowerMap.get("TORA")));
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+            view.getBreakdown().getChildren().add(new Text(lowerMap.get("TODA")));
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+            view.getBreakdown().getChildren().add(new Text(lowerMap.get("ASDA")));
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+            view.getBreakdown().getChildren().add(new Text(lowerMap.get("LDA")));
         });
+
     }
 
     public void loadMenu() {
