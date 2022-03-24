@@ -90,7 +90,7 @@ public class TopDownRunway extends RunwayView {
 
         //this gc.save() is essential for rotating and scaling, dont remove x
         gc.save();
-        transformRunway(bearing,0.8-((Math.sin(bearing)+1)/2)*0.25 /*temporary maths to make the runway scale within window*/);
+        transformRunway(bearing,0.5 /*temporary scale to make the runway scale within window*/);
 
         //background
         gc.setFill(Color.color(0.1,0.1,0.1));
