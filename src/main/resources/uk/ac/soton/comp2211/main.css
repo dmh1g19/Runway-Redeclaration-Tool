@@ -148,10 +148,9 @@ AnchorPane {
     -fx-text-fill: white;
 }
 .breakdown {
-    -fx-border-color: grey;
-    -fx-border-width: 2;
-    -fx-padding: 2;
     -fx-background-color: #d5d5d5;
 }
-.breakdown Text {
+.breakdownThreshold {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
 }

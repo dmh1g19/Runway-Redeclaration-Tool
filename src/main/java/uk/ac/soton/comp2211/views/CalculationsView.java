@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -215,17 +216,23 @@ public class CalculationsView extends BaseView {
         redeclaredRunwaysLabel.getStyleClass().add("valuesTableLabel");
 
         //Breakdown
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(breakdown);
+        scrollPane.setPrefWidth(300);
+        scrollPane.setPrefHeight(270);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         breakdown.setPrefWidth(300);
-        breakdown.getStyleClass().add("breakdown");
         breakdown.setMinHeight(270);
-        Label breakdownLabel = new Label("Calculator Breakdown");
+        breakdown.getStyleClass().add("breakdown");
+        Label breakdownLabel = new Label("Calculations Breakdown");
         breakdownLabel.getStyleClass().add("valuesTableLabel");
 
         //Vbox
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.TOP_CENTER);
         vbox.getStyleClass().add("calcInfo");
-        vbox.getChildren().addAll(originalRunwaysLabel,originalRunways,redeclaredRunwaysLabel,redeclaredRunways, breakdownLabel,breakdown);
+        vbox.getChildren().addAll(originalRunwaysLabel,originalRunways,redeclaredRunwaysLabel,redeclaredRunways, breakdownLabel,scrollPane);
 
         return vbox;
     }

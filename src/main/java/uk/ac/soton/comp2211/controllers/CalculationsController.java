@@ -293,7 +293,7 @@ public class CalculationsController {
             }
             if (error) return;
 
-            //calculate values
+            //Calculate values
             int obstacleHeight = Integer.parseInt(view.getObstacleHeight().getText());
             int obstacleWidth = Integer.parseInt(view.getObstacleWidth().getText());
             int obstacleLength = Integer.parseInt(view.getObstacleLength().getText());
@@ -334,6 +334,7 @@ public class CalculationsController {
                     ex.printStackTrace();
                 }
             }
+            //Update model with new Values
             model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
             //Set model to calculated values
@@ -351,8 +352,14 @@ public class CalculationsController {
             view.getRedeclaredRunways().getItems().add(model.redeclaredRunwaysProperty().get().getValue());
 
             //Show Breakdown
+            view.getBreakdown().getChildren().clear();
             Map<String, String> lowerMap = Calculator.calculationBreakdown(view.getRunwaySelect().getValue().getFirst(),
-                    lowerObstacleOnRunway, view.getSectionLowerThreshold().getValue());
+                    lowerObstacleOnRunway, view.getSectionLowerThreshold().getValue()); // Get values for lwrthr
+            Text lowerThr = new Text(view.getLowerThreshold().getText());
+            lowerThr.getStyleClass().add("breakdownThreshold");
+            view.getBreakdown().getChildren().add(lowerThr);
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+
             view.getBreakdown().getChildren().add(new Text(lowerMap.get("TORA")));
             view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
             view.getBreakdown().getChildren().add(new Text(lowerMap.get("TODA")));
@@ -360,6 +367,24 @@ public class CalculationsController {
             view.getBreakdown().getChildren().add(new Text(lowerMap.get("ASDA")));
             view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
             view.getBreakdown().getChildren().add(new Text(lowerMap.get("LDA")));
+
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator())); //Separate THRs
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+
+            Map<String, String> upperMap = Calculator.calculationBreakdown(view.getRunwaySelect().getValue().getSecond(),
+                    lowerObstacleOnRunway, view.getSectionLowerThreshold().getValue()); // Get values for uprthr
+            Text upperThr = new Text(view.getUpperThreshold().getText());
+            upperThr.getStyleClass().add("breakdownThreshold");
+            view.getBreakdown().getChildren().add(upperThr);
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+
+            view.getBreakdown().getChildren().add(new Text(upperMap.get("TORA")));
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+            view.getBreakdown().getChildren().add(new Text(upperMap.get("TODA")));
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+            view.getBreakdown().getChildren().add(new Text(upperMap.get("ASDA")));
+            view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
+            view.getBreakdown().getChildren().add(new Text(upperMap.get("LDA")));
         });
 
     }

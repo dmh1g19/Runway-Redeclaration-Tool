@@ -11,8 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import uk.ac.soton.comp2211.airport.*;
+import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.SelectionView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AirportModel {
@@ -42,6 +44,9 @@ public class AirportModel {
         return runwayStates;
     }
 
+    public void writeObstaclesToXML() {
+        XMLUtil.writeObstacles(new ArrayList<>(preDefinedObstacles));
+    }
 
     public void setRedeclaredRunway(RedeclaredRunway redeclaredRunway) {
         this.redeclaredRunway.set(redeclaredRunway);

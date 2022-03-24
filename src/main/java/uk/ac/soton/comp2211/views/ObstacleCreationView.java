@@ -16,7 +16,7 @@ import uk.ac.soton.comp2211.components.PredefinedObstacles;
 
 import java.util.ArrayList;
 
-public class ObstacleCreationView extends BaseView{
+public class ObstacleCreationView extends BaseView {
 
     private Text backButton = new Text("Exit");
     private TextField obstacleName = new TextField();
@@ -26,12 +26,15 @@ public class ObstacleCreationView extends BaseView{
     private Button addObstacle = new Button("Add Obstacle");
     private HBox hBox = new HBox();
 
-    private Button writeObstacles = new Button("Write Obstacles to XMl");
-    private  ArrayList<Button> obstacleRemoveButtons = new ArrayList<>();
+    private Button writeObstacles = new Button("Write Obstacles to XML");
 
+    private VBox obsForm = new VBox();
+
+    public VBox getObsForm() {
+        return obsForm;
+    }
 
     public ObstacleCreationView(){
-        PredefinedObstacles.getObstacles().addListener((ListChangeListener<Obstacle>) change -> updateView());
         view=createView();
     }
 
@@ -43,9 +46,8 @@ public class ObstacleCreationView extends BaseView{
 
         hBox.getChildren().add(createInputForm());
 
-
         ScrollPane scrollPane = new ScrollPane();
-
+        scrollPane.getStyleClass().add("inputs");
 
         scrollPane.setContent(createObsForm());
         hBox.getChildren().add(scrollPane);
@@ -53,7 +55,7 @@ public class ObstacleCreationView extends BaseView{
         hBox.setSpacing(10);
         //adding form
 
-        VBox vBox=new VBox();
+        VBox vBox = new VBox();
 
         vBox.getChildren().add(hBox);
         vBox.getChildren().add(writeObstacles);
@@ -68,7 +70,7 @@ public class ObstacleCreationView extends BaseView{
     }
 
 
-    public Node createInputForm() {
+    private Node createInputForm() {
         GridPane inputForm = new GridPane();
         inputForm.getStyleClass().add("inputs");
 
@@ -109,29 +111,14 @@ public class ObstacleCreationView extends BaseView{
     }
 
 
-    public Node createObsForm() {
-        obstacleRemoveButtons.clear();
-        GridPane obsForm = new GridPane();
-        obsForm.getStyleClass().add("inputs");
+    private Node createObsForm() {
+        obsForm.setSpacing(8);
 
         //Title
         Label headerLabel = new Label("Remove Obstacles");
         headerLabel.getStyleClass().add("headerCalc");
         VBox vbox = new VBox(headerLabel, new Separator(Orientation.HORIZONTAL));
-        obsForm.add(vbox,0,0,2,1);
-
-
-
-        ArrayList<Obstacle> obstacles = new ArrayList<>(PredefinedObstacles.getObstacles());
-        int i = 1;
-        for(Obstacle obstacle : obstacles){
-            Button button = new Button("Remove Obstacle");
-            obsForm.add(new Label(obstacle.getName()),0,i);
-            obsForm.add(button,1,i);
-            obstacleRemoveButtons.add(button);
-            i+=1;
-        }
-
+        obsForm.getChildren().add(vbox);
 
         return new Group(obsForm);
     }
@@ -144,10 +131,6 @@ public class ObstacleCreationView extends BaseView{
         hBox.getChildren().add(scrollPane);
     }
 
-
-    public ArrayList<Button> getObstacleRemoveButtons() {
-        return obstacleRemoveButtons;
-    }
 
     public Text getBackButton() {
         return backButton;

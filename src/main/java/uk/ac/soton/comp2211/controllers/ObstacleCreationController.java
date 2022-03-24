@@ -5,8 +5,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import uk.ac.soton.comp2211.airport.Obstacle;
-import uk.ac.soton.comp2211.components.PredefinedObstacles;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.views.ObstacleCreationView;
 import uk.ac.soton.comp2211.views.SelectionView;
@@ -21,14 +23,29 @@ public class ObstacleCreationController {
     //View
     ObstacleCreationView view;
 
-    public ObstacleCreationController(ObstacleCreationView obstacleCreationView, AirportModel model){
-        view = obstacleCreationView;
-        this.model=model;
+    public ObstacleCreationController(ObstacleCreationView view, AirportModel model) {
+        this.view = view;
+        this.model = model;
         initialise();
     }
-    public void initialise(){
-        model.preDefinedObstaclesProperty().set(PredefinedObstacles.getObstacles());
+    public void initialise() {
+        //Adding Obstacles to view
+        ObservableList<Obstacle> obstacles = model.preDefinedObstaclesProperty().get();
+        for(Obstacle obstacle : obstacles){
+            HBox obstacleB = new HBox();
+            Button button = new Button("Remove Obstacle");
+            Label obstacleName = new Label(obstacle.getName());
+            obstacleName.setPrefWidth(200);
+            obstacleName.setMaxWidth(200);
 
+            obstacleB.getChildren().addAll(obstacleName, button);
+            button.setOnAction(e -> {
+                view.getObsForm().getChildren().remove(obstacleB);
+                model.preDefinedObstaclesProperty().remove(obstacle);
+            });
+
+            view.getObsForm().getChildren().add(obstacleB);
+        }
 
 
         //Obstacle data only contains numbers
@@ -42,30 +59,16 @@ public class ObstacleCreationController {
             if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleLength().setText(oldV);
         });
 
-        view.getAddObstacle().setOnMouseClicked(e->{
-            addObstacle();
-        });
+        view.getAddObstacle().setOnMouseClicked(e-> addObstacle());
 
 
         //adding back button
         view.getBackButton().setOnMouseClicked(e->loadSelection());
 
         //adding a push to xml button
-        view.getWriteObstacles().setOnMouseClicked(e->PredefinedObstacles.writeObstaclesToXML());
+        view.getWriteObstacles().setOnMouseClicked(e -> model.writeObstaclesToXML());
 
         //setting up remove obstacle buttons
-        ArrayList<Button> buttons = view.getObstacleRemoveButtons();
-        int i = 0;
-
-        for (Button button : buttons){
-            final int finalI = i ;
-            button.setOnMouseClicked(e->{
-                PredefinedObstacles.removeObstacle(finalI);
-                initialise();
-            });
-            i+=1;
-
-        }
 
     }
 
@@ -166,8 +169,27 @@ public class ObstacleCreationController {
 
         if(!error){
             try {
-                Obstacle obstacle = new Obstacle(view.getObstacleName().getText(),Integer.parseInt(view.getObstacleHeight().getText()),Integer.parseInt(view.getObstacleLength().getText()),Integer.parseInt(view.getObstacleWidth().getText()));
-                PredefinedObstacles.addObstacle(obstacle);
+                Obstacle obstacle = new Obstacle(view.getObstacleName().getText(),
+                        Integer.parseInt(view.getObstacleHeight().getText()),
+                        Integer.parseInt(view.getObstacleLength().getText()),
+                        Integer.parseInt(view.getObstacleWidth().getText()));
+                model.preDefinedObstaclesProperty().add(obstacle);
+
+                //Add Obstacle to write side List
+                HBox obstacleB = new HBox();
+                Button button = new Button("Remove Obstacle");
+                Label obstacleName = new Label(obstacle.getName());
+                obstacleName.setPrefWidth(200);
+                obstacleName.setMaxWidth(200);
+
+                obstacleB.getChildren().addAll(obstacleName, button);
+                button.setOnAction(e -> {
+                    view.getObsForm().getChildren().remove(obstacleB);
+                    model.preDefinedObstaclesProperty().remove(obstacle);
+                });
+
+                view.getObsForm().getChildren().add(obstacleB);
+
                 view.getObstacleHeight().setText("");
                 view.getObstacleLength().setText("");
                 view.getObstacleWidth().setText("");
@@ -176,9 +198,6 @@ public class ObstacleCreationController {
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setContentText("Obstacle Added");
                 a.show();
-
-
-              initialise();
             }
             catch(Exception e) {
                 e.printStackTrace();
