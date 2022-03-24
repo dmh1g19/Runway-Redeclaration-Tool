@@ -115,7 +115,7 @@ public class CalculationsController {
         //Lower Threshold
         view.getLowerThreshold().setText(view.getRunwaySelect().getValue().getLowerThreshold());
         view.getDistanceLowerThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
+            if (!newV.matches("-?\\d*(\\\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
         });
 
         view.getSectionLowerThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -135,7 +135,7 @@ public class CalculationsController {
         //Upper Threshold
         view.getUpperThreshold().setText(view.getRunwaySelect().getValue().getUpperThreshold());
         view.getDistanceUpperThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
+            if (!newV.matches("-?\\d*(\\\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
         });
 
         view.getSectionUpperThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -372,7 +372,7 @@ public class CalculationsController {
             view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
 
             Map<String, String> upperMap = Calculator.calculationBreakdown(view.getRunwaySelect().getValue().getSecond(),
-                    lowerObstacleOnRunway, view.getSectionLowerThreshold().getValue()); // Get values for uprthr
+                    upperObstacleOnRunway, view.getSectionUpperThreshold().getValue()); // Get values for uprthr
             Text upperThr = new Text(view.getUpperThreshold().getText());
             upperThr.getStyleClass().add("breakdownThreshold");
             view.getBreakdown().getChildren().add(upperThr);
