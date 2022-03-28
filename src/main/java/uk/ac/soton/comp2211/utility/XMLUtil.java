@@ -23,7 +23,7 @@ import java.util.List;
 public class XMLUtil {
     
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("airports.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("uk/ac/soton/comp2211/airports.xml");
         Airport obj1 = (Airport) context.getBean("Airport1");
         Airport obj2 = (Airport) context.getBean("Airport2");
         Runway RW1 =(Runway) context.getBean("Runway1");
