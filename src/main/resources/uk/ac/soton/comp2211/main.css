@@ -28,8 +28,7 @@
     -fx-font-size: 18;
     -fx-font-weight: 600;
     -fx-text-fill: black;
-    -fx-padding: 8;
-    -fx-cursor: hand;
+    -fx-padding: 0 0 4 0;
     -fx-underline: true;
 }
 

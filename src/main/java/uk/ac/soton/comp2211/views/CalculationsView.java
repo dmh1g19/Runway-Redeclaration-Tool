@@ -56,6 +56,7 @@ public class CalculationsView extends BaseView {
     private TableView<RedeclaredRunway> redeclaredRunways = new TableView();
 
     private TextFlow breakdown = new TextFlow();
+    private Label airportIndicator = new Label();
 
     //GETTERS
 
@@ -135,6 +136,10 @@ public class CalculationsView extends BaseView {
         return runwayToShow;
     }
 
+    public Label getAirportIndicator() {
+        return airportIndicator;
+    }
+
     public CalculationsView() {
         view = createView();
     }
@@ -145,7 +150,7 @@ public class CalculationsView extends BaseView {
 
         layout.setLeft(createInputForm());
         layout.setCenter(createViewButtons());
-        layout.setTop(createBackButton());
+        layout.setTop(createTopBar());
         layout.setRight(createCalcInfoTable());
 
 
@@ -237,10 +242,21 @@ public class CalculationsView extends BaseView {
         return vbox;
     }
 
-    public Node createBackButton() {
-        BorderPane.setMargin(backButton, new Insets(0,0,8,0));
+    public Node createTopBar() {
+        HBox hbox = new HBox();
 
-        return backButton;
+        BorderPane.setMargin(backButton, new Insets(0,0,8,0));
+        //BorderPane.setMargin(airportIndicator, new Insets(0,0,8,0));
+
+        backButton.setAlignment(Pos.TOP_LEFT);
+        airportIndicator.setAlignment(Pos.TOP_RIGHT);
+        airportIndicator.getStyleClass().add("airportIndicator");
+
+        Region spacing = new Region();
+        HBox.setHgrow(spacing, Priority.ALWAYS);
+        hbox.getChildren().addAll(backButton, spacing, airportIndicator);
+
+        return hbox;
     }
 
     public Node createViewButtons() {

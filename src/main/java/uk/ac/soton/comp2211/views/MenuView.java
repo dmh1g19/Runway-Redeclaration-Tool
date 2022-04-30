@@ -15,11 +15,11 @@ import java.awt.*;
 public class MenuView extends BaseView {
 
     //View Nodes
-    Text calcButton = new Text("Calculate");
-    Text obstaclesButton = new Text("Obstacles");
-    Text settingsButton = new Text("Settings");
-    Text exitButton = new Text("Exit");
-    Label airportIndicator = new Label();
+    private Text calcButton = new Text("Calculate");
+    private Text obstaclesButton = new Text("Obstacles");
+    private Text settingsButton = new Text("Settings");
+    private Text exitButton = new Text("Exit");
+    private Label airportIndicator = new Label();
 
     public MenuView() {
         view = createView();

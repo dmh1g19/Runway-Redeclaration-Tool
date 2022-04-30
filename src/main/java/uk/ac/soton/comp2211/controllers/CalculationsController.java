@@ -38,6 +38,9 @@ public class CalculationsController {
     }
 
     public void initialise() {
+        //Airport indicator
+        view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
+
         //Runway Select
         view.getRunwaySelect().setItems(FXCollections.observableArrayList(model.selectedAirportProperty().get().getRunways()));
 
