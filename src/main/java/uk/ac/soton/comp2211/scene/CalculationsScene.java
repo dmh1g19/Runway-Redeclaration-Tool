@@ -3,7 +3,6 @@ package uk.ac.soton.comp2211.scene;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -11,7 +10,7 @@ import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.*;
 import uk.ac.soton.comp2211.components.PredefinedObstacles;
-import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
+import uk.ac.soton.comp2211.models.listeners.RunwayUpdatedListener;
 import uk.ac.soton.comp2211.utility.Calculator;
 
 import java.util.*;

@@ -154,6 +154,10 @@ public class App extends Application {
         loadScene(new SelectionScene(this));
     }
 
+    public void loadObstacleMenu() {
+        loadScene(new SelectionScene(this));
+    }
+
     public void loadScene(BaseScene newScene) {
         newScene.build();
         scene = newScene.setScene();

@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.models.AirportModel;
+import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.ObstacleCreationView;
 import uk.ac.soton.comp2211.views.SelectionView;
 
@@ -63,7 +64,7 @@ public class ObstacleCreationController {
 
 
         //adding back button
-        view.getBackButton().setOnMouseClicked(e->loadSelection());
+        view.getBackButton().setOnMouseClicked(e->loadMenu());
 
         //adding a push to xml button
         view.getWriteObstacles().setOnMouseClicked(e -> model.writeObstaclesToXML());
@@ -209,10 +210,10 @@ public class ObstacleCreationController {
 
     }
 
-
-    public void loadSelection() {
-        SelectionView selectionView = new SelectionView();
-        SelectionController selectionController = new SelectionController(selectionView, model);
-        view.getView().getScene().setRoot(selectionView.getView());
+    public void loadMenu() {
+        MenuView menuView = new MenuView();
+        MenuController menuController = new MenuController(menuView, model);
+        view.getView().getScene().setRoot(menuView.getView());
     }
+
 }

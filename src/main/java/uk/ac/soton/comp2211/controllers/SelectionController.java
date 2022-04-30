@@ -57,10 +57,6 @@ public class SelectionController {
             loadMenu();
         });
 
-        //Obstacle Button
-        view.getObsButton().setOnMouseClicked(e->{
-            loadObsCreation();
-        });
 
     }
 
@@ -69,10 +65,6 @@ public class SelectionController {
         MenuController menuController = new MenuController(menuView, model);
         view.getView().getScene().setRoot(menuView.getView());
     }
-    public void loadObsCreation(){
-        ObstacleCreationView obstacleCreationView = new ObstacleCreationView();
-        ObstacleCreationController controller= new ObstacleCreationController(obstacleCreationView, model);
-        view.getView().getScene().setRoot(obstacleCreationView.getView());
-    }
+
 
 }

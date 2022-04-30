@@ -1,6 +1,5 @@
 package uk.ac.soton.comp2211.components;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
@@ -9,12 +8,7 @@ import javafx.scene.transform.Scale;
 import uk.ac.soton.comp2211.airport.Direction;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.RedeclaredRunway;
-import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.airport.State;
-import uk.ac.soton.comp2211.listeners.RunwayUpdatedListener;
-import uk.ac.soton.comp2211.scene.CalculationsScene;
-
-import java.util.Optional;
 
 public class SideOnRunway extends RunwayView {
 

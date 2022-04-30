@@ -33,6 +33,11 @@ public class MenuScene extends BaseScene {
         calcButton.setOnMouseClicked(e -> app.loadCalculations());
         calcButton.getStyleClass().add("menuItem");
 
+        //Obstacles
+        Text obstaclesButton = new Text("Obstacles");
+        obstaclesButton.setOnMouseClicked(e -> app.loadSelection());
+        obstaclesButton.getStyleClass().add("menuItem");
+
         //Settings
         Text settingsButton = new Text("Settings");
         settingsButton.setOnMouseClicked(e -> app.loadSettings());
@@ -46,7 +51,7 @@ public class MenuScene extends BaseScene {
         //Menu Items
         VBox menuItems = new VBox();
         menuItems.setAlignment(Pos.CENTER);
-        menuItems.getChildren().addAll(calcButton,settingsButton,exitButton);
+        menuItems.getChildren().addAll(calcButton,obstaclesButton,settingsButton,exitButton);
         menuItems.getStyleClass().add("menu");
 
         //Airport Indicator

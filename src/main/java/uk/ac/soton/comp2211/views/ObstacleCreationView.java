@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ObstacleCreationView extends BaseView {
 
-    private Text backButton = new Text("Exit");
+    private Text backButton = new Text("Back to Menu");
     private TextField obstacleName = new TextField();
     private TextField obstacleWidth = new TextField();
     private TextField obstacleHeight = new TextField();

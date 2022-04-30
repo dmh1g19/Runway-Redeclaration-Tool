@@ -26,7 +26,6 @@ public class SelectionView extends BaseView {
     //View Nodes
     ComboBox<Airport> airportSelectionList = new ComboBox<>();
     Button selectButton = new Button("Select");
-    Text obsButton;
 
     public SelectionView() {
         view = createView();
@@ -39,8 +38,6 @@ public class SelectionView extends BaseView {
     public Button getSelectButton() {
         return selectButton;
     }
-
-    public Text getObsButton() {return  obsButton;}
 
     public Parent createView() {
         GridPane gridPane = new GridPane();
@@ -56,7 +53,6 @@ public class SelectionView extends BaseView {
         gridPane.add(vbox, 1, 1);
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(gridPane);
-        borderPane.setTop(createObsButton());
 
         return borderPane;
     }
@@ -84,13 +80,6 @@ public class SelectionView extends BaseView {
         return hbox;
     }
 
-
-    private Node createObsButton() {
-        obsButton = new Text("Create Obstacle");
-        obsButton.getStyleClass().add( "airportIndicator");
-
-        return obsButton ;
-    }
 
 
 }
