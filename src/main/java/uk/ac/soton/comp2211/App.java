@@ -119,6 +119,7 @@ public class App extends Application {
             Scene scene = new Scene(view.getView(), width, height);
 
             scene.getStylesheets().add(App.class.getResource("main.css").toExternalForm());
+            scene.getStylesheets().add(App.class.getResource("NormalFont.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {

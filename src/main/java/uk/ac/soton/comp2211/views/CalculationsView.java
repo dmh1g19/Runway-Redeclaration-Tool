@@ -145,6 +145,8 @@ public class CalculationsView extends BaseView {
     }
 
     public Parent createView() {
+
+
         BorderPane layout = new BorderPane();
         layout.setPadding(new Insets(8));
 

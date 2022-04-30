@@ -11,7 +11,6 @@
 
 .menuItem {
     -fx-font-family: Arial;
-    -fx-font-size: 36;
     -fx-font-weight: bold;
     -fx-fill: white;
     -fx-stroke-type: outside;
@@ -25,7 +24,6 @@
 }
 
 .airportIndicator {
-    -fx-font-size: 18;
     -fx-font-weight: 600;
     -fx-text-fill: black;
     -fx-padding: 0 0 4 0;
@@ -33,7 +31,6 @@
 }
 
 .selectArea{
-    -fx-font-size: 16;
     -fx-background-radius: 4;
     -fx-padding: 16;
     -fx-background-color: rgba(0,0,0,0.7);
@@ -58,14 +55,12 @@
 }
 
 .selectLabel {
-    -fx-font-size: 32;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-padding: 12 12 2 4;
 }
 .inputs {
     -fx-padding: 14;
-    -fx-font-size: 14;
     -fx-background-color: rgb(50, 50, 50);
     -fx-background-radius: 4;
     -fx-vgap: 10;
@@ -75,13 +70,11 @@
     -fx-text-fill: white;
     -fx-font-weight: 600;
     -fx-padding: 2;
-    -fx-font-size: 14;
 }
 
 .inputs ComboBox,
 .inputs TextField {
     -fx-padding: 4;
-    -fx-font-size: 14;
     -fx-max-width: 9999999;
     -fx-alignment: CENTER_RIGHT;
 }
@@ -93,7 +86,6 @@
     -fx-spacing: 2;
 }
 .headerCalc {
-    -fx-font-size: 24;
     -fx-font-weight: bold;
     -fx-padding: 12 12 2 2;
 }
@@ -108,7 +100,6 @@ AnchorPane {
     -fx-padding: 4 0 0 12;
 }
 .obstacleInfo {
-    -fx-font-size: 14;
     -fx-vgap: 8;
     -fx-hgap: 6;
     -fx-padding: 8 0 0 20;
@@ -121,17 +112,14 @@ AnchorPane {
     -fx-font-weight: bold;
 }
 .viewButton {
-    -fx-font-size: 14;
 }
 .error {
     -fx-text-box-border: red;
 }
 .runwayToShow {
     -fx-pref-width: 150;
-    -fx-font-size: 14;
 }
 .valuesTableLabel {
-    -fx-font-size: 18;
     -fx-text-fill: white;
     -fx-padding: 12 0 0 0;
 }
@@ -150,6 +138,5 @@ AnchorPane {
     -fx-background-color: #d5d5d5;
 }
 .breakdownThreshold {
-    -fx-font-size: 14;
     -fx-font-weight: bold;
 }
