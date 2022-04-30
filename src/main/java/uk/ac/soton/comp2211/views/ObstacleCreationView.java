@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ObstacleCreationView extends BaseView {
 
-    private Text backButton = new Text("Back to Menu");
+    private Button backButton = new Button("Back");
     private TextField obstacleName = new TextField();
     private TextField obstacleWidth = new TextField();
     private TextField obstacleHeight = new TextField();
@@ -60,8 +60,8 @@ public class ObstacleCreationView extends BaseView {
         layout.setCenter(vBox);
 
         //adding back button
-        backButton.getStyleClass().add("airportIndicator");
-        layout.setBottom(backButton);
+
+        layout.setLeft(backButton);
 
         return layout;
 
@@ -124,7 +124,7 @@ public class ObstacleCreationView extends BaseView {
 
 
 
-    public Text getBackButton() {
+    public Button getBackButton() {
         return backButton;
     }
 
@@ -154,5 +154,7 @@ public class ObstacleCreationView extends BaseView {
     public VBox getObsForm() {
         return obsForm;
     }
+
+
 
 }

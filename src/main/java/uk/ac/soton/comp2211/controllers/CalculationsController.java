@@ -17,6 +17,7 @@ import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.utility.Calculator;
 import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
+import uk.ac.soton.comp2211.views.SelectionView;
 import uk.ac.soton.comp2211.views.ViewsView;
 
 import java.util.Map;
@@ -153,7 +154,7 @@ public class CalculationsController {
         });
 
         //Back Button
-        view.getBackButton().setOnAction(e -> loadMenu());
+        view.getBackButton().setOnAction(e -> loadSelection());
 
         //Runway View Buttons
         view.getTopDownView().setOnAction(e -> loadTopDownView());
@@ -389,10 +390,10 @@ public class CalculationsController {
 
     }
 
-    public void loadMenu() {
-        MenuView menuView = new MenuView();
-        MenuController menuController = new MenuController(menuView, model);
-        view.getView().getScene().setRoot(menuView.getView());
+    public void loadSelection() {
+        SelectionView selectionView = new SelectionView();
+        SelectionController selectionController = new SelectionController(selectionView, model);
+        view.getView().getScene().setRoot(selectionView.getView());
     }
 
     public void loadTopDownView() {

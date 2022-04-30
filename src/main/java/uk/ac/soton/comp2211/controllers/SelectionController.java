@@ -58,6 +58,9 @@ public class SelectionController {
             loadCalculations();
         });
 
+        //adding back button
+        view.getBackButton().setOnMouseClicked(e->loadMenu());
+
 
     }
 
@@ -65,6 +68,11 @@ public class SelectionController {
         CalculationsView calculationsView = new CalculationsView();
         CalculationsController calculationsController = new CalculationsController(calculationsView, model);
         view.getView().getScene().setRoot(calculationsView.getView());
+    }
+    public void loadMenu() {
+        MenuView menuView = new MenuView();
+        MenuController menuController = new MenuController(menuView, model);
+        view.getView().getScene().setRoot(menuView.getView());
     }
 
 

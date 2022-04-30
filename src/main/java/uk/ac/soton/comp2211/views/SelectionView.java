@@ -2,6 +2,7 @@ package uk.ac.soton.comp2211.views;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -26,6 +27,8 @@ public class SelectionView extends BaseView {
     //View Nodes
     ComboBox<Airport> airportSelectionList = new ComboBox<>();
     Button selectButton = new Button("Select");
+    Button backButton = new Button("Back");
+
 
     public SelectionView() {
         view = createView();
@@ -53,6 +56,8 @@ public class SelectionView extends BaseView {
         gridPane.add(vbox, 1, 1);
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(gridPane);
+        createBackButton();
+        borderPane.setLeft(backButton);
 
         return borderPane;
     }
@@ -78,6 +83,15 @@ public class SelectionView extends BaseView {
         HBox.setHgrow(airportSelectionList, Priority.ALWAYS);
 
         return hbox;
+    }
+    public Button getBackButton(){
+        return backButton;
+    }
+
+    public Node createBackButton() {
+        BorderPane.setMargin(backButton, new Insets(10,10,10,10));
+
+        return backButton;
     }
 
 
