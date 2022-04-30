@@ -33,6 +33,7 @@ public class MenuController {
         view.getCalcButton().setOnMouseClicked(e -> loadSelection());
 
         view.getExitButton().setOnMouseClicked(e -> Platform.exit());
+        view.getSettingsButton().setOnMouseClicked(e -> loadSettings());
     }
 
     public void loadSelection() {
@@ -45,6 +46,12 @@ public class MenuController {
         ObstacleCreationView obstaclesView = new ObstacleCreationView();
         ObstacleCreationController obstacleCreationController = new ObstacleCreationController(obstaclesView, model);
         view.getView().getScene().setRoot(obstaclesView.getView());
+    }
+
+    public void loadSettings() {
+        SettingsView settingsView = new SettingsView();
+        SettingsController settingsController = new SettingsController(settingsView, model);
+        view.getView().getScene().setRoot(settingsView.getView());
     }
 
 

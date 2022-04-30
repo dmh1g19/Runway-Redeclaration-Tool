@@ -3,6 +3,7 @@ package uk.ac.soton.comp2211.models;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.adapter.JavaBeanObjectProperty;
@@ -25,6 +26,7 @@ public class AirportModel {
     private final SimpleListProperty<Obstacle> preDefinedObstacles = new SimpleListProperty<>();
     private SimpleObjectProperty<RedeclaredRunway> redeclaredRunway = new SimpleObjectProperty<>();
     private SimpleObjectProperty<State> state = new SimpleObjectProperty<>();
+    private final SimpleIntegerProperty fontSize = new SimpleIntegerProperty(1);
 
     private SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
 
@@ -88,4 +90,10 @@ public class AirportModel {
         return redeclaredRunways;
     }
 
+    public int getFontSize() {
+        return fontSize.get();
+    }
+    public void setFontSize(int i){
+        fontSize.set(i);
+    }
 }

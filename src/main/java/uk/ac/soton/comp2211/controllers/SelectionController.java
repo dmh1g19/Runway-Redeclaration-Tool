@@ -32,6 +32,7 @@ public class SelectionController {
 
     public void initialise() {
         //Airport Selection
+
         view.getAirportSelectionList().itemsProperty().bind(model.airportListProperty());
         if (!(model.selectedAirportProperty() == null)) {
             view.getAirportSelectionList().getSelectionModel().select(model.selectedAirportProperty().get());

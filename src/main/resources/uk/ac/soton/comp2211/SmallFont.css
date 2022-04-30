@@ -1,0 +1,87 @@
+
+
+.menuItem {
+    -fx-font-family: Arial;
+    -fx-font-size: 36;
+    -fx-font-weight: bold;
+
+}
+
+.airportIndicator {
+    -fx-font-size: 16;
+    -fx-font-weight: 600;
+}
+
+.selectArea{
+    -fx-font-size: 13;
+}
+
+
+
+.select,
+
+.selectLabel {
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+}
+.inputs {
+    -fx-font-size: 12;
+
+}
+.inputs Label {
+    -fx-font-weight: 600;
+    -fx-font-size: 12;
+}
+
+.inputs ComboBox,
+.inputs TextField {
+    -fx-font-size: 12;
+}
+.inputs ComboBox {
+    -fx-padding: 0;
+}
+
+.inputs HBox {
+    -fx-spacing: 2;
+}
+.headerCalc {
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+}
+AnchorPane {
+    -fx-padding: 10;
+}
+.inputs Button {
+    -fx-cursor: hand;
+}
+
+.obstacleInfo {
+    -fx-font-size: 14;
+    -fx-vgap: 8;
+    -fx-hgap: 6;
+    -fx-padding: 8 0 0 20;
+}
+.obstacleInfo TextField {
+    -fx-pref-width: 140;
+    -fx-alignment: CENTER_RIGHT;
+}
+.thr {
+    -fx-font-weight: bold;
+}
+.viewButton {
+    -fx-font-size: 12;
+}
+.runwayToShow {
+    -fx-pref-width: 150;
+    -fx-font-size: 12;
+}
+.valuesTableLabel {
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-padding: 12 0 0 0;
+}
+
+.breakdownThreshold {
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
