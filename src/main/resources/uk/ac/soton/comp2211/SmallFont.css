@@ -1,3 +1,19 @@
+.button{
+    -fx-font-size: 12;
+
+
+}
+.combo-box{
+    -fx-font-size: 12;
+}
+
+.label{
+    -fx-font-size: 12;
+}
+.table-view{
+    -fx-font-size: 12;
+}
+
 
 
 .menuItem {

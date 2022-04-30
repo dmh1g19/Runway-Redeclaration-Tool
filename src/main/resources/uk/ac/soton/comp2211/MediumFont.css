@@ -1,4 +1,15 @@
 
+.combo-box{
+    -fx-font-size: 14;
+}
+
+.label{
+    -fx-font-size: 14;
+}
+.table-view{
+    -fx-font-size: 14;
+}
+
 
 .menuItem {
     -fx-font-family: Arial;
@@ -85,3 +96,7 @@ AnchorPane {
     -fx-font-size: 14;
     -fx-font-weight: bold;
 }
+
+
+
+
