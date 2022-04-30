@@ -27,10 +27,12 @@ import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.components.PredefinedObstacles;
+import uk.ac.soton.comp2211.controllers.MenuController;
 import uk.ac.soton.comp2211.controllers.SelectionController;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.scene.*;
 import uk.ac.soton.comp2211.utility.XMLUtil;
+import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.io.File;
@@ -111,10 +113,11 @@ public class App extends Application {
             AirportModel model = new AirportModel(XMLUtil.importAirports("airports.xml"));
             model.setPreDefinedObstacles(XMLUtil.importObstacles("obstacles.xml"));
 
-            SelectionView view = new SelectionView();
-            SelectionController controller = new SelectionController(view, model);
+            MenuView view = new MenuView();
+            MenuController controller = new MenuController(view, model);
 
             Scene scene = new Scene(view.getView(), width, height);
+
             scene.getStylesheets().add(App.class.getResource("main.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
@@ -129,7 +132,8 @@ public class App extends Application {
         }
 
 
-        //stage.show();
+
+
 
     }
 

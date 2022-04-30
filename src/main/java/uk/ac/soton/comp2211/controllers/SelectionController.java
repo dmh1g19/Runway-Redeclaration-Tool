@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.models.AirportModel;
+import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.ObstacleCreationView;
 import uk.ac.soton.comp2211.views.SelectionView;
@@ -54,16 +55,16 @@ public class SelectionController {
         view.getSelectButton().setOnAction(e -> {
             if (view.getAirportSelectionList().getValue() == null) return;
             model.selectedAirportProperty().set(view.getAirportSelectionList().getValue());
-            loadMenu();
+            loadCalculations();
         });
 
 
     }
 
-    public void loadMenu() {
-        MenuView menuView = new MenuView();
-        MenuController menuController = new MenuController(menuView, model);
-        view.getView().getScene().setRoot(menuView.getView());
+    public void loadCalculations() {
+        CalculationsView calculationsView = new CalculationsView();
+        CalculationsController calculationsController = new CalculationsController(calculationsView, model);
+        view.getView().getScene().setRoot(calculationsView.getView());
     }
 
 

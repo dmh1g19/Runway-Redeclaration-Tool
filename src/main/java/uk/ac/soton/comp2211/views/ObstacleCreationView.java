@@ -30,9 +30,7 @@ public class ObstacleCreationView extends BaseView {
 
     private VBox obsForm = new VBox();
 
-    public VBox getObsForm() {
-        return obsForm;
-    }
+
 
     public ObstacleCreationView(){
         view=createView();
@@ -123,13 +121,7 @@ public class ObstacleCreationView extends BaseView {
         return new Group(obsForm);
     }
 
-    public void updateView(){
-        hBox.getChildren().remove(1);
-        ScrollPane scrollPane = new ScrollPane();
 
-        scrollPane.setContent(createObsForm());
-        hBox.getChildren().add(scrollPane);
-    }
 
 
     public Text getBackButton() {
@@ -158,6 +150,9 @@ public class ObstacleCreationView extends BaseView {
 
     public Button getWriteObstacles() {
         return writeObstacles;
+    }
+    public VBox getObsForm() {
+        return obsForm;
     }
 
 }

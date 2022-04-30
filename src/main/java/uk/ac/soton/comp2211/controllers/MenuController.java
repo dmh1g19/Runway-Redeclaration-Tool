@@ -24,13 +24,13 @@ public class MenuController {
 
     public void initialise() {
         //Airport Indicator
-        view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
-        view.getAirportIndicator().setOnMouseClicked(e -> loadSelection());
+        //view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
+        //view.getAirportIndicator().setOnMouseClicked(e -> loadSelection());
 
         view.getObstaclesButton().setOnMouseClicked( e -> loadObstacleMenu());
 
         //Calculations
-        view.getCalcButton().setOnMouseClicked(e -> loadCalculations());
+        view.getCalcButton().setOnMouseClicked(e -> loadSelection());
 
         view.getExitButton().setOnMouseClicked(e -> Platform.exit());
     }
@@ -47,10 +47,6 @@ public class MenuController {
         view.getView().getScene().setRoot(obstaclesView.getView());
     }
 
-    public void loadCalculations() {
-        CalculationsView calculationsView = new CalculationsView();
-        CalculationsController calculationsController = new CalculationsController(calculationsView, model);
-        view.getView().getScene().setRoot(calculationsView.getView());
-    }
+
 
 }

@@ -39,6 +39,7 @@ public class SelectionScene extends BaseScene {
 
     @Override
     public void build() {
+        System.out.println("building selection scene");
         root = new StackPane();
 
         //Drop Down List
