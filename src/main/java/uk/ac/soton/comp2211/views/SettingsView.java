@@ -6,12 +6,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import uk.ac.soton.comp2211.scene.BaseScene;
 import uk.ac.soton.comp2211.scene.SettingsScene;
@@ -23,6 +21,10 @@ public class SettingsView extends BaseView {
     ComboBox<String> fontsBox;
     CheckBox contrastBox;
 
+
+    ColorPicker accentPicker = new ColorPicker();
+    ColorPicker backPicker = new ColorPicker();
+    Button customColour = new Button("save colour");
 
 
     public SettingsView() { view = createView();}
@@ -51,7 +53,7 @@ public class SettingsView extends BaseView {
 
 
         //Font
-        Label fontLabel = new Label("Name:");
+        Label fontLabel = new Label("Font Size:");
         menu.add(fontLabel, 0, 1);
         ArrayList<String> fonts = new ArrayList<>();
         fonts.add("Small");
@@ -61,15 +63,38 @@ public class SettingsView extends BaseView {
         menu.add(fontsBox,1,1);
 
 
-        Label contrast = new Label("contrast:");
+        Label contrast = new Label("Contrast:");
         menu.add(contrast, 0, 2);
         contrastBox = new CheckBox();
         menu.add(contrastBox, 1, 2);
 
 
+
+
+
+        VBox colourBox = new VBox();
+        HBox accentBox = new HBox();
+        HBox backBox = new HBox();
+        Label accentPickerLabel = new Label("Custom Accent Colour:");
+        Label backPickerLabel = new Label("Custom Background Colour:");
+
+        accentBox.getChildren().add(accentPickerLabel);
+        accentBox.getChildren().add(accentPicker);
+        backBox.getChildren().add(backPickerLabel);
+        backBox.getChildren().add(backPicker);
+        colourBox.getChildren().add(accentBox);
+        colourBox.getChildren().add(backBox);
+        colourBox.getChildren().add(customColour);
+
+        menu.add(colourBox,0,3);
+
         menu.setAlignment(Pos.TOP_CENTER);
-        menu.setMaxWidth(300);
+        menu.setMaxWidth(500);
         menu.setMaxHeight(500);
+
+     ;
+
+
         return  menu;
     }
 
@@ -84,5 +109,16 @@ public class SettingsView extends BaseView {
     public CheckBox getContrastBox() {
         return contrastBox;
     }
+    public ColorPicker getAccentPicker() {
+        return accentPicker;
+    }
+
+    public ColorPicker getBackPicker() {
+        return backPicker;
+    }
+    public Button getCustomColour(){
+        return customColour;
+    }
+
 
 }

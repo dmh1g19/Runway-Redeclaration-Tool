@@ -1,4 +1,9 @@
 
+.button{
+    -fx-font-size: 14;
+
+
+}
 .combo-box{
     -fx-font-size: 14;
 }
@@ -11,9 +16,10 @@
 }
 
 
+
 .menuItem {
     -fx-font-family: Arial;
-    -fx-font-size: 36;
+    -fx-font-size: 38;
     -fx-font-weight: bold;
 
 }
@@ -59,23 +65,15 @@
     -fx-font-size: 24;
     -fx-font-weight: bold;
 }
-AnchorPane {
-    -fx-padding: 12;
-}
-.inputs Button {
-    -fx-cursor: hand;
-}
+
 
 .obstacleInfo {
-    -fx-font-size: 14;
+    -fx-font-size: 16;
     -fx-vgap: 8;
     -fx-hgap: 6;
     -fx-padding: 8 0 0 20;
 }
-.obstacleInfo TextField {
-    -fx-pref-width: 140;
-    -fx-alignment: CENTER_RIGHT;
-}
+
 .thr {
     -fx-font-weight: bold;
 }
@@ -96,7 +94,3 @@ AnchorPane {
     -fx-font-size: 14;
     -fx-font-weight: bold;
 }
-
-
-
-

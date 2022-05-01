@@ -3,6 +3,7 @@ package uk.ac.soton.comp2211.models;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,6 +28,7 @@ public class AirportModel {
     private SimpleObjectProperty<RedeclaredRunway> redeclaredRunway = new SimpleObjectProperty<>();
     private SimpleObjectProperty<State> state = new SimpleObjectProperty<>();
     private final SimpleIntegerProperty fontSize = new SimpleIntegerProperty(1);
+    private final SimpleBooleanProperty highContrast = new SimpleBooleanProperty(false);
 
     private SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
 
@@ -95,5 +97,17 @@ public class AirportModel {
     }
     public void setFontSize(int i){
         fontSize.set(i);
+    }
+
+    public boolean isHighContrast() {
+        return highContrast.get();
+    }
+
+    public void setHighContrast(boolean contrast) {
+         highContrast.set(contrast);
+    }
+
+    public SimpleBooleanProperty highContrastProperty() {
+        return highContrast;
     }
 }

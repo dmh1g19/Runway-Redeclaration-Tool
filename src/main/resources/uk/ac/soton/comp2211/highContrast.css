@@ -1,0 +1,234 @@
+.root {
+    -fx-background-size: cover;
+
+    -fx-text-fill: #1fff00 ;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, white, #000000)
+}
+
+
+.label{
+    -fx-text-fill: #1fff00;
+}
+.table-view{
+    -fx-text-fill: #1fff00;
+}
+.button{
+    -fx-background-color: #000000;
+    -fx-text-fill: #1fff00;
+}
+
+.menu {
+    -fx-background-color: rgba(0,0,0,0.8);
+    -fx-background-radius: 8;
+    -fx-padding: 16;
+}
+
+.menuItem {
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
+    -fx-fill: #1fff00;
+    -fx-stroke-type: outside;
+    -fx-stroke: black;
+    -fx-stroke-width: 1.5;
+}
+
+.menuItem:hover {
+    -fx-fill: #a8a8a8;
+    -fx-cursor: hand;
+}
+
+.airportIndicator {
+    -fx-font-weight: 600;
+    -fx-text-fill: #1fff00;
+    -fx-padding: 0 0 4 0;
+    -fx-underline: true;
+}
+
+.selectArea{
+    -fx-background-radius: 4;
+    -fx-padding: 16;
+    -fx-background-color: rgba(0,0,0,0.7);
+}
+
+.selectBox {
+    -fx-padding: 12 0 0 0;
+    -fx-spacing: 8;
+}
+
+.select,
+.airportList {
+    -fx-background-radius: 2;
+    -fx-background-color: lightgrey;
+    -fx-background-insets: 1;
+    -fx-border-color: darkgrey;
+    -fx-border-radius: 3;
+    -fx-cursor: hand;
+}
+.select:hover {
+    -fx-background-color: grey;
+}
+.select.button{
+    -fx-background-color: black;
+
+}
+.select.combo-box{
+    -fx-background-color: black;
+    -fx-text-fill: #1fff00 ;
+}
+
+.selectLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1fff00;
+    -fx-padding: 12 12 2 4;
+}
+.inputs {
+    -fx-padding: 14;
+    -fx-background-color: rgb(50, 50, 50);
+    -fx-background-radius: 4;
+    -fx-text-fill: #1fff00;
+    -fx-vgap: 10;
+    -fx-hgap: 8;
+}
+.inputs Label {
+    -fx-text-fill: #1fff00;
+    -fx-font-weight: 600;
+    -fx-padding: 2;
+}
+
+.inputs ComboBox,
+.inputs TextField {
+    -fx-padding: 4;
+    -fx-max-width: 9999999;
+    -fx-alignment: CENTER_RIGHT;
+}
+.inputs ComboBox {
+    -fx-padding: 0;
+}
+
+.inputs ComboBox.list-cell{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.inputs HBox {
+    -fx-text-fill: #1fff00;
+    -fx-spacing: 2;
+}
+.headerCalc {
+    -fx-font-weight: bold;
+    -fx-padding: 12 12 2 2;
+}
+AnchorPane {
+    -fx-text-fill: #1fff00;
+    -fx-padding: 12;
+}
+.inputs Button {
+    -fx-background-color: black;
+    -fx-text-fill: #1fff00;
+    -fx-cursor: hand;
+}
+.metre {
+    -fx-text-fill: #1fff00;
+    -fx-fill: #1fff00;
+    -fx-padding: 4 0 0 12;
+}
+.obstacleInfo {
+    -fx-vgap: 8;
+    -fx-hgap: 6;
+    -fx-padding: 8 0 0 20;
+}
+.obstacleInfo TextField {
+    -fx-text-fill: #1fff00;
+    -fx-background-color: black;
+    -fx-pref-width: 140;
+    -fx-alignment: CENTER_RIGHT;
+}
+.thr {
+    -fx-text-fill: #1fff00;
+    -fx-font-weight: bold;
+}
+.viewButton {
+}
+.error {
+    -fx-text-box-border: red;
+}
+.runwayToShow {
+    -fx-pref-width: 150;
+}
+.valuesTableLabel {
+    -fx-text-fill: #1fff00;
+    -fx-background-color: transparent;
+    -fx-padding: 12 0 0 0;
+}
+.scroll-pane .viewport {
+    -fx-background-color: rgb(50, 50, 50);
+}
+.calcInfo {
+    -fx-text-fill: #1fff00;
+    -fx-background-color: rgba(0,0,0,0.7);
+    -fx-background-radius: 4;
+    -fx-padding: 8;
+}
+.calcInfo Text {
+    -fx-text-fill: #1fff00;
+}
+.breakdown {
+    -fx-text-fill: #1fff00;
+    -fx-background-color: #000000;
+}
+
+
+.breakdownThreshold {
+    -fx-text-fill: #1fff00;
+    -fx-font-weight: bold;
+}
+
+.combo-box{
+    -fx-background-color: black;
+    -fx-text-fill:  #1fff00;
+}
+.combo-box.list-cell{
+    -fx-background-color: black;
+    -fx-text-fill:  #1fff00;
+}
+
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-background-color: #000000;
+    -fx-text-fill: #1fff00;
+    -fx-font-family: Oxygen Light;
+}
+.combo-box .cell:selected {
+    -fx-text-fill: #1fff00;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-text-fill: #1fff00;
+}
+.table-view .cell{
+    -fx-background-color: #000000;
+    -fx-text-fill: #1fff00;
+
+}
+.text-field{
+    -fx-background-color: #000000;
+    -fx-text-fill: #1fff00;
+}
+
+.table-view .column-header{
+    -fx-background-color: #3f3e3e;
+    -fx-text-fill: #1fff00;
+
+}
+.text-area{
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+
+}
+
+.breakdown Text{
+    -fx-fill: #1fff00;
+
+}
