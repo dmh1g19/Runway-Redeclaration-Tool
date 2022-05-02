@@ -105,3 +105,8 @@ AnchorPane {
     -fx-font-weight: bold;
 
 }
+.settingsHeader{
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+
+}

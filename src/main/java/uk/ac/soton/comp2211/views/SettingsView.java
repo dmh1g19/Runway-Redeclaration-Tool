@@ -19,13 +19,13 @@ import java.util.ArrayList;
 public class SettingsView extends BaseView {
     Button backButton = new Button("Back");
     ComboBox<String> fontsBox;
-    CheckBox contrastBox;
-
 
     ColorPicker accentPicker = new ColorPicker();
     ColorPicker backPicker = new ColorPicker();
-    Button customColour = new Button("save colour");
-
+    Button customColour = new Button("save custom colours");
+    Button blindColour = new Button("save colour blindness settings");
+    Button resetColours = new Button("reset colours");
+    ComboBox<String> colourBlindOptionsBox;
 
     public SettingsView() { view = createView();}
 
@@ -53,6 +53,11 @@ public class SettingsView extends BaseView {
 
 
         //Font
+        Label fontOptions = new Label("Font Options");
+        fontOptions.setAlignment(Pos.CENTER);
+        fontOptions.getStyleClass().add("settingsHeader");
+        menu.add(fontOptions,0,0);
+
         Label fontLabel = new Label("Font Size:");
         menu.add(fontLabel, 0, 1);
         ArrayList<String> fonts = new ArrayList<>();
@@ -63,15 +68,10 @@ public class SettingsView extends BaseView {
         menu.add(fontsBox,1,1);
 
 
-        Label contrast = new Label("Contrast:");
-        menu.add(contrast, 0, 2);
-        contrastBox = new CheckBox();
-        menu.add(contrastBox, 1, 2);
 
 
 
-
-
+        //custom colours
         VBox colourBox = new VBox();
         HBox accentBox = new HBox();
         HBox backBox = new HBox();
@@ -86,13 +86,44 @@ public class SettingsView extends BaseView {
         colourBox.getChildren().add(backBox);
         colourBox.getChildren().add(customColour);
 
-        menu.add(colourBox,0,3);
+
+
+
+
+        Label customColours = new Label("Colour Options");
+        customColours.setAlignment(Pos.CENTER);
+        customColours.getStyleClass().add("settingsHeader");
+
+        menu.add(customColours,0,3);
+
+        menu.add(colourBox,0,4);
+
+
+        //colour blind options
+        VBox blindBox = new VBox();
+        ArrayList<String> blinds = new ArrayList<>();
+        blinds.add("Protanopia");
+        blinds.add("Deuteranopia");
+        blinds.add("Tritanopia");
+        blinds.add("High Contrast");
+        blinds.add("Black and White");
+        colourBlindOptionsBox = new ComboBox<String>(FXCollections.observableList(blinds.stream().toList()));
+        blindBox.getChildren().add(colourBlindOptionsBox);
+        blindBox.getChildren().add(blindColour);
+
+        Label blindColours = new Label("Colour Blindness Options");
+        blindColours.setAlignment(Pos.CENTER);
+        blindColours.getStyleClass().add("settingsHeader");
+        menu.add(blindColours,0,5);
+        menu.add(blindBox,0,6);
+
+        menu.add(resetColours,1,10);
 
         menu.setAlignment(Pos.TOP_CENTER);
         menu.setMaxWidth(500);
         menu.setMaxHeight(500);
 
-     ;
+
 
 
         return  menu;
@@ -106,9 +137,6 @@ public class SettingsView extends BaseView {
         return fontsBox;
     }
 
-    public CheckBox getContrastBox() {
-        return contrastBox;
-    }
     public ColorPicker getAccentPicker() {
         return accentPicker;
     }
@@ -120,5 +148,15 @@ public class SettingsView extends BaseView {
         return customColour;
     }
 
+    public Button getBlindColour(){
+        return blindColour;
+    }
 
+    public Button getResetButton() {
+        return resetColours;
+    }
+
+    public ComboBox<String> getColourBlindOptionsBox() {
+        return colourBlindOptionsBox;
+    }
 }

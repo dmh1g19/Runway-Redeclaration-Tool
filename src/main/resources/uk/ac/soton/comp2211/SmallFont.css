@@ -93,3 +93,8 @@
     -fx-font-size: 12;
     -fx-font-weight: bold;
 }
+.settingsHeader{
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+
+}

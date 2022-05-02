@@ -232,3 +232,6 @@ AnchorPane {
     -fx-fill: -fx-accentColour;
 
 }
+.color-picker{
+    -fx-background-color: -fx-back;
+}
