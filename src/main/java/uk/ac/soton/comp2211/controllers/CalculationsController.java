@@ -44,6 +44,9 @@ public class CalculationsController {
         //Airport indicator
         view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
 
+        //Change Airport
+        view.getChangeAirport().setOnAction(e -> loadSelection());
+
         //Runway Select
         view.getRunwaySelect().setItems(FXCollections.observableArrayList(model.selectedAirportProperty().get().getRunways()));
 
@@ -160,11 +163,13 @@ public class CalculationsController {
         });
 
         //Back Button
-        view.getBackButton().setOnAction(e -> loadSelection());
+        view.getBackButton().setOnAction(e -> loadMenu());
 
         //Runway View Buttons
         view.getTopDownView().setOnAction(e -> loadTopDownView());
+        view.getTopDownView().setDisable(true);
         view.getSideOnView().setOnAction(e -> loadSideOnView());
+        view.getSideOnView().setDisable(true);
 
         //RunwayToShow
         view.getRunwayToShow().setItems(FXCollections.observableArrayList(
@@ -300,7 +305,9 @@ public class CalculationsController {
             }
             if (error) return;
 
-            //Calculate values
+            /**
+             * CALCULATE NEW VALUES
+             */
             int obstacleHeight = Integer.parseInt(view.getObstacleHeight().getText());
             int obstacleWidth = Integer.parseInt(view.getObstacleWidth().getText());
             int obstacleLength = Integer.parseInt(view.getObstacleLength().getText());
@@ -344,7 +351,9 @@ public class CalculationsController {
             //Update model with new Values
             model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
-            //Set model to calculated values
+            /**
+             * SET MODEL TO CALCULATED VALUES
+             */
             if (Objects.equals(model.redeclaredRunwaysProperty().get().getKey().getRunway().getName(),
                     view.getRunwayToShow().getValue().getKey().getName())) {
                 model.redeclaredRunwayProperty().set(model.redeclaredRunwaysProperty().get().getKey());
@@ -358,7 +367,9 @@ public class CalculationsController {
             view.getRedeclaredRunways().getItems().add(model.redeclaredRunwaysProperty().get().getKey());
             view.getRedeclaredRunways().getItems().add(model.redeclaredRunwaysProperty().get().getValue());
 
-            //Show Breakdown
+            /**
+             * ADD BREAKDOWN TEXT
+             */
             view.getBreakdown().getChildren().clear();
             Map<String, String> lowerMap = Calculator.calculationBreakdown(view.getRunwaySelect().getValue().getFirst(),
                     lowerObstacleOnRunway, view.getSectionLowerThreshold().getValue()); // Get values for lwrthr
@@ -392,8 +403,20 @@ public class CalculationsController {
             view.getBreakdown().getChildren().add(new Text(upperMap.get("ASDA")));
             view.getBreakdown().getChildren().add(new Text(System.lineSeparator()));
             view.getBreakdown().getChildren().add(new Text(upperMap.get("LDA")));
+
+            /**
+             * ENABLE BUTTONS
+             */
+            view.getSideOnView().setDisable(false);
+            view.getTopDownView().setDisable(false);
         });
 
+    }
+
+    public void loadMenu() {
+        MenuView menuView = new MenuView();
+        MenuController menuController = new MenuController(menuView, model);
+        view.getView().getScene().setRoot(menuView.getView());
     }
 
     public void loadSelection() {

@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.views;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -48,8 +49,11 @@ public class MenuView extends BaseView {
     public Parent createView() {
         //Airport Indicator
         airportIndicator.getStyleClass().add("airportIndicator");
+        airportIndicator.setPadding(new Insets(8));
 
         BorderPane layout = new BorderPane();
+
+        BorderPane.setAlignment(airportIndicator, Pos.TOP_RIGHT);
 
         layout.setCenter(createMenu());
         layout.setTop(airportIndicator);
@@ -62,13 +66,10 @@ public class MenuView extends BaseView {
         menuItems.setAlignment(Pos.CENTER);
         menuItems.getStyleClass().add("menu");
 
-        //calcButton.setOnMouseClicked(e -> app.loadCalculations());
         calcButton.getStyleClass().add("menuItem");
 
         obstaclesButton.getStyleClass().add("menuItem");
 
-        //Settings
-        //settingsButton.setOnMouseClicked(e -> app.loadSettings());
         settingsButton.getStyleClass().add("menuItem");
 
         //Exit

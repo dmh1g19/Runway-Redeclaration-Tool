@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RunwayTool.iml" filepath="$PROJECT_DIR$/RunwayTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../RunwayTool.iml" filepath="$PROJECT_DIR$/../RunwayTool.iml" />
     </modules>
   </component>
 </project>

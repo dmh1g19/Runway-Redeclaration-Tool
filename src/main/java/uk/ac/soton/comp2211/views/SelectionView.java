@@ -27,7 +27,7 @@ public class SelectionView extends BaseView {
     //View Nodes
     ComboBox<Airport> airportSelectionList = new ComboBox<>();
     Button selectButton = new Button("Select");
-    Button backButton = new Button("Back");
+    Button backButton = new Button("Menu");
 
 
     public SelectionView() {

@@ -57,8 +57,11 @@ public class CalculationsView extends BaseView {
 
     private TextFlow breakdown = new TextFlow();
     private Label airportIndicator = new Label();
+    private Button changeAirport = new Button("Change Airport");
 
-    //GETTERS
+    /**
+     * GETTERS
+     */
 
     public TextFlow getBreakdown() {
         return breakdown;
@@ -140,6 +143,10 @@ public class CalculationsView extends BaseView {
         return airportIndicator;
     }
 
+    public Button getChangeAirport() {
+        return changeAirport;
+    }
+
     public CalculationsView() {
         view = createView();
     }
@@ -163,7 +170,7 @@ public class CalculationsView extends BaseView {
         //Original Runways
         originalRunways.setEditable(false);
         originalRunways.setPrefWidth(300);
-        originalRunways.setPrefHeight(75);
+        originalRunways.setPrefHeight(100);
         originalRunways.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Runway, String> name = new TableColumn<>("THR");
@@ -191,7 +198,7 @@ public class CalculationsView extends BaseView {
         //Redeclared Runways
         redeclaredRunways.setEditable(false);
         redeclaredRunways.setPrefWidth(300);
-        redeclaredRunways.setPrefHeight(75);
+        redeclaredRunways.setPrefHeight(100);
         redeclaredRunways.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<RedeclaredRunway, String> reName = new TableColumn<>("THR");
@@ -247,8 +254,7 @@ public class CalculationsView extends BaseView {
     public Node createTopBar() {
         HBox hbox = new HBox();
 
-        BorderPane.setMargin(backButton, new Insets(0,0,8,0));
-        //BorderPane.setMargin(airportIndicator, new Insets(0,0,8,0));
+        BorderPane.setMargin(hbox, new Insets(0,0,4,0));
 
         backButton.setAlignment(Pos.TOP_LEFT);
         airportIndicator.setAlignment(Pos.TOP_RIGHT);
@@ -256,7 +262,8 @@ public class CalculationsView extends BaseView {
 
         Region spacing = new Region();
         HBox.setHgrow(spacing, Priority.ALWAYS);
-        hbox.getChildren().addAll(backButton, spacing, airportIndicator);
+        hbox.setSpacing(12);
+        hbox.getChildren().addAll(backButton, spacing, changeAirport,airportIndicator);
 
         return hbox;
     }

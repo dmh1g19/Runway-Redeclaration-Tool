@@ -27,13 +27,16 @@ public class MenuController {
 
     public void initialise() {
         //Airport Indicator
-        //view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
-        //view.getAirportIndicator().setOnMouseClicked(e -> loadSelection());
+        if (!(model.selectedAirportProperty().get() == null)) view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
+        else view.getAirportIndicator().setText("Airport: None selected");
 
         view.getObstaclesButton().setOnMouseClicked( e -> loadObstacleMenu());
 
         //Calculations
-        view.getCalcButton().setOnMouseClicked(e -> loadSelection());
+        view.getCalcButton().setOnMouseClicked(e -> {
+            if (model.selectedAirportProperty().get() == null) loadSelection();
+            else loadCalculations();
+        });
 
         view.getExitButton().setOnMouseClicked(e -> Platform.exit());
         view.getSettingsButton().setOnMouseClicked(e -> loadSettings());
@@ -55,6 +58,12 @@ public class MenuController {
         SettingsView settingsView = new SettingsView();
         SettingsController settingsController = new SettingsController(settingsView, model);
         view.getView().getScene().setRoot(settingsView.getView());
+    }
+
+    public void loadCalculations() {
+        CalculationsView calculationsView = new CalculationsView();
+        CalculationsController calculationsController = new CalculationsController(calculationsView, model);
+        view.getView().getScene().setRoot(calculationsView.getView());
     }
 
 

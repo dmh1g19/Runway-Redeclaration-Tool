@@ -141,6 +141,19 @@ public class XMLUtil {
         }
     }
 
+
+    public static void exportAirport(Airport airport) {
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            xmlMapper.writeValue(new File("obstacles.xml"), airport);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Airport[] importAirports(String fileName) throws IOException {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
