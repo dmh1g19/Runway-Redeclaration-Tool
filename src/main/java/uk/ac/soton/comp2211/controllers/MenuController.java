@@ -19,6 +19,9 @@ public class MenuController {
         this.view = view;
         this.model = model;
         initialise();
+        if(model.isCustomColours()){
+            view.getView().setStyle(model.getCustomColours());
+        }
     }
 
 

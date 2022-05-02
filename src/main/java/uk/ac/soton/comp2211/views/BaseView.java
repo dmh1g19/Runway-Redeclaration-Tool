@@ -7,6 +7,7 @@ public abstract class BaseView {
     //View
     Parent view;
 
+
     public abstract Parent createView();
 
     public Parent getView() {

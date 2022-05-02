@@ -18,7 +18,11 @@ public class ViewsController {
     public ViewsController(ViewsView view, AirportModel model) {
         this.view = view;
         this.model = model;
+
         initialise();
+        if(model.isCustomColours()){
+            view.getView().setStyle(model.getCustomColours());
+        }
     }
 
     public void initialise() {

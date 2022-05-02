@@ -28,6 +28,9 @@ public class SelectionController {
         this.view = view;
         this.model = model;
         initialise();
+        if(model.isCustomColours()){
+            view.getView().setStyle(model.getCustomColours());
+        }
     }
 
     public void initialise() {

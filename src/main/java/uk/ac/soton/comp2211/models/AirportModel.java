@@ -3,10 +3,7 @@ package uk.ac.soton.comp2211.models;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.beans.property.adapter.JavaBeanObjectProperty;
 import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
@@ -29,6 +26,13 @@ public class AirportModel {
     private SimpleObjectProperty<State> state = new SimpleObjectProperty<>();
     private final SimpleIntegerProperty fontSize = new SimpleIntegerProperty(1);
     private final SimpleBooleanProperty highContrast = new SimpleBooleanProperty(false);
+
+
+
+    private boolean isCustomColours = false;
+
+
+    private final SimpleStringProperty customColours = new SimpleStringProperty("");
 
     private SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
 
@@ -110,4 +114,22 @@ public class AirportModel {
     public SimpleBooleanProperty highContrastProperty() {
         return highContrast;
     }
+
+    public String getCustomColours() {
+        return customColours.get();
+    }
+
+
+    public void setCustomColours(String customColours) {
+        this.customColours.set(customColours);
+    }
+
+    public boolean isCustomColours() {
+        return isCustomColours;
+    }
+
+    public void setHasCustomColours(boolean customColours) {
+        isCustomColours = customColours;
+    }
+
 }

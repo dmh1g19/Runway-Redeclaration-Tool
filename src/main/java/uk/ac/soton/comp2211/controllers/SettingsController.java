@@ -19,6 +19,9 @@ public class SettingsController {
         this.view = view;
         this.model = model;
         initialise();
+        if(model.isCustomColours()){
+            view.getView().setStyle(model.getCustomColours());
+        }
     }
 
     public void initialise(){
@@ -50,9 +53,11 @@ public class SettingsController {
             view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
             view.getView().getScene().getStylesheets().remove(App.class.getResource("highContrast.css").toExternalForm());
             view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
-            view.getView().setStyle("-fx-accentColour:"+toHexString(c)+"; -fx-back:"+toHexString(c2));
+            model.setCustomColours("-fx-accentColour:"+toHexString(c)+"; -fx-back:"+toHexString(c2));
+            view.getView().setStyle(model.getCustomColours());
             System.out.println("New accent Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
             System.out.println("New background Color's RGB = "+c2.getRed()+" "+c2.getGreen()+" "+c2.getBlue());
+            model.setHasCustomColours(true);
         });
 
 
