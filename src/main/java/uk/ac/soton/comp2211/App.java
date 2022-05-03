@@ -51,7 +51,7 @@ public class App extends Application {
         Runway r09L = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
         Runway r27R = new Runway("27R", 3901,50, 269.71,3882,3960,3882,3882, 78, 0);
         Runway r09R = new Runway("09R", 3658,50, 089.67,3658,3658,3658,3350,0,308);
-        Runway r27L = new Runway("27L", 3658,50, 089.67,3658,3658,3658,3658,0,0);
+        Runway r27L = new Runway("27L", 3658,50, 0269.71,3658,3658,3658,3658,0,0);
 
         PhysicalRunway r09L27R = new PhysicalRunway(r09L,r27R);
         PhysicalRunway r09R27L = new PhysicalRunway(r09R,r27L);

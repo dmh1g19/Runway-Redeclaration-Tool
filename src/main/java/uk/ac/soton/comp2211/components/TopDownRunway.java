@@ -118,11 +118,40 @@ public class TopDownRunway extends RunwayView {
         gc.setLineDashes(10);
         gc.strokeLine(startOfRunwayX,halfHeight,startOfRunwayX+runwayLen,halfHeight);
 
+        System.out.println(runway.getName());
+        int bearing = ((int) Math.round(runway.getBearing()))/10 ;
+        System.out.println(bearing);
+        String closeLetter = "";
+        String farLetter = "";
+        if(runway.getName().contains("L")){
+            closeLetter="L";
+            farLetter="R";
+
+        }else if(runway.getName().contains("R")){
+            closeLetter="R";
+            farLetter="L";
+        }
+
+        if(bearing < 18){
+            thresholdR(String.valueOf(bearing+18), farLetter);
+            if(bearing <10){
+                thresholdL("0"+ bearing,closeLetter);
+            }else{
+                thresholdL(String.valueOf(bearing),closeLetter);
+            }
+        }else{
+            thresholdL(String.valueOf(bearing),closeLetter);
+            if(bearing <28){
+                thresholdR("0"+ (bearing - 18),farLetter);;
+            }else{
+                thresholdR(String.valueOf(bearing-18),farLetter);
+            }
+
+        }
+
         //LEFT THR MARKING
         //thresholdL(String.valueOf(round(bearing)),"L");
-        thresholdL("09","L");
-        //RIGHT THR MARKING
-        thresholdR("27","R");
+
 
         gc.setFill(Color.WHITE);
         //RESA1
@@ -289,9 +318,9 @@ public class TopDownRunway extends RunwayView {
         gc.setFill(Color.WHITE);
         gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
         gc.setFont(new Font(30));
-        gc.fillText("R", endOfRunwayX-scaledRESA-35,halfHeight-25);
+       gc.fillText(pos, endOfRunwayX-scaledRESA-35,halfHeight-25);
         gc.setFont(new Font(25));
-        gc.fillText("27", endOfRunwayX-scaledRESA-40,halfHeight-50);
+        gc.fillText(thr, endOfRunwayX-scaledRESA-40,halfHeight-50);
         gc.restore();
     }
 
