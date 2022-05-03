@@ -325,13 +325,21 @@ public class CalculationsController {
                 try {
                     redeclaredRunwayLower = Calculator.TowardsObstacle(view.getRunwaySelect().getValue().getFirst(), lowerObstacleOnRunway);
                 } catch (Calculator.IncorrectObstacleException ex) {
-                    ex.printStackTrace();
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getFirst().getName());
+                    error=true;
+                    a.show();
+                    view.getDistanceLowerThreshold().setText("");
                 }
             } else {
                 try {
                     redeclaredRunwayLower = Calculator.AwayFromObstacle(view.getRunwaySelect().getValue().getFirst(), lowerObstacleOnRunway);
                 } catch (Calculator.IncorrectObstacleException ex) {
-                    ex.printStackTrace();
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getFirst().getName());
+                    error=true;
+                    a.show();
+                    view.getDistanceLowerThreshold().setText("");
                 }
             }
             RedeclaredRunway redeclaredRunwayUpper = null;
@@ -339,15 +347,25 @@ public class CalculationsController {
                 try {
                     redeclaredRunwayUpper = Calculator.TowardsObstacle(view.getRunwaySelect().getValue().getSecond(), upperObstacleOnRunway);
                 } catch (Calculator.IncorrectObstacleException ex) {
-                    ex.printStackTrace();
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getSecond().getName());
+                    error=true;
+                    a.show();
+                    view.getDistanceUpperThreshold().setText("");
                 }
             } else {
                 try {
                     redeclaredRunwayUpper = Calculator.AwayFromObstacle(view.getRunwaySelect().getValue().getSecond(), upperObstacleOnRunway);
                 } catch (Calculator.IncorrectObstacleException ex) {
-                    ex.printStackTrace();
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getSecond().getName());
+                    error=true;
+                    a.show();
+                    view.getDistanceUpperThreshold().setText("");
                 }
             }
+            if (error)
+                return;
             //Update model with new Values
             model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
