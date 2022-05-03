@@ -3,6 +3,7 @@ package uk.ac.soton.comp2211.utility;
 
 import uk.ac.soton.comp2211.airport.*;
 
+import java.time.chrono.MinguoChronology;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +47,10 @@ public class Calculator {
         Runway runwayWithObstacle = new Runway(runway);
         int obstaclePosition = obs.getPosition()- runway.getDTL(); //obstacle position should represent how far down the runway it is
         int newLDA = obstaclePosition -(RESA + distanceToStripEnd);
-        runwayWithObstacle.setLDA(newLDA);
+        if(newLDA < runway.getLDA()){
+            runwayWithObstacle.setLDA(newLDA);
+        }
+
 
 
         return runwayWithObstacle;
@@ -66,8 +70,11 @@ public class Calculator {
         int obstaclePosition = obs.getPosition() - runway.getDTL(); //obstacle position should represent how far down the runway  the highest point is
         int obstacleLength = obs.getLength();
         int obstacleHeight = obs.getHeight();
-        int newLDA = Integer.min (runway.getLDA(),runway.getLDA() - obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
-        runwayWithObstacle.setLDA(newLDA);
+        int newLDA =runway.getLDA() - obstaclePosition -distanceToStripEnd - Integer.max((RESA + obstacleLength/2) , (obstacleHeight *50));
+        if(newLDA < runway.getLDA()){
+            runwayWithObstacle.setLDA(newLDA);
+        }
+
 
         return runwayWithObstacle;
     }
@@ -85,10 +92,13 @@ public class Calculator {
         int obstaclePosition = obs.getPosition()- runway.getDTL(); //obstacle position should represent how far down the runway it is
         int clearway = runway.getTODA() -runway.getTORA();
         int stopway = runway.getASDA() - runway.getTORA();
-        int newTORA = runway.getTORA() -blastProtectionDistance - obstaclePosition - runway.getDTL() ;
-        runwayWithObstacle.setTORA(newTORA);
-        runwayWithObstacle.setTODA(newTORA+clearway);
-        runwayWithObstacle.setASDA(newTORA+stopway);
+        int newTORA = runway.getTORA() -(Integer.max(blastProtectionDistance,RESA +distanceToStripEnd)) - obstaclePosition - runway.getDTL() ;
+        if(newTORA < runway.getTORA()){
+            runwayWithObstacle.setTORA(newTORA);
+            runwayWithObstacle.setTODA(newTORA+clearway);
+            runwayWithObstacle.setASDA(newTORA+stopway);
+        }
+
 
         return runwayWithObstacle;
     }
@@ -103,11 +113,15 @@ public class Calculator {
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition()- runway.getDTL();//obstacle position should represent how far down the runway it is
-        int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - Integer.max((RESA + obs.getLength()) , (obstacleHeight *50));
+        int newTORA = obstaclePosition + runway.getDTL() - distanceToStripEnd - Integer.max((RESA + obs.getLength()/2) , (obstacleHeight *50));
 
-        runwayWithObstacle.setTORA(newTORA);
-        runwayWithObstacle.setTODA(newTORA);
-        runwayWithObstacle.setASDA(newTORA);
+        if(newTORA <= runway.getTORA()){
+            runwayWithObstacle.setTORA(newTORA);
+            runwayWithObstacle.setTODA(newTORA);
+            runwayWithObstacle.setASDA(newTORA);
+        }
+
+
 
         return runwayWithObstacle;
     }
@@ -149,9 +163,20 @@ public class Calculator {
     private static void validateObstacle (ObstacleOnRunway obs) throws IncorrectObstacleException {
 
 
-        if (obs.getHeight() < 0 || obs.getHeight() > 10000 ){
+        if (obs.getHeight() < 1 || obs.getHeight() > 1000 ){
             throw new IncorrectObstacleException("Height of obstacle incorrect");
         }
+
+        if (obs.getWidth() < 1 || obs.getWidth() > 1000 ){
+            throw new IncorrectObstacleException("Width of obstacle incorrect");
+        }
+
+        if (obs.getLength() < 1 || obs.getLength() > 1000 ){
+            throw new IncorrectObstacleException("Length of obstacle incorrect");
+        }
+
+
+
         if (obs.getPosition() < -10000 || obs.getPosition() > 10000 ){
             throw new IncorrectObstacleException("Position of obstacle incorrect");
         }
@@ -176,10 +201,13 @@ public class Calculator {
             int RESA = 240;
             int distanceToStripEnd = 60;
             int newLDA = obstaclePosition - runway.getDTL() - (RESA + distanceToStripEnd);
+            int LDA = Integer.min(runway.getLDA(), newLDA);
             StringBuilder s = new StringBuilder();
-            s.append("LDA = Distance From Threshold - Displaced Threshold - Strip End - RESA\n");
-            s.append("   = "+ obs.getPosition() +" - "+ runway.getDTL() + " - 60 - 240 \n");
-            s.append("   = "+newLDA);
+            s.append("New LDA = Distance From Threshold - Strip End - RESA\n");
+            s.append("= "+ (obs.getPosition() - runway.getDTL() )+ " - 60 - 240 \n");
+            s.append("= "+newLDA);
+            s.append("LDA = Min (Original LDA , NewLDA"+  " \n");
+            s.append("LDA = "+LDA+  " \n");
             map.put("LDA",s.toString());
 
 
@@ -187,20 +215,19 @@ public class Calculator {
             for (int i = 0; i < 3; i++) {
                map.put(names[i],TOACalculationBuilder(names[i],runway,obs,i));
             }
-            int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway  the highest point is
+            int obstaclePosition = obs.getPosition()-runway.getDTL(); //obstacle position should represent how far down the runway  the highest point is
             int obstacleLength = obs.getLength();
             int RESA = 240;
             int distanceToStripEnd = 60;
             int obstacleHeight = obs.getHeight();
             //int newLDA = (obstaclePosition -distanceToStripEnd) - Integer.max((RESA + obstacleLength) , (obstacleHeight *50));
-            int newLDA = Integer.min(runway.getLDA(),runway.getLDA() + runway.getDTL() - obstaclePosition   -distanceToStripEnd -  Integer.max((RESA + obstacleLength) , (obstacleHeight *50)) ) ;
+            int newLDA = runway.getLDA() - obstaclePosition -distanceToStripEnd - Integer.max((RESA + obstacleLength/2) , (obstacleHeight *50));
+            int LDA = Integer.min(runway.getLDA(),newLDA);
             StringBuilder s = new StringBuilder();
-            s.append("LDA = Min(Original LDA , Original LDA + Displacement Threshold - Obstacle Position  – Strip End - Max (Runway parametrs, Slope Calculation))\n");
-            if(newLDA != runway.getLDA()){
-                s.append("     = "+runway.getLDA() +" + "+ runway.getDTL() + " - "+ obs.getPosition() + " - 60 " + "- ( 50 * " +obstacleHeight+ ")\n");
-            }
-
-            s.append("     = "+newLDA);
+            s.append("New LDA = Original LDA + Displacement Threshold - Obstacle Position  – Strip End - Max (RESA + half obstacle length , Slope Calculation))\n");
+            s.append("= "+runway.getLDA() +" + "+ runway.getDTL() + " - "+ obs.getPosition() + " - 60 " + "- ( " +Integer.max((RESA + obstacleLength/2) , (obstacleHeight *50))+ " )\n");
+            s.append("LDA = Min (New LDA , Original LDA"+  " \n");
+            s.append("= "+LDA+  " \n");
             map.put("LDA",s.toString());
         }
         return map;
@@ -218,17 +245,21 @@ public class Calculator {
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
         int RESA = 240;
         int distanceToStripEnd = 60;
-        int newTORA = obstaclePosition  - distanceToStripEnd - Integer.max (RESA+obs.getLength(),obstacleHeight *50);
+        int newTORA = obstaclePosition  - distanceToStripEnd - Integer.max((RESA + obs.getLength()/2) , (obstacleHeight *50));
+        int TORA = Integer.min(runway.getTORA(),newTORA);
 
         StringBuilder s = new StringBuilder();
-        s.append(name+"= Distance from Threshold - Strip end -  Max(Slope Calculation, RESA + Obstacle Length)\n");
+        s.append("New "+name+"= Obstacle distance from runway start - Strip End -  Max(Slope Calculation, RESA + Obstacle Length)\n");
         if(RESA+obs.getLength()<=obstacleHeight *50){
-            s.append("    = "+obs.getPosition() +" - 60 " + "- (50 * " +obstacleHeight+ ") \n");
+            s.append("= "+obs.getPosition() +" - 60 " + "- (50 * " +obstacleHeight+ ") \n");
 
         }else{
-            s.append("    = "+obs.getPosition() +" - 60 " + "- " +RESA+  "- "+ obs.getLength() +  " \n");
+            s.append("= "+obs.getPosition() +" - 60 " + "- " +RESA+  "- "+ obs.getLength() +  " \n");
         }
-        s.append("    = "+newTORA);
+        s.append("= "+newTORA + " \n");
+        s.append(name+ " = Min ( New"+ name+ ", Original "+name+" )" +  " \n");
+        s.append(name+" = "+TORA +  " \n");
+
 
         return  s.toString();
     }
@@ -247,8 +278,9 @@ public class Calculator {
         int stopway = runway.getASDA() - runway.getTORA();
         int blastProtection = 300;
         int newTORA = runway.getTORA() - (Integer.max(300,blastProtection)) - obstaclePosition ;
+        int TORA = Integer.min(newTORA,runway.getTORA());
         StringBuilder s = new StringBuilder();
-        s.append(name+" = Original TORA - (Max of Blast Protection and (RESA+srip end)) - Distance from Threshold - Displaced Threshold");
+        s.append("New "+name+" = Original TORA - (Max of Blast Protection and (RESA+ Srip End)) - Distance from Threshold - Displaced Threshold");
         switch (extra) {
             case 1 -> s.append("+ Clearway \n");
             case 2 -> s.append("+ Stopway \n");
@@ -256,9 +288,9 @@ public class Calculator {
         }
         s.append("    = "+runway.getTORA() +" - "+ (Integer.max(300,blastProtection)) + " - " + obs.getPosition());
         switch (extra) {
-            case 1 -> s.append(clearway+" \n").append("    +"+(newTORA+clearway));
-            case 2 -> s.append(stopway+ "\n").append("    +"+(newTORA+stopway));
-            default -> s.append("\n").append("    +"+newTORA);
+            case 1 -> s.append(clearway+" \n").append(name+" = Min (Original "+name+" , New "+name+"\n").append("    ="+(TORA+clearway)+  " \n");
+            case 2 -> s.append(stopway+ "\n").append(name+"= Min (Original "+name+" , New "+name+"\n").append("    ="+(TORA+stopway) +  " \n");
+            default -> s.append("\n").append(name+" = Min (Original "+name+" , New "+name+"\n").append("    ="+TORA +  " \n");
         }
         return s.toString();
     }
