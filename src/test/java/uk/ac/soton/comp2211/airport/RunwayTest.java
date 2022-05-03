@@ -113,7 +113,7 @@ class RunwayTest {
 
     @Test
     void setDTL() {
-        runway.setDTL(10);
+        runway.setDisplacedThreshold(10);
         assertTrue(runway.getDTL()==10,"Error with  runway setDTL function");
     }
 

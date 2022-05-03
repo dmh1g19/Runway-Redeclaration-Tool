@@ -1,13 +1,6 @@
 package uk.ac.soton.comp2211.airport;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
-import java.util.Map;
-import java.util.Optional;
 
 public class Runway {
     protected String name;
@@ -92,7 +85,7 @@ public class Runway {
         this.LDA = LDA;
     }
 
-    public void setDTL(int displacedThreshold) {
+    public void setDisplacedThreshold(int displacedThreshold) {
         this.displacedThreshold = displacedThreshold;
     }
 
