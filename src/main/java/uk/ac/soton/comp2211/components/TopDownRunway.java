@@ -120,7 +120,6 @@ public class TopDownRunway extends RunwayView {
 
         System.out.println(runway.getName());
         int bearing = ((int) Math.round(runway.getBearing()))/10 ;
-        System.out.println(bearing);
         String closeLetter = "";
         String farLetter = "";
         if(runway.getName().contains("L")){
@@ -158,7 +157,6 @@ public class TopDownRunway extends RunwayView {
         gc.fillRect(startOfRunwayX+scaledDTL, startOfRunwayY, scaledRESA, runwayWidth);
         //RESA2
         gc.fillRect(endOfRunwayX-scaledRESA, startOfRunwayY, scaledRESA, runwayWidth);
-
         //disp thres
         gc.setFill(Color.YELLOW);
         gc.fillRect(startOfRunwayX, startOfRunwayY, scaledDTL, runwayWidth);

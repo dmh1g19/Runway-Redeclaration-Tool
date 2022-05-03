@@ -99,6 +99,7 @@ public class App extends Application {
             scene.getStylesheets().add(App.class.getResource("MediumFont.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

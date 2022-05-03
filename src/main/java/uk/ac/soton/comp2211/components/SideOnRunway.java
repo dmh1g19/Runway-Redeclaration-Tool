@@ -26,6 +26,7 @@ public class SideOnRunway extends RunwayView {
     private double LDALen;
     private double sixtyLen;
     private double RESALen;
+    private double scaledDTL;
     private double clearwayLength;
     private double ALSUp;
     private double ALSAcross;
@@ -81,6 +82,7 @@ public class SideOnRunway extends RunwayView {
         sixtyLen = (60.0/overallLength)*width;
         RESALen = (240.0/overallLength)*width;
         clearwayLength = ((double) runway.getRunway().getClearwayLength() / overallLength) * width;
+        scaledDTL = (runway.getRunway().getDTL() /overallLength ) *width;
 
 
 
@@ -99,6 +101,13 @@ public class SideOnRunway extends RunwayView {
 
         gc.setFill(Color.BLACK);
         gc.fillRect(0, (height - 20), width - clearwayLength , 20);
+
+
+        //DTL
+
+        gc.setFill(Color.YELLOW);
+        gc.fillRect(0, (height - 20),scaledDTL  , 20);
+
 
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(width - clearwayLength,(height - 20),clearwayLength,20 );

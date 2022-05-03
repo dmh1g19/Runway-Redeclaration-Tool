@@ -369,6 +369,7 @@ public class CalculationsController {
             //Update model with new Values
             model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
+
             /**
              * SET MODEL TO CALCULATED VALUES
              */
@@ -427,6 +428,7 @@ public class CalculationsController {
              */
             view.getSideOnView().setDisable(false);
             view.getTopDownView().setDisable(false);
+
         });
 
     }
