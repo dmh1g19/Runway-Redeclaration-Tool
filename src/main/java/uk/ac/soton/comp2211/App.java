@@ -6,41 +6,25 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.google.inject.Binder;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import uk.ac.soton.comp2211.airport.Airport;
-import uk.ac.soton.comp2211.airport.Obstacle;
 import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
-import uk.ac.soton.comp2211.components.PredefinedObstacles;
 import uk.ac.soton.comp2211.controllers.MenuController;
-import uk.ac.soton.comp2211.controllers.SelectionController;
 import uk.ac.soton.comp2211.models.AirportModel;
-import uk.ac.soton.comp2211.scene.*;
 import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.MenuView;
-import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * JavaFX App
@@ -49,9 +33,6 @@ public class App extends Application {
 
     private Scene scene;
     private Stage stage;
-
-    private Airport selectedAirport;
-    private Airport[] airports;
 
     private final int height = 600;
     private final int width = 900;
@@ -101,10 +82,6 @@ public class App extends Application {
             System.out.println("Error");
         }
 
-
-        PredefinedObstacles.init();
-        loadAirports();
-
         //defaultScene();
         //loadSelection();
 
@@ -135,40 +112,7 @@ public class App extends Application {
     }
 
 
-    public void loadSettings() {
-        loadScene(new SettingsScene(this));
-    }
 
-    public void loadMenu() {
-        loadScene(new MenuScene(this));
-    }
-
-    public void loadPrimary() {
-        loadScene(new PrimaryScene(this));
-    }
-
-    public void loadCalculations() {
-        loadScene(new CalculationsScene(this));
-    }
-
-    public void loadSelection() {
-        loadScene(new SelectionScene(this));
-    }
-
-    public void loadObstacleMenu() {
-        loadScene(new SelectionScene(this));
-    }
-
-    public void loadScene(BaseScene newScene) {
-        newScene.build();
-        scene = newScene.setScene();
-        stage.setScene(scene);
-        scene.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ESCAPE) {
-                loadCalculations();
-            }
-        });
-    }
 
     public void defaultScene() {
         scene = new Scene(new StackPane(),width,height, Color.BLACK);
@@ -179,29 +123,6 @@ public class App extends Application {
         return this.scene;
     }
 
-    public Airport getSelectedAirport() {
-        return selectedAirport;
-    }
-
-    public void setSelectedAirport(Airport airport) {
-        this.selectedAirport = airport;
-    }
-
-    public Airport[] getAirports() {
-        return airports;
-    }
-
-    public void setAirports(Airport[] airports) {
-        this.airports = airports;
-    }
-
-    public void loadAirports() {
-        try {
-            airports = XMLUtil.importAirports("airports.xml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * FXML FUNCTIONS
@@ -220,7 +141,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-
         launch();
     }
 

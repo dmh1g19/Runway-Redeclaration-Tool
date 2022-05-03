@@ -46,7 +46,7 @@ public class CalculationsView extends BaseView {
 
     private Button calculateButton = new Button("Calculate");
 
-    private Button backButton = new Button("Back");
+    private Button backButton = new Button("Menu");
 
     private Button topDownView = new Button("Top Down View");
     private Button sideOnView = new Button("Side On View");
@@ -170,7 +170,8 @@ public class CalculationsView extends BaseView {
         //Original Runways
         originalRunways.setEditable(false);
         originalRunways.setPrefWidth(300);
-        originalRunways.setPrefHeight(100);
+        originalRunways.setPrefHeight(85);
+        originalRunways.setMinHeight(85);
         originalRunways.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Runway, String> name = new TableColumn<>("THR");
@@ -198,7 +199,8 @@ public class CalculationsView extends BaseView {
         //Redeclared Runways
         redeclaredRunways.setEditable(false);
         redeclaredRunways.setPrefWidth(300);
-        redeclaredRunways.setPrefHeight(100);
+        redeclaredRunways.setPrefHeight(85);
+        redeclaredRunways.setMinHeight(85);
         redeclaredRunways.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<RedeclaredRunway, String> reName = new TableColumn<>("THR");

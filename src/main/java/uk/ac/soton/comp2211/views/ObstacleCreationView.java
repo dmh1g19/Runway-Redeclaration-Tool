@@ -1,7 +1,5 @@
 package uk.ac.soton.comp2211.views;
 
-import javafx.beans.Observable;
-import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -10,11 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import uk.ac.soton.comp2211.airport.Obstacle;
-import uk.ac.soton.comp2211.components.PredefinedObstacles;
-
-import java.util.ArrayList;
 
 public class ObstacleCreationView extends BaseView {
 
@@ -26,7 +19,7 @@ public class ObstacleCreationView extends BaseView {
     private Button addObstacle = new Button("Add Obstacle");
     private HBox hBox = new HBox();
 
-    private Button writeObstacles = new Button("Write Obstacles to XML");
+    private Button writeObstacles = new Button("Save Changes");
 
     private VBox obsForm = new VBox();
 

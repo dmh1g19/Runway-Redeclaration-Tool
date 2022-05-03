@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.controllers.SelectionController;
-import uk.ac.soton.comp2211.scene.BaseScene;
 
 import java.util.Objects;
 

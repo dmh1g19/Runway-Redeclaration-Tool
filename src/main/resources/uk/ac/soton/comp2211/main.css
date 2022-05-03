@@ -140,3 +140,10 @@ AnchorPane {
 .breakdownThreshold {
     -fx-font-weight: bold;
 }
+.table-view .scroll-bar {
+    -fx-max-width: 2;
+    -fx-max-height: 2;
+}
+Button:hover {
+    -fx-cursor: hand;
+}
