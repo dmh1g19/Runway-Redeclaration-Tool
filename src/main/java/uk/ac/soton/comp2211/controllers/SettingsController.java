@@ -55,7 +55,7 @@ public class SettingsController {
             Color c = new Color(0,0,0,0);
             Color c2 = new Color(0,0,0,0);
             if(!model.isCustomColours()){
-                //view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
+                view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
                 view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
             }
 
@@ -88,6 +88,12 @@ public class SettingsController {
                 }
 
             }
+
+            if(!model.isCustomColours()){
+                view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
+                view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
+            }
+
             view.getAccentPicker().setValue(Color.WHITE);
             view.getBackPicker().setValue(Color.WHITE);
 
