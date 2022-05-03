@@ -36,8 +36,11 @@ public class SettingsController {
         view.getCustomColour().setOnAction(e -> {
             Color c = view.getAccentPicker().getValue();
             Color c2 = view.getBackPicker().getValue();
-            view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
-            view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
+
+            if(!model.isCustomColours()){
+                view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
+                view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
+            }
             model.setCustomColours("-fx-accentColour:"+toHexString(c)+"; -fx-back:"+toHexString(c2));
             view.getView().setStyle(model.getCustomColours());
             System.out.println("New accent Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
@@ -49,8 +52,11 @@ public class SettingsController {
         view.getBlindColour().setOnAction(actionEvent -> {
             Color c = new Color(0,0,0,0);
             Color c2 = new Color(0,0,0,0);
-            view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
-            view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
+            if(!model.isCustomColours()){
+                view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
+                view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
+            }
+
 
             view.getColourBlindOptionsBox().getValue();
             switch (view.getColourBlindOptionsBox().getValue()) {
