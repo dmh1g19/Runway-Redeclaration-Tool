@@ -90,7 +90,7 @@ public class SettingsController {
             }
 
             if(!model.isCustomColours()){
-                view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
+                //view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
                 view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
             }
 
