@@ -1,9 +1,5 @@
 
-.button{
-    -fx-font-size: 14;
 
-
-}
 .combo-box{
     -fx-font-size: 14;
 }
@@ -97,5 +93,10 @@
 .settingsHeader{
     -fx-font-size: 18;
     -fx-font-weight: bold;
+
+}
+.button{
+    -fx-font-size: 14;
+
 
 }

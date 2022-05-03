@@ -50,6 +50,8 @@ public class SettingsController {
         });
 
         view.getBlindColour().setOnAction(actionEvent -> {
+            if (view.getColourBlindOptionsBox().getValue()==null)
+                return;
             Color c = new Color(0,0,0,0);
             Color c2 = new Color(0,0,0,0);
             if(!model.isCustomColours()){
@@ -58,7 +60,7 @@ public class SettingsController {
             }
 
 
-            view.getColourBlindOptionsBox().getValue();
+
             switch (view.getColourBlindOptionsBox().getValue()) {
                 case "Protanopia" -> {
                     c = Color.YELLOW;
@@ -81,6 +83,10 @@ public class SettingsController {
                     c = Color.WHITE;
                     c2 = Color.BLACK;
                 }
+                default -> {
+                    return;
+                }
+
             }
             view.getAccentPicker().setValue(Color.WHITE);
             view.getBackPicker().setValue(Color.WHITE);
@@ -130,8 +136,17 @@ public class SettingsController {
                 .toUpperCase();
     }
     private  void resetColours(){
-        view.getView().getScene().getStylesheets().remove(App.class.getResource("choseColour.css").toExternalForm());
+        view.getView().getScene().getStylesheets().clear();
         view.getView().getScene().getStylesheets().add(App.class.getResource("main.css").toExternalForm());
+        String fontSize;
+        if(model.getFontSize()==0){
+            fontSize="Small";
+        }else if(model.getFontSize()==2){
+            fontSize="Large";
+        }else{
+            fontSize="Medium";
+        }
+        view.getView().getScene().getStylesheets().add(App.class.getResource(fontSize+"Font.css").toExternalForm());
         model.setHasCustomColours(false);
     }
 
