@@ -17,7 +17,6 @@ public class MenuView extends BaseView {
 
     //View Nodes
     private Text calcButton = new Text("Calculate");
-    private Text obstaclesButton = new Text("Obstacles");
     private Text settingsButton = new Text("Settings");
     private Text exitButton = new Text("Exit");
     private Label airportIndicator = new Label();
@@ -30,9 +29,6 @@ public class MenuView extends BaseView {
         return airportIndicator;
     }
 
-    public Text getObstaclesButton() {
-        return obstaclesButton;
-    }
 
     public Text getCalcButton() {
         return calcButton;
@@ -68,7 +64,6 @@ public class MenuView extends BaseView {
 
         calcButton.getStyleClass().add("menuItem");
 
-        obstaclesButton.getStyleClass().add("menuItem");
 
         settingsButton.getStyleClass().add("menuItem");
 
@@ -76,7 +71,7 @@ public class MenuView extends BaseView {
         exitButton.getStyleClass().add("menuItem");
 
         //Add to Menu Vbox
-        menuItems.getChildren().addAll(calcButton, obstaclesButton, settingsButton, exitButton);
+        menuItems.getChildren().addAll(calcButton, settingsButton, exitButton);
 
         return new Group(menuItems);
     }

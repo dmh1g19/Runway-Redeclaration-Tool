@@ -30,8 +30,6 @@ public class MenuController {
         if (!(model.selectedAirportProperty().get() == null)) view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
         else view.getAirportIndicator().setText("Airport: None selected");
 
-        view.getObstaclesButton().setOnMouseClicked( e -> loadObstacleMenu());
-
         //Calculations
         view.getCalcButton().setOnMouseClicked(e -> {
             if (model.selectedAirportProperty().get() == null) loadSelection();
@@ -46,12 +44,6 @@ public class MenuController {
         SelectionView selectionView = new SelectionView();
         SelectionController selectionController = new SelectionController(selectionView, model);
         view.getView().getScene().setRoot(selectionView.getView());
-    }
-
-    public void loadObstacleMenu() {
-        ObstacleCreationView obstaclesView = new ObstacleCreationView();
-        ObstacleCreationController obstacleCreationController = new ObstacleCreationController(obstaclesView, model);
-        view.getView().getScene().setRoot(obstaclesView.getView());
     }
 
     public void loadSettings() {

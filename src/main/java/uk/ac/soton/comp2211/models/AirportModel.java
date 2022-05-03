@@ -14,6 +14,7 @@ import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class AirportModel {
@@ -26,15 +27,10 @@ public class AirportModel {
     private SimpleObjectProperty<State> state = new SimpleObjectProperty<>();
     private final SimpleIntegerProperty fontSize = new SimpleIntegerProperty(1);
     private final SimpleBooleanProperty highContrast = new SimpleBooleanProperty(false);
-
-
-
     private boolean isCustomColours = false;
-
-
     private final SimpleStringProperty customColours = new SimpleStringProperty("");
-
-    private SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
+    private final SimpleListProperty<Pair<Date,String>> actions = new SimpleListProperty<>();
 
 
     public AirportModel() {}
@@ -130,6 +126,18 @@ public class AirportModel {
 
     public void setHasCustomColours(boolean customColours) {
         isCustomColours = customColours;
+    }
+
+    public ObservableList<Pair<Date,String>> getActions() {
+        return actions.get();
+    }
+
+    public SimpleListProperty<Pair<Date,String>> actionsProperty() {
+        return actions;
+    }
+
+    public void addAction(Date date,String action) {
+        this.actions.add(new Pair<>(date,action));
     }
 
 }

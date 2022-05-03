@@ -1,11 +1,19 @@
 package uk.ac.soton.comp2211.controllers;
 
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import uk.ac.soton.comp2211.App;
+import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.models.AirportModel;
+import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.MenuView;
+import uk.ac.soton.comp2211.views.ObstacleCreationView;
 import uk.ac.soton.comp2211.views.SelectionView;
 import uk.ac.soton.comp2211.views.SettingsView;
+
+import java.io.File;
+import java.io.IOException;
 
 public class SettingsController {
 
@@ -25,6 +33,9 @@ public class SettingsController {
     }
 
     public void initialise(){
+        if (!(model.selectedAirportProperty().get() == null)) view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
+        else view.getAirportIndicator().setText("Airport: None selected");
+
         view.getFontsBox().getSelectionModel().select(model.getFontSize());
         view.getBackButton().setOnMouseClicked(mouseEvent -> loadMenu());
 
@@ -38,7 +49,7 @@ public class SettingsController {
             Color c2 = view.getBackPicker().getValue();
 
             if(!model.isCustomColours()){
-                view.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
+                //.getView().getScene().getStylesheets().remove(App.class.getResource("main.css").toExternalForm());
                 view.getView().getScene().getStylesheets().add(App.class.getResource("choseColour.css").toExternalForm());
             }
             model.setCustomColours("-fx-accentColour:"+toHexString(c)+"; -fx-back:"+toHexString(c2));
@@ -111,6 +122,93 @@ public class SettingsController {
             view.getBackPicker().setValue(Color.WHITE);
 
         });
+
+        // EDIT OBSTACLES BUTTON
+        view.getEditObstaclesButton().setOnAction(e -> loadObstacleMenu());
+
+        // IMPORT AIRPORTS
+        view.getImportAirportsButton().setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
+            fileChooser.setTitle("Select Airport(s) XML File");
+            File file = fileChooser.showOpenDialog(view.getView().getScene().getWindow());
+
+            try {
+                model.airportListProperty().addAll(XMLUtil.importAirports(file));
+                Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
+                importSuccess.setTitle("Success!");
+                importSuccess.setContentText("Airport(s) were imported successfully");
+                importSuccess.show();
+            } catch (Exception ex) {
+                Alert importFail = new Alert(Alert.AlertType.ERROR);
+                importFail.setTitle("Error");
+                importFail.setContentText("Error importing airport(s) from XML file");
+                importFail.show();
+            }
+        });
+
+        // IMPORT OBSTACLES
+        view.getImportObstaclesButton().setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
+            fileChooser.setTitle("Select Obstacle(s) XML File");
+            File file = fileChooser.showOpenDialog(view.getView().getScene().getWindow());
+
+            try {
+                model.preDefinedObstaclesProperty().addAll(XMLUtil.importObstacles(file));
+                Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
+                importSuccess.setTitle("Success!");
+                importSuccess.setContentText("Obstacle(s) were imported successfully");
+                importSuccess.show();
+            } catch (Exception ex) {
+                Alert importFail = new Alert(Alert.AlertType.ERROR);
+                importFail.setTitle("Error");
+                importFail.setContentText("Error importing obstacle(s) from XML file");
+                importFail.show();
+            }
+        });
+
+        // EXPORT AIRPORTS
+        view.getExportAirportsButton().setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
+            fileChooser.setTitle("Create file to save airports to");
+            File file = fileChooser.showSaveDialog(view.getView().getScene().getWindow());
+            if (file == null) return;
+            try {
+                XMLUtil.exportAirports(file, model.airportListProperty().get());
+                Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
+                importSuccess.setTitle("Success!");
+                importSuccess.setContentText("Airports were successfully exported");
+                importSuccess.show();
+            } catch (IOException ex) {
+                Alert importFail = new Alert(Alert.AlertType.ERROR);
+                importFail.setTitle("Error");
+                importFail.setContentText("Error exporting Airports");
+                importFail.show();
+            }
+        });
+
+        // EXPORT OBSTACLES
+        view.getExportObstaclesButton().setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
+            fileChooser.setTitle("Create file to save obstacles to");
+            File file = fileChooser.showSaveDialog(view.getView().getScene().getWindow());
+            if (file == null) return;
+            try {
+                XMLUtil.exportObstacles(file, model.preDefinedObstaclesProperty().get());
+                Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
+                importSuccess.setTitle("Success!");
+                importSuccess.setContentText("Obstacles were successfully exported");
+                importSuccess.show();
+            } catch (IOException ex) {
+                Alert importFail = new Alert(Alert.AlertType.ERROR);
+                importFail.setTitle("Error");
+                importFail.setContentText("Error exporting Obstacles");
+                importFail.show();
+            }
+        });
     }
 
     public void loadMenu() {
@@ -156,5 +254,10 @@ public class SettingsController {
         model.setHasCustomColours(false);
     }
 
+    public void loadObstacleMenu() {
+        ObstacleCreationView obstaclesView = new ObstacleCreationView();
+        ObstacleCreationController obstacleCreationController = new ObstacleCreationController(obstaclesView, model);
+        view.getView().getScene().setRoot(obstaclesView.getView());
+    }
 
 }

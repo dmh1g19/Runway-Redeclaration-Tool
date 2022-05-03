@@ -13,6 +13,7 @@ import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.ObstacleCreationView;
 import uk.ac.soton.comp2211.views.SelectionView;
+import uk.ac.soton.comp2211.views.SettingsView;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class ObstacleCreationController {
 
 
         //adding back button
-        view.getBackButton().setOnMouseClicked(e->loadMenu());
+        view.getBackButton().setOnMouseClicked(e-> loadSettings());
 
         //adding a push to xml button
         view.getWriteObstacles().setOnMouseClicked(e -> model.writeObstaclesToXML());
@@ -214,10 +215,10 @@ public class ObstacleCreationController {
 
     }
 
-    public void loadMenu() {
-        MenuView menuView = new MenuView();
-        MenuController menuController = new MenuController(menuView, model);
-        view.getView().getScene().setRoot(menuView.getView());
+    public void loadSettings() {
+        SettingsView settingsView = new SettingsView();
+        SettingsController settingsController = new SettingsController(settingsView, model);
+        view.getView().getScene().setRoot(settingsView.getView());
     }
 
 }
