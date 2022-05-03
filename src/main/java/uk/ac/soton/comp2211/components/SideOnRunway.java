@@ -23,6 +23,8 @@ public class SideOnRunway extends RunwayView {
     private double obLen;
     private double obHeight;
     private double TODALen;
+    private double TORALen;
+    private double ASDALen;
     private double LDALen;
     private double sixtyLen;
     private double RESALen;
@@ -78,6 +80,8 @@ public class SideOnRunway extends RunwayView {
 
         //relative sizes for TODA, 60m and the RESA are calculated.
         TODALen = ((double) runway.getRunway().getTODA() / overallLength) * width;
+        TORALen = ((double) runway.getRunway().getTORA() / overallLength) * width;
+        ASDALen = ((double) runway.getRunway().getASDA() / overallLength) * width;
         LDALen = ((double) runway.getRunway().getLDA() / overallLength) * width;
         sixtyLen = (60.0/overallLength)*width;
         RESALen = (240.0/overallLength)*width;
@@ -196,16 +200,37 @@ public class SideOnRunway extends RunwayView {
             gc.strokeLine(obPos+(obLen/2), (height - 50),obPos+(obLen/2) + blastAllowance ,(height - 50));
             writeText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) ,reflected );
 
-
+            //TODA
             gc.setStroke(Color.DARKGREEN);
             gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -50),obPos+(obLen/2) + blastAllowance+TODALen, (height - 50));
             writeText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65),reflected);
 
+            //TORA
+            gc.setStroke(Color.DARKBLUE);
+            gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -80),obPos+(obLen/2) + blastAllowance+TORALen, (height - 80));
+            writeText(("TORA:" + runway.getRunway().getTORA() + "m"), obPos+(obLen/2) + blastAllowance+(TORALen/2) ,(height - 95),reflected);
+
+            //ASDA
+            gc.setStroke(Color.DARKGRAY);
+            gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -110),obPos+(obLen/2) + blastAllowance+ASDALen, (height - 110));
+            writeText(("ASDA:" + runway.getRunway().getASDA() + "m"), obPos+(obLen/2) + blastAllowance+(ASDALen/2) ,(height - 125),reflected);
+
         }
         //taking off towards an obstruction
         else{
+            //TODA
             gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
             writeText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65),reflected);
+
+            //TORA
+            gc.setStroke(Color.DARKBLUE);
+            gc.strokeLine(1,(height - 80), (TORALen-1) ,(height - 80));
+            writeText(("TORA:" + runway.getRunway().getTORA() + "m"), (TORALen / 2) ,(height - 95),reflected);
+
+            //ASDA
+            gc.setStroke(Color.DARKGRAY);
+            gc.strokeLine(1,(height - 110), (ASDALen-1) ,(height - 110));
+            writeText(("ASDA:" + runway.getRunway().getASDA() + "m"), (ASDALen / 2) ,(height - 125),reflected);
 
 
 
