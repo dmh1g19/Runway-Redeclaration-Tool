@@ -62,6 +62,7 @@ public class CalculationsView extends BaseView {
     private TextFlow breakdown = new TextFlow();
     private Label airportIndicator = new Label();
     private Button changeAirport = new Button("Change Airport");
+    private Button notifButton = new Button("View Notifications");
     private Button storeCalculationButton = new Button("Store Calculation");
 
     /**
@@ -155,6 +156,10 @@ public class CalculationsView extends BaseView {
         return storeCalculationButton;
     }
 
+    public Button getNotifButton() {
+        return notifButton;
+    }
+
     public CalculationsView() {
         view = createView();
     }
@@ -243,8 +248,9 @@ public class CalculationsView extends BaseView {
         scrollPane.setPrefHeight(270);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        breakdown.setPrefWidth(300);
-        breakdown.setMinHeight(270);
+        breakdown.setPrefWidth(285);
+        breakdown.setMaxWidth(285);
+        breakdown.setMinHeight(285);
         breakdown.getStyleClass().add("breakdown");
         Label breakdownLabel = new Label("Calculations Breakdown");
         breakdownLabel.getStyleClass().add("valuesTableLabel");
@@ -270,7 +276,7 @@ public class CalculationsView extends BaseView {
         Region spacing = new Region();
         HBox.setHgrow(spacing, Priority.ALWAYS);
         hbox.setSpacing(12);
-        hbox.getChildren().addAll(backButton, spacing, changeAirport,airportIndicator);
+        hbox.getChildren().addAll(backButton, spacing, notifButton, changeAirport,airportIndicator);
 
         return hbox;
     }

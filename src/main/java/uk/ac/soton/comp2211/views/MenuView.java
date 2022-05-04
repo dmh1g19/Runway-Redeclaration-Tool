@@ -82,7 +82,7 @@ public class MenuView extends BaseView {
         notifButton.getStyleClass().add("menuItem");
 
         //Add to Menu Vbox
-        menuItems.getChildren().addAll(calcButton, settingsButton, exitButton, notifButton);
+        menuItems.getChildren().addAll(calcButton, settingsButton, notifButton, exitButton);
 
         return new Group(menuItems);
     }
