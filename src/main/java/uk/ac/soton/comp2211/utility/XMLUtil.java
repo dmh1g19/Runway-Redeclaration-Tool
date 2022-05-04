@@ -124,8 +124,9 @@ public class XMLUtil {
         xmlMapper.writeValue(file, obstacles);
     }
 
-    public static void storeCalculation(Pair<RedeclaredRunway, RedeclaredRunway> runways, File file) throws IOException {
-        String toWrite = runways.getKey().getRunway().getName() + "\n"
+    public static void storeCalculation(Airport airport ,Pair<RedeclaredRunway, RedeclaredRunway> runways, File file) throws IOException {
+        String toWrite = airport.getName() + "\n\n"
+                + runways.getKey().getRunway().getName() + "\n"
                 + "TORA: " + runways.getKey().getRunway().getTORA() + "m\n"
                 + "TODA: " + runways.getKey().getRunway().getTODA() + "m\n"
                 + "ASDA: " + runways.getKey().getRunway().getASDA() + "m\n"

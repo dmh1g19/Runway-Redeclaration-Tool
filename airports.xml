@@ -1,6 +1,6 @@
 <Airports>
   <item>
-    <name>Heathrow</name>
+    <name>London Heathrow</name>
     <runways>
       <runways>
         <first>
@@ -65,64 +65,64 @@
     </runways>
   </item>
   <item>
-    <name>Heathrow</name>
+    <name>London Gatwick</name>
     <runways>
       <runways>
         <first>
-          <name>09L</name>
-          <length>3901</length>
-          <width>50</width>
-          <bearing>89.67</bearing>
-          <TORA>3901</TORA>
-          <TODA>3901</TODA>
-          <ASDA>3901</ASDA>
-          <LDA>3592</LDA>
-          <displacedThreshold>309</displacedThreshold>
-          <clearwayLength>0</clearwayLength>
+          <name>08L</name>
+          <length>2561</length>
+          <width>45</width>
+          <bearing>77.63</bearing>
+          <TORA>2561</TORA>
+          <TODA>2657</TODA>
+          <ASDA>2515</ASDA>
+          <LDA>2146</LDA>
+          <displacedThreshold>321</displacedThreshold>
+          <clearwayLength>479</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
         </first>
         <second>
-          <name>27R</name>
-          <length>3901</length>
-          <width>50</width>
-          <bearing>269.71</bearing>
-          <TORA>3882</TORA>
-          <TODA>3960</TODA>
-          <ASDA>3882</ASDA>
-          <LDA>3882</LDA>
-          <displacedThreshold>0</displacedThreshold>
-          <clearwayLength>78</clearwayLength>
+          <name>26R</name>
+          <length>2561</length>
+          <width>45</width>
+          <bearing>257.65</bearing>
+          <TORA>2515</TORA>
+          <TODA>2657</TODA>
+          <ASDA>2515</ASDA>
+          <LDA>2146</LDA>
+          <displacedThreshold>415</displacedThreshold>
+          <clearwayLength>142</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
         </second>
       </runways>
       <runways>
         <first>
-          <name>09R</name>
-          <length>3658</length>
-          <width>50</width>
-          <bearing>89.67</bearing>
-          <TORA>3658</TORA>
-          <TODA>3658</TODA>
-          <ASDA>3658</ASDA>
-          <LDA>3350</LDA>
-          <displacedThreshold>308</displacedThreshold>
-          <clearwayLength>0</clearwayLength>
+          <name>08R</name>
+          <length>3317</length>
+          <width>45</width>
+          <bearing>77.76</bearing>
+          <TORA>3159</TORA>
+          <TODA>3311</TODA>
+          <ASDA>3233</ASDA>
+          <LDA>2765</LDA>
+          <displacedThreshold>395</displacedThreshold>
+          <clearwayLength>152</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
         </first>
         <second>
-          <name>27L</name>
-          <length>3658</length>
-          <width>50</width>
-          <bearing>269.71</bearing>
-          <TORA>3658</TORA>
-          <TODA>3658</TODA>
-          <ASDA>3658</ASDA>
-          <LDA>3658</LDA>
-          <displacedThreshold>0</displacedThreshold>
-          <clearwayLength>0</clearwayLength>
+          <name>26L</name>
+          <length>3317</length>
+          <width>45</width>
+          <bearing>257.65</bearing>
+          <TORA>3255</TORA>
+          <TODA>3399</TODA>
+          <ASDA>3317</ASDA>
+          <LDA>2830</LDA>
+          <displacedThreshold>425</displacedThreshold>
+          <clearwayLength>144</clearwayLength>
           <stopwayLength>0</stopwayLength>
           <stopwayWidth>0</stopwayWidth>
         </second>

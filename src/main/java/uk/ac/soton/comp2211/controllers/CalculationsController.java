@@ -119,20 +119,20 @@ public class CalculationsController {
 
         //Obstacle Info
         view.getObstacleHeight().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleHeight().setText(oldV);
+            if (!newV.matches("[0-9]*")) view.getObstacleHeight().setText(oldV);
         });
         view.getObstacleWidth().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleWidth().setText(oldV);
+            if (!newV.matches("[0-9]*")) view.getObstacleWidth().setText(oldV);
         });
         view.getObstacleLength().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleLength().setText(oldV);
+            if (!newV.matches("[0-9]*")) view.getObstacleLength().setText(oldV);
         });
 
 
         //Lower Threshold
         view.getLowerThreshold().setText(view.getRunwaySelect().getValue().getLowerThreshold());
         view.getDistanceLowerThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("-?\\d*(\\\\d*)?")) view.getDistanceLowerThreshold().setText(oldV);
+            if (!newV.matches("-?[0-9]*")) view.getDistanceLowerThreshold().setText(oldV);
         });
 
         view.getSectionLowerThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -152,7 +152,7 @@ public class CalculationsController {
         //Upper Threshold
         view.getUpperThreshold().setText(view.getRunwaySelect().getValue().getUpperThreshold());
         view.getDistanceUpperThreshold().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("-?\\d*(\\\\d*)?")) view.getDistanceUpperThreshold().setText(oldV);
+            if (!newV.matches("-?[0-9]*")) view.getDistanceUpperThreshold().setText(oldV);
         });
 
         view.getSectionUpperThreshold().setItems(FXCollections.observableArrayList(Direction.TOWARDS,Direction.AWAYOVER));
@@ -192,7 +192,7 @@ public class CalculationsController {
             File file = fileChooser.showSaveDialog(view.getView().getScene().getWindow());
             if (file == null) return;
             try {
-                XMLUtil.storeCalculation(model.redeclaredRunwaysProperty().get(), file);
+                XMLUtil.storeCalculation(model.selectedAirportProperty().get(),model.redeclaredRunwaysProperty().get(), file);
                 Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
                 importSuccess.setTitle("Success!");
                 importSuccess.setContentText("Calculation was stored successfully");
@@ -255,11 +255,11 @@ public class CalculationsController {
                 view.getObstacleHeight().getStyleClass().add("error");
                 error = true;
             }
-            if (view.getDistanceLowerThreshold().getText().equals("")) {
+            if (view.getDistanceLowerThreshold().getText().equals("") || view.getDistanceLowerThreshold().getText().equals("-")) {
                 view.getDistanceLowerThreshold().getStyleClass().add("error");
                 error = true;
             }
-            if (view.getDistanceUpperThreshold().getText().equals("")) {
+            if (view.getDistanceUpperThreshold().getText().equals("") || view.getDistanceUpperThreshold().getText().equals("-")) {
                 view.getDistanceUpperThreshold().getStyleClass().add("error");
                 error = true;
             }

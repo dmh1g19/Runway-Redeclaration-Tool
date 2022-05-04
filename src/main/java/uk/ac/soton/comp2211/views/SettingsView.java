@@ -91,6 +91,7 @@ public class SettingsView extends BaseView {
 
         //custom colours
         VBox colourBox = new VBox();
+        colourBox.setSpacing(4);
         HBox accentBox = new HBox();
         HBox backBox = new HBox();
         Label accentPickerLabel = new Label("Custom Text Colour:");

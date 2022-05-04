@@ -19,7 +19,7 @@ public class ObstacleCreationView extends BaseView {
     private Button addObstacle = new Button("Add Obstacle");
     private HBox hBox = new HBox();
 
-    private Button writeObstacles = new Button("Save Changes");
+    private Button writeObstacles = new Button("Save Changes To File");
 
     private VBox obsForm = new VBox();
 

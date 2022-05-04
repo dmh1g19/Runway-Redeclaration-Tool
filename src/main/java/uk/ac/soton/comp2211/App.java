@@ -48,42 +48,39 @@ public class App extends Application {
         stage.setTitle("Runway Re-declaration Tool");
 
         // INPUT RUNWAYS MANUALLY
-        Runway r09L = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
-        Runway r27R = new Runway("27R", 3901,50, 269.71,3882,3960,3882,3882, 78, 0);
-        Runway r09R = new Runway("09R", 3658,50, 089.67,3658,3658,3658,3350,0,308);
-        Runway r27L = new Runway("27L", 3658,50, 0269.71,3658,3658,3658,3658,0,0);
-
-        PhysicalRunway r09L27R = new PhysicalRunway(r09L,r27R);
-        PhysicalRunway r09R27L = new PhysicalRunway(r09R,r27L);
-
-        PhysicalRunway[] runways = new PhysicalRunway[]{r09L27R,r09R27L};
-
-        Airport heathrow = new Airport("Heathrow", runways);
-
-        Airport[] airports = new Airport[]{heathrow,heathrow};
-
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        try {
-            xmlMapper.writeValue(new File("airports.xml"), airports);
-
-            XmlMapper mapper = new XmlMapper();
-
-
-
-            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            Airport[] ports = mapper.readValue(new File("airports.xml"), Airport[].class);
-            System.out.println(ports[0].getRunways()[0].getFirst().getName());
-            System.out.println("Good");
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Error");
-        }
-
-        //defaultScene();
-        //loadSelection();
+//        Runway r09L = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
+//        Runway r27R = new Runway("27R", 3901,50, 269.71,3882,3960,3882,3882, 78, 0);
+//        Runway r09R = new Runway("09R", 3658,50, 089.67,3658,3658,3658,3350,0,308);
+//        Runway r27L = new Runway("27L", 3658,50, 0269.71,3658,3658,3658,3658,0,0);
+//
+//        PhysicalRunway r09L27R = new PhysicalRunway(r09L,r27R);
+//        PhysicalRunway r09R27L = new PhysicalRunway(r09R,r27L);
+//
+//        PhysicalRunway[] runways = new PhysicalRunway[]{r09L27R,r09R27L};
+//
+//        Airport heathrow = new Airport("Heathrow", runways);
+//
+//        Airport[] airports = new Airport[]{heathrow,heathrow};
+//
+//        XmlMapper xmlMapper = new XmlMapper();
+//        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+//        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+//        try {
+//            xmlMapper.writeValue(new File("airports.xml"), airports);
+//
+//            XmlMapper mapper = new XmlMapper();
+//
+//
+//
+//            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+//            Airport[] ports = mapper.readValue(new File("airports.xml"), Airport[].class);
+//            System.out.println(ports[0].getRunways()[0].getFirst().getName());
+//            System.out.println("Good");
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            System.out.println("Error");
+//        }
 
         try {
 
@@ -104,16 +101,12 @@ public class App extends Application {
             e.printStackTrace();
         }
 
-
-        SimpleObjectProperty<Airport> airportLL = new SimpleObjectProperty<>(heathrow);
-        if (airportLL.isNull().get()) {
-            System.out.println("TESTING");
-        }
-
-
+//
+//        SimpleObjectProperty<Airport> airportLL = new SimpleObjectProperty<>(heathrow);
+//        if (airportLL.isNull().get()) {
+//            System.out.println("TESTING");
+//        }
     }
-
-
 
 
     public void defaultScene() {

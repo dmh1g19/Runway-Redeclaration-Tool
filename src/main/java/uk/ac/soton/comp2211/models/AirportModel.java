@@ -31,7 +31,7 @@ public class AirportModel {
     private boolean isCustomColours = false;
     private final SimpleStringProperty customColours = new SimpleStringProperty("");
     private final SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
-    private final SimpleListProperty<Pair<Date,String>> actions = new SimpleListProperty<>();
+    private final SimpleListProperty<Pair<Date,Object>> actions = new SimpleListProperty<>();
     private final SimpleIntegerProperty blastProtection = new SimpleIntegerProperty(300);
 
 
@@ -44,10 +44,10 @@ public class AirportModel {
 
     public Pair<Runway,State>[] getRunwayStates(PhysicalRunway physicalRunway) {
         Pair<Runway,State>[] runwayStates = new Pair[4];
-        runwayStates[0] = new Pair(physicalRunway.getFirst(), State.LANDING);
-        runwayStates[1] = new Pair(physicalRunway.getFirst(), State.TAKEOFF);
-        runwayStates[2] = new Pair(physicalRunway.getSecond(), State.LANDING);
-        runwayStates[3] = new Pair(physicalRunway.getSecond(), State.TAKEOFF);
+        runwayStates[0] = new Pair<>(physicalRunway.getFirst(), State.LANDING);
+        runwayStates[1] = new Pair<>(physicalRunway.getFirst(), State.TAKEOFF);
+        runwayStates[2] = new Pair<>(physicalRunway.getSecond(), State.LANDING);
+        runwayStates[3] = new Pair<>(physicalRunway.getSecond(), State.TAKEOFF);
         return runwayStates;
     }
 
@@ -131,11 +131,11 @@ public class AirportModel {
         isCustomColours = customColours;
     }
 
-    public ObservableList<Pair<Date,String>> getActions() {
+    public ObservableList<Pair<Date,Object>> getActions() {
         return actions.get();
     }
 
-    public SimpleListProperty<Pair<Date,String>> actionsProperty() {
+    public SimpleListProperty<Pair<Date,Object>> actionsProperty() {
         return actions;
     }
 
