@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.components;
 
 import javafx.scene.Group;
+import javafx.scene.shape.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -23,7 +24,9 @@ public class TopDownRunway extends RunwayView {
     GraphicsContext gc = this.getGraphicsContext2D();
 
     private Runway runway;
+    private RedeclaredRunway redeclaredRunway;
     private ObstacleOnRunway obstacle;
+
 
     double halfHeight;
     double halfWidth;
@@ -45,8 +48,10 @@ public class TopDownRunway extends RunwayView {
     double scaledEndGap;
 
     double bearing;
+    boolean bearingAlligned = true;
 
     Direction direction;
+    private State state;
 
     public TopDownRunway( double width, double height)  {
         super(width, height);
@@ -57,8 +62,10 @@ public class TopDownRunway extends RunwayView {
 
 
         this.runway = runway1.getRunway();
+        this.redeclaredRunway = runway1;
         this.obstacle = runway1.getObstacle();
         this.direction = runway1.getDirection();
+        this.state = state;
 
         //runway.setDTL(300);
 
@@ -87,7 +94,9 @@ public class TopDownRunway extends RunwayView {
 
         //this gc.save() is essential for rotating and scaling, dont remove x
         gc.save();
-        transformRunway(bearing-90,0.9 /*temporary scale to make the runway scale within window*/);
+        if(bearingAlligned) {
+            transformRunway(bearing-90, 0.9);
+        } else { transformRunway(0, 0.9);}
 
         //background
         gc.setFill(Color.color(0.1,0.1,0.1));
@@ -324,7 +333,7 @@ public class TopDownRunway extends RunwayView {
         gc.setFill(Color.WHITE);
         gc.transform(new Affine(new Rotate(270,endOfRunwayX-scaledRESA-15,halfHeight-(runwayWidth/2)+15)));
         gc.setFont(new Font(30));
-       gc.fillText(pos, endOfRunwayX-scaledRESA-35,halfHeight-25);
+        gc.fillText(pos, endOfRunwayX-scaledRESA-35,halfHeight-25);
         gc.setFont(new Font(25));
         gc.fillText(thr, endOfRunwayX-scaledRESA-40,halfHeight-50);
         gc.restore();
@@ -362,27 +371,59 @@ public class TopDownRunway extends RunwayView {
     public void compass()
     {
         //A compass in the top right of the screen that shows the bearing of the runway
+
+
+
+
         gc.setFill(Color.WHITE);
         gc.fillOval(getWidth()- 100, getHeight()/10 , 50,50);
         gc.strokeOval(getWidth()- 100, getHeight()/10 , 50,50);
         gc.setStroke(Color.BLUE);
         gc.save();
-        gc.transform(new Affine(new Rotate(bearing,(getWidth()- 75),(getHeight()/10 +25))));
-        gc.strokeLine(getWidth()- 75, getHeight()/10 +25, getWidth()- 75, getHeight()/10 + 7  );
-        gc.restore();
-        gc.setStroke(Color.RED);
-        gc.strokeLine(getWidth()- 75, getHeight()/10 +25, getWidth()- 75, getHeight()/10 + 7  );
-        gc.setFill(Color.RED);
-        gc.fillText("N" ,getWidth()- 79,getHeight()/10 -5 );
+        if (bearingAlligned) {
+            gc.transform(new Affine(new Rotate(bearing, (getWidth() - 75), (getHeight() / 10 + 25))));
+            gc.strokeLine(getWidth() - 75, getHeight() / 10 + 25, getWidth() - 75, getHeight() / 10 + 7);
+            gc.restore();
+            gc.setStroke(Color.RED);
+            gc.strokeLine(getWidth() - 75, getHeight() / 10 + 25, getWidth() - 75, getHeight() / 10 + 7);
+            gc.setFill(Color.RED);
+            gc.fillText("N", getWidth() - 79, getHeight() / 10 - 5);
+        }
+        else
+        {
+            gc.transform(new Affine(new Rotate(90, (getWidth() - 75), (getHeight() / 10 + 25))));
+            gc.strokeLine(getWidth() - 75, getHeight() / 10 + 25, getWidth() - 75, getHeight() / 10 + 7);
+            gc.restore();
+            gc.setStroke(Color.RED);
+            gc.save();
+            gc.transform(new Affine(new Rotate(90-bearing, (getWidth() - 75), (getHeight() / 10 + 25))));
+            gc.strokeLine(getWidth() - 75, getHeight() / 10 + 25, getWidth() - 75, getHeight() / 10 + 7);
+            gc.setFill(Color.RED);
+            gc.fillText("N", getWidth() - 79, getHeight() / 10 - 5);
+            gc.restore();
+        }
         gc.setFill(Color.WHITE);
-        gc.fillText("Bearing",getWidth() - 45,getHeight()/10 + 20 );
-        gc.fillText(String.valueOf(bearing)+"°",getWidth() - 45,getHeight()/10 + 35 );
+        gc.fillText("Bearing",getWidth() - 45,getHeight()/10  );
+        gc.fillText(String.valueOf(bearing)+"°",getWidth() - 45,getHeight()/10 + 15 );
     }
 
     public void transformRunway(double rotDegrees, double scale)
     {
         gc.transform(new Affine(new Scale(scale,scale,this.halfWidth,halfHeight)));
         gc.transform(new Affine(new Rotate(rotDegrees,this.halfWidth,halfHeight)));
+    }
+
+    public void toggleBearingAlligned()
+    {
+        if(!bearingAlligned)
+        {
+            bearingAlligned = true;
+            draw(redeclaredRunway,state);
+        }
+        else{
+            bearingAlligned = false;
+            draw(redeclaredRunway,state);
+        }
     }
 
 

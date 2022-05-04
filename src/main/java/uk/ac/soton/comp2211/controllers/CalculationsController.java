@@ -5,7 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -516,13 +520,21 @@ public class CalculationsController {
         int width = 700;
         int height = 400;
 
-        ViewsView viewsView = new ViewsView(new TopDownRunway(width, height));
+        TopDownRunway runway = new TopDownRunway(width, height);
+        ViewsView viewsView = new ViewsView(runway);
         ViewsController viewsController = new ViewsController(viewsView, model);
         Stage newWindow = new Stage();
         newWindow.setTitle("Top Down View");
 
-        newWindow.setScene(new Scene(viewsView.getView(), width, height));
-        newWindow.getScene().setFill(Color.color(0.1,0.1,0.1));
+        Circle compassClickbox = new Circle(width- 75, (height/10)+25, 25, Color.TRANSPARENT);
+        compassClickbox.setOnMouseClicked((e) -> runway.toggleBearingAlligned());
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().add(viewsView.getView());
+        anchorPane.getChildren().add(compassClickbox);
+
+        newWindow.setScene(new Scene(anchorPane, width, height));
+        anchorPane.setStyle("-fx-background-color: #1A1A1AFF");
         newWindow.setResizable(false);
         newWindow.show();
 
