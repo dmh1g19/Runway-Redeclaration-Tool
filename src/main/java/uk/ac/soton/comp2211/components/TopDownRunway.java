@@ -48,15 +48,8 @@ public class TopDownRunway extends RunwayView {
 
     Direction direction;
 
-
     public TopDownRunway( double width, double height)  {
         super(width, height);
-
-        this.runway = new Runway("09L",3000,0,0,0,0,0,0,0,0);
-        this.obstacle = new ObstacleOnRunway("test", 0, 0, 0, 0,0);
-
-        //tmp screen with nothing on it
-        draw(new RedeclaredRunway(runway,obstacle,Direction.TOWARDS), State.TAKEOFF);
     }
 
     @Override
@@ -94,7 +87,7 @@ public class TopDownRunway extends RunwayView {
 
         //this gc.save() is essential for rotating and scaling, dont remove x
         gc.save();
-        transformRunway(bearing-90,0.5 /*temporary scale to make the runway scale within window*/);
+        transformRunway(bearing-90,0.9 /*temporary scale to make the runway scale within window*/);
 
         //background
         gc.setFill(Color.color(0.1,0.1,0.1));
@@ -363,24 +356,21 @@ public class TopDownRunway extends RunwayView {
 
     public void compass()
     {
-        double width = getWidth();
-        double height = getHeight();
         //A compass in the top right of the screen that shows the bearing of the runway
         gc.setFill(Color.WHITE);
-        gc.fillOval(width - 100, height/10 , 50,50);
-        gc.strokeOval(width - 100, height/10 , 50,50);
+        gc.fillOval(getWidth()- 100, getHeight()/10 , 50,50);
+        gc.strokeOval(getWidth()- 100, getHeight()/10 , 50,50);
         gc.setStroke(Color.BLUE);
         gc.save();
-        gc.transform(new Affine(new Rotate(bearing,(width - 75),(height/10 +25))));
-        gc.strokeLine(width - 75, height/10 +25, width - 75, height/10 + 7  );
+        gc.transform(new Affine(new Rotate(bearing,(getWidth()- 75),(getHeight()/10 +25))));
+        gc.strokeLine(getWidth()- 75, getHeight()/10 +25, getWidth()- 75, getHeight()/10 + 7  );
         gc.restore();
         gc.setStroke(Color.RED);
-        gc.strokeLine(width - 75, height/10 +25, width - 75, height/10 + 7  );
+        gc.strokeLine(getWidth()- 75, getHeight()/10 +25, getWidth()- 75, getHeight()/10 + 7  );
         gc.setFill(Color.RED);
-        gc.fillText("N" ,width - 79,height/10 -5 );
+        gc.fillText("N" ,getWidth()- 79,getHeight()/10 -5 );
         gc.setFill(Color.WHITE);
-        gc.fillText("Bearing" ,width - 45,height/10 +30 );
-        gc.fillText(bearing+"",width - 45,height/10 + 20 );
+        gc.fillText(String.valueOf(round(bearing)),getWidth() - 45,getHeight()/10 + 20 );
     }
 
     public void transformRunway(double rotDegrees, double scale)
