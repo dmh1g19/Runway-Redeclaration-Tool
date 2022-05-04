@@ -168,7 +168,7 @@ public class SideOnRunway extends RunwayView {
         gc.fillRect(0, (height - 20), width - farStopwayLength -farClearwayLength , 20);
 
         //clearway
-        gc.setFill(Color.LIGHTBLUE);
+        gc.setFill(Color.LIME);
         gc.fillRect(0, (height - 20),closeClearwayLength  , 20);
 
 
@@ -186,21 +186,12 @@ public class SideOnRunway extends RunwayView {
 
 
 
-        gc.setFill(Color.LIGHTBLUE);
-        gc.fillRect(width - farClearwayLength,(height - 20),farStopwayLength,20 );
+        gc.setFill(Color.LIME);
+        gc.fillRect(width - farClearwayLength,(height - 20),farClearwayLength,20 );
 
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(width - farClearwayLength-farStopwayLength,(height - 20), farStopwayLength,20 );
 
-        gc.setFill(Color.BLACK);
-        if(reflected){
-            gc.save();
-            gc.transform(new Affine(new Scale(-1,1,70,50)));
-            gc.fillText("Width : Height = 1 : 10",0,15);
-            gc.restore();
-        }else{
-            gc.fillText("Width : Height = 1 : 10",0,15);
-        }
 
         //the obstructions dimensions relative to the view size are calculated.
         gc.setFill(Color.RED);
@@ -362,22 +353,21 @@ public class SideOnRunway extends RunwayView {
         if (dToObstacle == Direction.AWAYOVER){
             gc.setLineWidth(3);
             gc.setStroke(Color.DARKGREEN);
-            gc.strokeLine(width -1 ,(height - 50), (width - LDALen + 1) ,(height - 50));
+            gc.strokeLine(width -farStopwayLength -farClearwayLength ,(height - 50), (width - LDALen -farStopwayLength -farClearwayLength) ,(height - 50));
             writeText(("LDA:" + runway.getRunway().getLDA() + "m"), (width - (LDALen / 2)) ,(height - 65),reflected);
 
             //if the RESA is less than the distance of runway taken away by the obstacle then that distance is used instead of RESA
             if ((runway.getRunway().getLength() - runway.getRunway().getLDA() - (obPos + (obPos/2) )) > 300){
+                System.out.println("no hi");
                 gc.setStroke(Color.ORANGE);
-                gc.strokeLine( obPos + (obLen/2),
-                        (height - 50),
-                        ((double) (runway.getRunway().getLength()- runway.getRunway().getLDA())/ runway.getRunway().getLength())*width,
-                        (height - 50));
+                gc.strokeLine( obPos + (obLen/2), (height - 50),  (width - LDALen -farStopwayLength -farClearwayLength) , (height - 50));
 
             }
             //landing towards an object
             else{
+                System.out.println("hi");
                 gc.setStroke(Color.YELLOW);
-                gc.strokeLine((width - LDALen - 1),(height - 50),(width -(LDALen + sixtyLen - 1)),(height - 50));
+                gc.strokeLine((width - LDALen - farClearwayLength -farStopwayLength ),(height - 50),(width -(LDALen + sixtyLen - farClearwayLength -farStopwayLength)),(height - 50));
 
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine((width -(LDALen + sixtyLen + 1)),(height - 50),(width -(LDALen + sixtyLen + RESALen - 1)),(height - 50));
