@@ -375,7 +375,8 @@ public class TopDownRunway extends RunwayView {
         gc.setFill(Color.RED);
         gc.fillText("N" ,getWidth()- 79,getHeight()/10 -5 );
         gc.setFill(Color.WHITE);
-        gc.fillText(String.valueOf(round(bearing)),getWidth() - 45,getHeight()/10 + 20 );
+        gc.fillText("Bearing",getWidth() - 45,getHeight()/10 + 20 );
+        gc.fillText(String.valueOf(bearing)+"°",getWidth() - 45,getHeight()/10 + 35 );
     }
 
     public void transformRunway(double rotDegrees, double scale)

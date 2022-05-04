@@ -155,25 +155,36 @@ public class SideOnRunway extends RunwayView {
 
 
         //A compass in the top right of the screen that shows the bearing of the runway
+        gc.setStroke(Color.BLACK);
         gc.setFill(Color.WHITE);
         gc.fillOval(width - 100, height/10 , 50,50);
         gc.strokeOval(width - 100, height/10 , 50,50);
-        gc.setStroke(Color.RED);
+        gc.setStroke(Color.BLUE);
         gc.save();
-        gc.transform(new Affine(new Rotate(runway.getRunway().getBearing()*10,(width - 75),(height/10 +25))));
+        if(reflected){
+            gc.transform(new Affine(new Rotate(runway.getRunway().getBearing()+180,(width - 75),(height/10 +25))));
+        } else {
+            gc.transform(new Affine(new Rotate(runway.getRunway().getBearing(),(width - 75),(height/10 +25))));
+        }
         gc.strokeLine(width - 75, height/10 +25, width - 75, height/10 + 7  );
         gc.restore();
+        gc.setStroke(Color.RED);
+        gc.strokeLine(width- 75, height/10 +25, width- 75, height/10 + 7  );
         gc.setFill(Color.RED);
 
         if(reflected){
             gc.save();
             gc.transform(new Affine(new Scale(-1,1,width - 75,height/10 + 7 )));
-            gc.fillText("Bearing" ,width - 45,height/10 +30 );
-            gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+            gc.fillText("N" ,width- 79,height/10 -5 );
+            gc.fillText( runway.getRunway().getBearing()+"°",width - 45,height/10 +30 );
+            gc.fillText("Bearing" ,width - 45,height/10 + 20 );
             gc.restore();
         }else{
-            gc.fillText("Bearing" ,width - 45,height/10 +30 );
-            gc.fillText(runway.getRunway().getBearing()+"",width - 45,height/10 + 20 );
+            gc.save();
+            gc.fillText("N" ,width- 79,height/10 -5 );
+            gc.fillText( runway.getRunway().getBearing()+"°",width - 45,height/10 +30 );
+            gc.fillText("Bearing" ,width - 45,height/10 + 20 );
+            gc.restore();
         }
 
 
