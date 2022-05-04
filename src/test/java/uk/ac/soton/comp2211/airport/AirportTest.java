@@ -35,10 +35,10 @@ class AirportTest {
     @Test
     void getRunways() {
         PhysicalRunway[] physicalRunways = airport.getRunways();
-        Assertions.assertTrue(physicalRunways[0].getFirst()==runways[0],"Error with Airport getRunways method (runway 0)");
-        Assertions.assertTrue(physicalRunways[0].getSecond()==runways[1],"Error with Airport getRunways method (runway 1)");
-        Assertions.assertTrue(physicalRunways[1].getFirst()==runways[2],"Error with Airport getRunways method (runway 2)");
-        Assertions.assertTrue(physicalRunways[1].getSecond()==runways[3],"Error with Airport getRunways method (runway 3)");
+        Assertions.assertSame(physicalRunways[0].getFirst(), runways[0], "Error with Airport getRunways method (runway 0)");
+        Assertions.assertSame(physicalRunways[0].getSecond(), runways[1], "Error with Airport getRunways method (runway 1)");
+        Assertions.assertSame(physicalRunways[1].getFirst(), runways[2], "Error with Airport getRunways method (runway 2)");
+        Assertions.assertSame(physicalRunways[1].getSecond(), runways[3], "Error with Airport getRunways method (runway 3)");
     }
 
     @Test
@@ -50,8 +50,8 @@ class AirportTest {
        PhysicalRunway[] physicalRunways = new  PhysicalRunway[1];
        physicalRunways[0]= new PhysicalRunway(runways[0],runways[1]);
        airport.setRunways(physicalRunways);
-       Assertions.assertTrue(physicalRunways[0].getFirst()==runways[0],"Error with Airport setRunways method (runway 0)");
-       Assertions.assertTrue(physicalRunways[0].getSecond()==runways[1],"Error with Airport setRunways method (runway 1)");
+        Assertions.assertSame(physicalRunways[0].getFirst(), runways[0], "Error with Airport setRunways method (runway 0)");
+        Assertions.assertSame(physicalRunways[0].getSecond(), runways[1], "Error with Airport setRunways method (runway 1)");
 
     }
 }

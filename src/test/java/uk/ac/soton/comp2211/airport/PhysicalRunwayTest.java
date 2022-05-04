@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.airport;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,8 +11,8 @@ class PhysicalRunwayTest {
 
     private  static PhysicalRunway[] physicalRunways;
     private static Runway[] runways;
-    @BeforeAll
-    static void initialiseAirport() {
+    @BeforeEach
+     void initialiseAirport() {
 
         runways = new Runway[4];
         runways[0] = new Runway("09R", 4022, 280, 90, 3660, 3660, 3660, 3353, 5);
@@ -31,8 +32,9 @@ class PhysicalRunwayTest {
 
     @Test
     void getName() {
-        assertTrue(physicalRunways[0].getName().equals("09R/28L"),"Error with physical runway getName function");
-        assertTrue(physicalRunways[1].getName().equals("09L/28R"),"Error with physical runway getName function");
+
+        assertTrue(physicalRunways[0].getName().equals("09R/27L"),"Error with physical runway getName function");
+        assertTrue(physicalRunways[1].getName().equals("09L/27R"),"Error with physical runway getName function");
 
     }
 

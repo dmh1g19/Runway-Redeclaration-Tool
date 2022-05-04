@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.airport;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,8 +11,8 @@ class RedeclaredRunwayTest {
     static ObstacleOnRunway obstacleOnRunway;
     static  Runway runway;
     static  RedeclaredRunway redeclaredRunway;
-    @BeforeAll
-    static void initialiseRunway() {
+    @BeforeEach
+     void initialiseRunway() {
 
         Obstacle obstacle = new Obstacle("Test Obstacle",10,11,12 );
         obstacleOnRunway = new ObstacleOnRunway(obstacle,13,14);

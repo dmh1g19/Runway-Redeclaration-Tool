@@ -1,6 +1,7 @@
 package uk.ac.soton.comp2211.airport;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class RunwayTest {
     static Runway runway;
 
-    @BeforeAll
-    static void initialiseRunway() {
+    @BeforeEach
+     void initialiseRunway() {
 
         runway = new Runway("09R", 4022, 280, 90, 3660, 3660, 3660, 3353, 5,100);
 
@@ -125,6 +126,6 @@ class RunwayTest {
     @Test
     void setClearwayLength() {
         runway.setClearwayLength(1);
-        assertTrue(runway.getClearwayLength()==5,"Error with  runway setClearwayLength function");
+        assertTrue(runway.getClearwayLength()==1,"Error with  runway setClearwayLength function");
     }
 }
