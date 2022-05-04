@@ -25,6 +25,7 @@ public class TopDownRunway extends RunwayView {
 
     private Runway runway;
     private RedeclaredRunway redeclaredRunway;
+    private RedeclaredRunway redeclaredRunway2;
     private ObstacleOnRunway obstacle;
 
 
@@ -61,7 +62,7 @@ public class TopDownRunway extends RunwayView {
     @Override
     public void redraw()
     {
-        draw(redeclaredRunway,state);
+        draw(redeclaredRunway, redeclaredRunway2 ,state);
     }
     @Override
     public void draw(RedeclaredRunway runway1, RedeclaredRunway runway2,State state) {
@@ -69,6 +70,7 @@ public class TopDownRunway extends RunwayView {
 
         this.runway = runway1.getRunway();
         this.redeclaredRunway = runway1;
+        this.redeclaredRunway2 = runway2;
         this.oppositeRunway = runway2;
         this.obstacle = runway1.getObstacle();
         this.direction = runway1.getDirection();

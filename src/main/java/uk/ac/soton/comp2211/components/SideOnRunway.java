@@ -17,6 +17,9 @@ public class SideOnRunway extends RunwayView {
      * Draw the view for side-on runway here -
      */
     private RedeclaredRunway runway;
+
+    private RedeclaredRunway runway2;
+
     private ObstacleOnRunway obstacle;
     private double width;
     private double height;
@@ -59,7 +62,7 @@ public class SideOnRunway extends RunwayView {
     @Override
     public void redraw()
     {
-        draw(runway,state);
+        draw(runway,runway2,state);
     }
 
     //need to add stopway and clearway to the view.
@@ -68,6 +71,7 @@ public class SideOnRunway extends RunwayView {
 
         //Moved from constructor
         this.runway = runway1;
+        this.runway2 = runway2;
         this.state = state;
         this.obstacle = runway.getObstacle();
         this.dToObstacle = runway.getDirection();
