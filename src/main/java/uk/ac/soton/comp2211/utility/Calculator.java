@@ -276,7 +276,7 @@ public class Calculator {
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
         int clearway = runway.getTODA() - runway.getTORA();
         int stopway = runway.getASDA() - runway.getTORA();
-        int blastProtection = 300;
+        int blastProtection = blastProtectionDistance;
         int newTORA = runway.getTORA() - (Integer.max(300,blastProtection)) - obstaclePosition ;
         int TORA = Integer.min(newTORA,runway.getTORA());
         StringBuilder s = new StringBuilder();

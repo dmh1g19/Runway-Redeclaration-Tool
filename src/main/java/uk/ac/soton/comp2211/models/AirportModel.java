@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import uk.ac.soton.comp2211.airport.*;
+import uk.ac.soton.comp2211.utility.Calculator;
 import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.SelectionView;
 
@@ -38,6 +39,7 @@ public class AirportModel {
 
     public AirportModel(Airport[] airportList) {
         this.airportList.setValue(FXCollections.observableArrayList(airportList));
+        blastProtection.addListener((observableValue, number, t1) -> Calculator.setBlastProtectionDistance((Integer) t1));
     }
 
     public Pair<Runway,State>[] getRunwayStates(PhysicalRunway physicalRunway) {

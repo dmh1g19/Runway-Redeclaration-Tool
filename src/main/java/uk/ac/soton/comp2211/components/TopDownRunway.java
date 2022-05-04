@@ -76,11 +76,11 @@ public class TopDownRunway extends RunwayView {
         this.scaledTORA = scaleToRunwayLength(runway.getTORA());
         this.scaledTODA = scaleToRunwayLength(runway.getTODA());
         this.scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
-        this.scaledObjLen = scaleToRunwayLength(obstacle.getLength());
+        this.scaledObjLen = scaleToRunwayLength(obstacle.getLength()/2);
         this.scaledObjHeight = scaleToRunwayLength(obstacle.getHeight());
         this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
         this.scaledObjWidth = scaleToRunwayWidth(obstacle.getWidth());
-        this.scaledBlast = scaleToRunwayWidth(blastProtection);
+        this.scaledBlast = scaleToRunwayLength(blastProtection);
 
         //clear canvas before drawing -- for when you have to redraw
         gc.clearRect(0,0, getWidth(), getHeight());

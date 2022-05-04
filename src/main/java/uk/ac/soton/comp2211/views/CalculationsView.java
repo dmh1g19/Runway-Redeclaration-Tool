@@ -46,8 +46,12 @@ public class CalculationsView extends BaseView {
 
     private Button calculateButton = new Button("Calculate");
 
+
+
     private Button backButton = new Button("Menu");
 
+
+    private Button blastProtection = new Button("Update Blast Protection Distance");
     private Button topDownView = new Button("Top Down View");
     private Button sideOnView = new Button("Side On View");
     private ComboBox<Pair<Runway, State>> runwayToShow = new ComboBox<>();
@@ -280,7 +284,7 @@ public class CalculationsView extends BaseView {
         topDownView.getStyleClass().add("viewButton");
         runwayToShow.getStyleClass().add("runwayToShow");
 
-        vbox.getChildren().addAll(sideOnView, topDownView, runwayToShow, storeCalculationButton);
+        vbox.getChildren().addAll(blastProtection,sideOnView, topDownView, runwayToShow, storeCalculationButton);
 
         return vbox;
     }
@@ -382,6 +386,9 @@ public class CalculationsView extends BaseView {
 
         hbox.getChildren().addAll(input, metre);
         return hbox;
+    }
+    public Button getBlastProtection() {
+        return blastProtection;
     }
 
 

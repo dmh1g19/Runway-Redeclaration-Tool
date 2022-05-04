@@ -31,6 +31,8 @@ public class SideOnRunway extends RunwayView {
     private double sixtyLen;
     private double RESALen;
     private double scaledDTL;
+    private double scaledBlast;
+    private double scaledRESA;
     private double clearwayLength;
     private double ALSUp;
     private double ALSAcross;
@@ -90,7 +92,8 @@ public class SideOnRunway extends RunwayView {
         RESALen = (240.0/overallLength)*width;
         clearwayLength = ((double) runway.getRunway().getClearwayLength() / overallLength) * width;
         scaledDTL = (runway.getRunway().getDTL() /overallLength ) *width;
-
+        scaledBlast =(blastProtection /overallLength)*width;
+        scaledRESA =(300 /overallLength)*width;
 
 
         // length and height of ALS slope relative to view size are calculated.
@@ -208,11 +211,11 @@ public class SideOnRunway extends RunwayView {
         gc.setStroke(Color.DARKGREEN);
         //taking off away from an obstruction
         if (dToObstacle == Direction.AWAYOVER){
-            double blastAllowance = (300.0/ overallLength)*width;
+            double blastAllowance = Double.max(scaledBlast,scaledRESA) ;
             gc.setLineWidth(3);
             gc.setStroke(Color.ORANGE);
             gc.strokeLine(obPos+(obLen/2), (height - 50),obPos+(obLen/2) + blastAllowance ,(height - 50));
-            writeText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) ,reflected );
+            writeText(("Blast Allowance / RESA: "+ blastProtection),obPos+(obLen/2) + (blastAllowance/2),(height - 65) ,reflected );
 
             //TODA
             gc.setStroke(TODA_COLOR);
