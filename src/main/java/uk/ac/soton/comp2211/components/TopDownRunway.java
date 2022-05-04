@@ -47,6 +47,8 @@ public class TopDownRunway extends RunwayView {
     double scaledObjWidth;
     double scaledBlast;
     double scaledEndGap;
+    double scaledCloseStopway;
+    double scaledFarStopway;
     RedeclaredRunway oppositeRunway;
 
     double bearing;
@@ -97,6 +99,8 @@ public class TopDownRunway extends RunwayView {
         this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
         this.scaledObjWidth = scaleToRunwayWidth(obstacle.getWidth());
         this.scaledBlast = scaleToRunwayLength(blastProtection);
+        this.scaledCloseStopway = scaleToRunwayLength(runway2.getRunway().getStopwayLength());
+        this.scaledFarStopway = scaleToRunwayLength(runway1.getRunway().getStopwayLength());
 
         //clear canvas before drawing -- for when you have to redraw
         gc.clearRect(0,0, getWidth(), getHeight());
@@ -166,19 +170,33 @@ public class TopDownRunway extends RunwayView {
         //LEFT THR MARKING
         //thresholdL(String.valueOf(round(bearing)),"L");
 
+        System.out.println("clsoe stopay"+scaledCloseStopway);
+        System.out.println("afwr stopay"+scaledFarStopway);
 
         gc.setFill(Color.WHITE);
         //RESA1
         gc.fillRect(startOfRunwayX+scaledDTL, startOfRunwayY, scaledRESA, runwayWidth);
         //RESA2
         gc.fillRect(endOfRunwayX-scaledRESA, startOfRunwayY, scaledRESA, runwayWidth);
+
+        //stopways
+        gc.setFill(Color.DARKGRAY);
+        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledCloseStopway, runwayWidth);
+
+        //farStopway
+        gc.fillRect(endOfRunwayX-scaledFarStopway, startOfRunwayY, scaledFarStopway, runwayWidth);
+
         //disp thres
         gc.setFill(Color.YELLOW);
-        gc.fillRect(startOfRunwayX, startOfRunwayY, scaledDTL, runwayWidth);
+        gc.fillRect(startOfRunwayX+scaledCloseStopway, startOfRunwayY, scaledDTL, runwayWidth);
 
         //Object
         gc.setFill(Color.RED);
-        gc.fillRect(startOfRunwayX+scaledObjPos, (halfHeight-(scaledObjWidth/2))+scaledObjDFCL,scaledObjLen,scaledObjWidth);
+        gc.fillRect(startOfRunwayX+scaledObjPos+scaledCloseStopway, (halfHeight-(scaledObjWidth/2))+scaledObjDFCL,scaledObjLen,scaledObjWidth);
+
+
+
+
 
         //Draw distances according to what the plane is doing
         gc.setLineWidth(2);
@@ -239,16 +257,16 @@ public class TopDownRunway extends RunwayView {
 
         //TODA
         gc.setStroke(TODA_COLOR);
-        lineMarking(startOfRunwayX, 90, scaledTODA);
+        lineMarking(startOfRunwayX+scaledCloseStopway, 90, scaledTODA);
         //TORA
         gc.setStroke(TORA_COLOR);
-        lineMarking(startOfRunwayX, 70, scaledTORA);
+        lineMarking(startOfRunwayX+scaledCloseStopway, 70, scaledTORA);
         //LDA
         gc.setStroke(LDA_COLOR);
-        lineMarking(startOfRunwayX+scaledDTL, 50, scaledLDA);
+        lineMarking(startOfRunwayX+scaledCloseStopway+scaledDTL, 50, scaledLDA);
         //ASDA
         gc.setStroke(ASDA_COLOR);
-        lineMarking(startOfRunwayX, 110, scaledASDA);
+        lineMarking(startOfRunwayX+scaledCloseStopway, 110, scaledASDA);
         //RESA
         gc.setStroke(RESA_COLOR);
         if (scaledObjPos > 0) {

@@ -136,10 +136,6 @@ public class SideOnRunway extends RunwayView {
 
 
 
-        System.out.println("TODA "+ TODALen);
-        System.out.println("TORA"+ TORALen);
-        System.out.println("stff "+ (farClearwayLength+farStopwayLength));
-        System.out.println("stopwau "+ runway2.getRunway().getStopwayLength());
 
 
                 // length and height of ALS slope relative to view size are calculated.
@@ -358,14 +354,13 @@ public class SideOnRunway extends RunwayView {
 
             //if the RESA is less than the distance of runway taken away by the obstacle then that distance is used instead of RESA
             if ((runway.getRunway().getLength() - runway.getRunway().getLDA() - (obPos + (obPos/2) )) > 300){
-                System.out.println("no hi");
+
                 gc.setStroke(Color.ORANGE);
                 gc.strokeLine( obPos + (obLen/2), (height - 50),  (width - LDALen -farStopwayLength -farClearwayLength) , (height - 50));
 
             }
             //landing towards an object
             else{
-                System.out.println("hi");
                 gc.setStroke(Color.YELLOW);
                 gc.strokeLine((width - LDALen - farClearwayLength -farStopwayLength ),(height - 50),(width -(LDALen + sixtyLen - farClearwayLength -farStopwayLength)),(height - 50));
 
