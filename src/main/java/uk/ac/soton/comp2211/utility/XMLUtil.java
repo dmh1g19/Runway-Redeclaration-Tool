@@ -6,16 +6,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import javafx.util.Pair;
 import org.junit.platform.engine.discovery.ClasspathResourceSelector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.Obstacle;
+import uk.ac.soton.comp2211.airport.RedeclaredRunway;
 import uk.ac.soton.comp2211.airport.Runway;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -117,6 +122,27 @@ public class XMLUtil {
         xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
         xmlMapper.writeValue(file, obstacles);
+    }
+
+    public static void storeCalculation(Pair<RedeclaredRunway, RedeclaredRunway> runways, File file) throws IOException {
+        String toWrite = runways.getKey().getRunway().getName() + "\n"
+                + "TORA: " + runways.getKey().getRunway().getTORA() + "m\n"
+                + "TODA: " + runways.getKey().getRunway().getTODA() + "m\n"
+                + "ASDA: " + runways.getKey().getRunway().getASDA() + "m\n"
+                + "LDA: " + runways.getKey().getRunway().getLDA() + "m\n\n"
+                + runways.getValue().getRunway().getName() + "\n"
+                + "TORA: " + runways.getValue().getRunway().getTORA() + "m\n"
+                + "TODA: " + runways.getValue().getRunway().getTODA() + "m\n"
+                + "ASDA: " + runways.getValue().getRunway().getASDA() + "m\n"
+                + "LDA: " + runways.getValue().getRunway().getLDA() + "m\n\n"
+                + "Obstacle Information" + "\n"
+                + "Height: " + runways.getKey().getObstacle().getHeight() + "m\n"
+                + "Width: " + runways.getKey().getObstacle().getWidth() + "m\n"
+                + "Length: " + runways.getKey().getObstacle().getLength() + "m\n"
+                + "Distance From " + runways.getKey().getRunway().getName() + ": " + runways.getKey().getObstacle().getPosition() + "m\n"
+                + "Distance From " + runways.getValue().getRunway().getName() + ": " + runways.getValue().getObstacle().getPosition() + "m";
+
+        Files.write(file.toPath(), toWrite.getBytes());
     }
 }
 

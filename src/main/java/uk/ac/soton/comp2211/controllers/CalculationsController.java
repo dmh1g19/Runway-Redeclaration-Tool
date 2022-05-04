@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -15,11 +16,16 @@ import uk.ac.soton.comp2211.components.SideOnRunway;
 import uk.ac.soton.comp2211.components.TopDownRunway;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.utility.Calculator;
+import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.CalculationsView;
 import uk.ac.soton.comp2211.views.MenuView;
 import uk.ac.soton.comp2211.views.SelectionView;
 import uk.ac.soton.comp2211.views.ViewsView;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -41,7 +47,7 @@ public class CalculationsController {
     }
 
     public void initialise() {
-        //Airport indicator
+        //Airport Indicator
         view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
 
         //Change Airport
@@ -170,6 +176,33 @@ public class CalculationsController {
         view.getTopDownView().setDisable(true);
         view.getSideOnView().setOnAction(e -> loadSideOnView());
         view.getSideOnView().setDisable(true);
+
+            //Store Calculations Button
+        view.getStoreCalculationButton().setDisable(true);
+        view.getStoreCalculationButton().setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+            fileChooser.setTitle("Store Calculations To File");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date();
+            fileChooser.setInitialFileName(formatter.format(date) + model.selectedAirportProperty().get().getName()
+                    + model.redeclaredRunwaysProperty().get().getKey().getRunway().getName() + "-"
+                    + model.redeclaredRunwaysProperty().get().getValue().getRunway().getName());
+            File file = fileChooser.showSaveDialog(view.getView().getScene().getWindow());
+            if (file == null) return;
+            try {
+                XMLUtil.storeCalculation(model.redeclaredRunwaysProperty().get(), file);
+                Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
+                importSuccess.setTitle("Success!");
+                importSuccess.setContentText("Calculation was stored successfully");
+                importSuccess.show();
+            } catch (IOException ex) {
+                Alert importFail = new Alert(Alert.AlertType.ERROR);
+                importFail.setTitle("Error");
+                importFail.setContentText("Error storing file");
+                importFail.show();
+            }
+        });
 
         //RunwayToShow
         view.getRunwayToShow().setItems(FXCollections.observableArrayList(
@@ -369,7 +402,6 @@ public class CalculationsController {
             //Update model with new Values
             model.redeclaredRunwaysProperty().set(new Pair<>(redeclaredRunwayLower,redeclaredRunwayUpper));
 
-
             /**
              * SET MODEL TO CALCULATED VALUES
              */
@@ -428,7 +460,7 @@ public class CalculationsController {
              */
             view.getSideOnView().setDisable(false);
             view.getTopDownView().setDisable(false);
-
+            view.getStoreCalculationButton().setDisable(false);
         });
 
     }

@@ -58,6 +58,7 @@ public class CalculationsView extends BaseView {
     private TextFlow breakdown = new TextFlow();
     private Label airportIndicator = new Label();
     private Button changeAirport = new Button("Change Airport");
+    private Button storeCalculationButton = new Button("Store Calculation");
 
     /**
      * GETTERS
@@ -145,6 +146,9 @@ public class CalculationsView extends BaseView {
 
     public Button getChangeAirport() {
         return changeAirport;
+    }
+    public Button getStoreCalculationButton() {
+        return storeCalculationButton;
     }
 
     public CalculationsView() {
@@ -276,7 +280,7 @@ public class CalculationsView extends BaseView {
         topDownView.getStyleClass().add("viewButton");
         runwayToShow.getStyleClass().add("runwayToShow");
 
-        vbox.getChildren().addAll(sideOnView, topDownView, runwayToShow);
+        vbox.getChildren().addAll(sideOnView, topDownView, runwayToShow, storeCalculationButton);
 
         return vbox;
     }

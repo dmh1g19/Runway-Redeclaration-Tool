@@ -18,8 +18,8 @@ public class Runway {
     protected int LDA;
     protected int displacedThreshold = 0;
     protected int clearwayLength;
-    protected int stopwayLength;
-    protected int stopwayWidth;
+    protected int stopwayLength = 0;
+    protected int stopwayWidth = 0;
 
     public String getName() {
         return name;
@@ -100,6 +100,23 @@ public class Runway {
     public void setClearwayLength(int clearwayLength) {
         this.clearwayLength = clearwayLength;
     }
+
+    public int getStopwayWidth() {
+        return stopwayWidth;
+    }
+
+    public void setStopwayWidth(int stopwayWidth) {
+        this.stopwayWidth = stopwayWidth;
+    }
+
+    public int getStopwayLength() {
+        return stopwayLength;
+    }
+
+    public void setStopwayLength(int stopwayLength) {
+        this.stopwayLength = stopwayLength;
+    }
+
 
     public Runway() {
 

@@ -132,7 +132,7 @@ public class SettingsController {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
             fileChooser.setTitle("Select Airport(s) XML File");
             File file = fileChooser.showOpenDialog(view.getView().getScene().getWindow());
-
+            if (file == null) return;
             try {
                 model.airportListProperty().addAll(XMLUtil.importAirports(file));
                 Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
@@ -153,7 +153,7 @@ public class SettingsController {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
             fileChooser.setTitle("Select Obstacle(s) XML File");
             File file = fileChooser.showOpenDialog(view.getView().getScene().getWindow());
-
+            if (file == null) return;
             try {
                 model.preDefinedObstaclesProperty().addAll(XMLUtil.importObstacles(file));
                 Alert importSuccess = new Alert(Alert.AlertType.CONFIRMATION);
