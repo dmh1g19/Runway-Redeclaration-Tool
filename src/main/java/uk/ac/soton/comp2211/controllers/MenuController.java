@@ -3,7 +3,9 @@ package uk.ac.soton.comp2211.controllers;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.views.*;
 
@@ -38,6 +40,7 @@ public class MenuController {
 
         view.getExitButton().setOnMouseClicked(e -> Platform.exit());
         view.getSettingsButton().setOnMouseClicked(e -> loadSettings());
+        view.getNotifButton().setOnMouseClicked(e -> loadNotifications());
     }
 
     public void loadSelection() {
@@ -58,6 +61,17 @@ public class MenuController {
         view.getView().getScene().setRoot(calculationsView.getView());
     }
 
+    public void loadNotifications() {
+        int width = 500;
+        int height = 300;
 
+        NotificationsView notificationsView = new NotificationsView();
+        NotificationsController notificationsController = new NotificationsController(notificationsView, model);
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Side On View");
+        newWindow.setScene(new Scene(notificationsView.getView(), width, height));
+        newWindow.setResizable(false);
+        newWindow.show();
+    }
 
 }

@@ -117,6 +117,7 @@ public class Runway {
         this.stopwayLength = stopwayLength;
     }
 
+    public Runway() {}
 
     public Runway(String name, int length, int width, double bearing, int TORA, int TODA, int ASDA, int LDA, int clearwayLength) {
         this.name = name;
