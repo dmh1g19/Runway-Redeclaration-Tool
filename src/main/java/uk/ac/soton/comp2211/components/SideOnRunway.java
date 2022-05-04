@@ -204,17 +204,17 @@ public class SideOnRunway extends RunwayView {
             writeText("Blast Allowance: 800m",obPos+(obLen/2) + (blastAllowance/2),(height - 65) ,reflected );
 
             //TODA
-            gc.setStroke(Color.DARKGREEN);
+            gc.setStroke(TODA_COLOR);
             gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -50),obPos+(obLen/2) + blastAllowance+TODALen, (height - 50));
             writeText(("TODA:" + runway.getRunway().getTODA() + "m"), obPos+(obLen/2) + blastAllowance+(TODALen/2) ,(height - 65),reflected);
 
             //TORA
-            gc.setStroke(Color.DARKBLUE);
+            gc.setStroke(TORA_COLOR);
             gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -80),obPos+(obLen/2) + blastAllowance+TORALen, (height - 80));
             writeText(("TORA:" + runway.getRunway().getTORA() + "m"), obPos+(obLen/2) + blastAllowance+(TORALen/2) ,(height - 95),reflected);
 
             //ASDA
-            gc.setStroke(Color.DARKGRAY);
+            gc.setStroke(ASDA_COLOR);
             gc.strokeLine(obPos+(obLen/2) + blastAllowance, (height -110),obPos+(obLen/2) + blastAllowance+ASDALen, (height - 110));
             writeText(("ASDA:" + runway.getRunway().getASDA() + "m"), obPos+(obLen/2) + blastAllowance+(ASDALen/2) ,(height - 125),reflected);
 
@@ -222,16 +222,17 @@ public class SideOnRunway extends RunwayView {
         //taking off towards an obstruction
         else{
             //TODA
+            gc.setStroke(TODA_COLOR);
             gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
             writeText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65),reflected);
 
             //TORA
-            gc.setStroke(Color.DARKBLUE);
+            gc.setStroke(TORA_COLOR);
             gc.strokeLine(1,(height - 80), (TORALen-1) ,(height - 80));
             writeText(("TORA:" + runway.getRunway().getTORA() + "m"), (TORALen / 2) ,(height - 95),reflected);
 
             //ASDA
-            gc.setStroke(Color.DARKGRAY);
+            gc.setStroke(ASDA_COLOR);
             gc.strokeLine(1,(height - 110), (ASDALen-1) ,(height - 110));
             writeText(("ASDA:" + runway.getRunway().getASDA() + "m"), (ASDALen / 2) ,(height - 125),reflected);
 

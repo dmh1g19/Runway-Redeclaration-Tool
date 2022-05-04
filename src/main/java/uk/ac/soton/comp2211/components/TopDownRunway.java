@@ -189,6 +189,11 @@ public class TopDownRunway extends RunwayView {
         double gap = Double.max(scaledRESA+scaledEndGap,scaledBlast); //max of resa and blast protection
         double slopeGap = Double.max(scaledObjHeight *50,scaledRESA) ;
 
+        System.out.println("Resa :"+(scaledRESA+scaledEndGap));
+        System.out.println("blast :"+(scaledBlast));
+        System.out.println("slope :"+(scaledObjHeight *50));
+        System.out.println("height :"+(obstacle.getHeight() *50));
+        System.out.println("height2 :"+(scaleToRunwayLength(obstacle.getHeight() *50)));
 
         //obstacle position is how far down runway not relative to displaced threshold
 
@@ -207,7 +212,7 @@ public class TopDownRunway extends RunwayView {
         lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+gap,110,scaledASDA);
         //RESA
         gc.setStroke(RESA_COLOR);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL, 130,scaledRESA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen, 130,scaledRESA);
     }
 
     public void landingAndTakeOffTowardsObj_LowestThreshold() {
