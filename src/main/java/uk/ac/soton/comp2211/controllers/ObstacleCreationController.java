@@ -110,7 +110,7 @@ public class ObstacleCreationController {
                 a.setContentText("Height to large");
                 a.show();
             }
-            if(test <= 0){
+            if(test < 0){
                 error=true;
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText("Height to small");
@@ -134,7 +134,7 @@ public class ObstacleCreationController {
                 a.setContentText("Length to large");
                 a.show();
             }
-            if(test <= 0){
+            if(test < 0){
                 error=true;
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText("Length to small");
@@ -158,7 +158,7 @@ public class ObstacleCreationController {
                 a.setContentText("Width to large");
                 a.show();
             }
-            if(test <= 0){
+            if(test < 0){
                 error=true;
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText("Width to small");

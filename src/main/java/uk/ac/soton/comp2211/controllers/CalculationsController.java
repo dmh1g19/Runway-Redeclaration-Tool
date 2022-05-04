@@ -285,7 +285,7 @@ public class CalculationsController {
                     a.setContentText("Height too large");
                     a.show();
                 }
-                if(test <= 0){
+                if(test < 0){
                     error=true;
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Height too small");
@@ -309,7 +309,7 @@ public class CalculationsController {
                     a.setContentText("Length too large");
                     a.show();
                 }
-                if(test <= 0){
+                if(test < 0){
                     error=true;
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Length too small");
@@ -327,13 +327,13 @@ public class CalculationsController {
 
             try {
                 int test = Integer.parseInt(view.getObstacleWidth().getText());
-                if (test >= 1000) {
+                if (test > 1000) {
                     error = true;
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Width too large");
                     a.show();
                 }
-                if (test <= 0) {
+                if (test < 0) {
                     error = true;
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Width too small");
@@ -495,7 +495,7 @@ public class CalculationsController {
                     a.show();
                     return;
                 }
-                if(blastDistance <0){
+                if(blastDistance <=0){
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("blast distance to small");
                     a.show();
