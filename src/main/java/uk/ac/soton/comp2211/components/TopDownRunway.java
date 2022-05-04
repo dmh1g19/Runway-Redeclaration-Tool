@@ -170,8 +170,7 @@ public class TopDownRunway extends RunwayView {
         //LEFT THR MARKING
         //thresholdL(String.valueOf(round(bearing)),"L");
 
-        System.out.println("clsoe stopay"+scaledCloseStopway);
-        System.out.println("afwr stopay"+scaledFarStopway);
+        
 
         gc.setFill(Color.WHITE);
         //RESA1
