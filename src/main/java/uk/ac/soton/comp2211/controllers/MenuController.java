@@ -62,13 +62,13 @@ public class MenuController {
     }
 
     public void loadNotifications() {
-        int width = 500;
-        int height = 300;
+        int width = 600;
+        int height = 400;
 
         NotificationsView notificationsView = new NotificationsView();
         NotificationsController notificationsController = new NotificationsController(notificationsView, model);
         Stage newWindow = new Stage();
-        newWindow.setTitle("Side On View");
+        newWindow.setTitle("Notifications");
         newWindow.setScene(new Scene(notificationsView.getView(), width, height));
         newWindow.setResizable(false);
         newWindow.show();

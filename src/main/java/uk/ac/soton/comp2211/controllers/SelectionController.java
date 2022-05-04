@@ -58,7 +58,8 @@ public class SelectionController {
         //Select Button
         view.getSelectButton().setOnAction(e -> {
             if (view.getAirportSelectionList().getValue() == null) return;
-            model.selectedAirportProperty().set(view.getAirportSelectionList().getValue());
+            var airport = view.getAirportSelectionList().getValue();
+            model.selectedAirportProperty().set(airport);
             loadCalculations();
         });
 

@@ -64,7 +64,7 @@ public class SideOnRunway extends RunwayView {
 
     //need to add stopway and clearway to the view.
     @Override
-    public void draw(RedeclaredRunway runway1, State state) {
+    public void draw(RedeclaredRunway runway1, RedeclaredRunway runway2,State state) {
 
         //Moved from constructor
         this.runway = runway1;

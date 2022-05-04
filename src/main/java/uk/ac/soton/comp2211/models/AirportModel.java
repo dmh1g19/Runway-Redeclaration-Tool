@@ -1,23 +1,15 @@
 package uk.ac.soton.comp2211.models;
 
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.*;
-import javafx.beans.property.adapter.JavaBeanObjectProperty;
-import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import uk.ac.soton.comp2211.airport.*;
 import uk.ac.soton.comp2211.utility.Calculator;
 import uk.ac.soton.comp2211.utility.XMLUtil;
-import uk.ac.soton.comp2211.views.SelectionView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class AirportModel {
 
@@ -32,15 +24,48 @@ public class AirportModel {
     private boolean isCustomColours = false;
     private final SimpleStringProperty customColours = new SimpleStringProperty("");
     private final SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
-    private final SimpleListProperty<Pair<Date,Object>> actions = new SimpleListProperty<>();
+    private final SimpleListProperty<Pair<Date,String>> actions = new SimpleListProperty<>(FXCollections.observableArrayList());
+
     private final SimpleIntegerProperty blastProtection = new SimpleIntegerProperty(300);
 
+    public SimpleIntegerProperty fontSizeProperty() {
+        return fontSize;
+    }
 
-    public AirportModel() {}
+    public AirportModel() {
+        initialiseNotifications();
+    }
 
     public AirportModel(Airport[] airportList) {
         this.airportList.setValue(FXCollections.observableArrayList(airportList));
         blastProtection.addListener((observableValue, number, t1) -> Calculator.setBlastProtectionDistance((Integer) t1));
+        initialiseNotifications();
+    }
+
+    private void initialiseNotifications() {
+        // LISTEN FOR ACTIONS
+        selectedAirportProperty().addListener((observableValue, airport, t1) -> {
+            addAction(t1.getName() + " Selected");
+        });
+
+        redeclaredRunwaysProperty().addListener((observableValue, redeclaredRunwayRedeclaredRunwayPair, t1) -> {
+            addAction("New values calculated for runway: " + t1.getKey().getRunway().getName() + "/" + t1.getValue().getRunway().getName());
+        });
+
+        blastProtectionProperty().addListener((observableValue, number, t1) -> {
+            addAction("Blast protection distance changed to: " + t1 + "m");
+        });
+
+        customColoursProperty().addListener((observableValue, s, t1) -> {
+            if (t1 == null) return;
+            addAction("App Colours Changed");
+        });
+
+        fontSizeProperty().addListener((observableValue, number, t1) -> {
+            if (t1.equals(0)) addAction("Font size set to Small");
+            if (t1.equals(1)) addAction("Font size set to Medium");
+            if (t1.equals(2)) addAction("Font size set to Large");
+        });
     }
 
     public Pair<Runway,State>[] getRunwayStates(PhysicalRunway physicalRunway) {
@@ -139,17 +164,18 @@ public class AirportModel {
         isCustomColours = customColours;
     }
 
-    public ObservableList<Pair<Date,Object>> getActions() {
+    public ObservableList<Pair<Date,String>> getActions() {
         return actions.get();
     }
 
-    public SimpleListProperty<Pair<Date,Object>> actionsProperty() {
+    public SimpleListProperty<Pair<Date,String>> actionsProperty() {
         return actions;
     }
 
-    public void addAction(Date date,String action) {
-        this.actions.add(new Pair<>(date,action));
+    public void addAction(String action) {
+        this.actions.add(new Pair<Date,String>(new Date(),action));
     }
+
 
     public int getBlastProtection() {
         return blastProtection.get();
@@ -157,5 +183,9 @@ public class AirportModel {
 
     public SimpleIntegerProperty blastProtectionProperty() {
         return blastProtection;
+    }
+
+    public SimpleStringProperty customColoursProperty() {
+        return customColours;
     }
 }

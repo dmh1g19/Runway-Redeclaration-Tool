@@ -24,10 +24,7 @@ import uk.ac.soton.comp2211.components.TopDownRunway;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.utility.Calculator;
 import uk.ac.soton.comp2211.utility.XMLUtil;
-import uk.ac.soton.comp2211.views.CalculationsView;
-import uk.ac.soton.comp2211.views.MenuView;
-import uk.ac.soton.comp2211.views.SelectionView;
-import uk.ac.soton.comp2211.views.ViewsView;
+import uk.ac.soton.comp2211.views.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +51,9 @@ public class CalculationsController {
     }
 
     public void initialise() {
+        //View Notifications
+        view.getNotifButton().setOnAction(e -> loadNotifications());
+
         //Airport Indicator
         view.getAirportIndicator().setText("Airport: " + model.selectedAirportProperty().get().getName());
 
@@ -270,7 +270,10 @@ public class CalculationsController {
                 error = true;
             }
 
-            if (error) return;
+            if (error)  {
+                model.addAction("Error: Insufficient parameters in calculation inputs");
+                return;
+            }
             error = false;
 
             //Testing for invalid inputs
@@ -468,6 +471,8 @@ public class CalculationsController {
             view.getSideOnView().setDisable(false);
             view.getTopDownView().setDisable(false);
             view.getStoreCalculationButton().setDisable(false);
+
+            // ADD ACTION TO MODEL
         });
 
         //blast proctection button
@@ -572,6 +577,19 @@ public class CalculationsController {
         newWindow.setTitle("Side On View");
         newWindow.setScene(new Scene(anchorPane, width, height));
         anchorPane.setStyle("-fx-background-color: #ADD8E6");
+        newWindow.setResizable(false);
+        newWindow.show();
+    }
+
+    public void loadNotifications() {
+        int width = 600;
+        int height = 400;
+
+        NotificationsView notificationsView = new NotificationsView();
+        NotificationsController notificationsController = new NotificationsController(notificationsView, model);
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Notifications");
+        newWindow.setScene(new Scene(notificationsView.getView(), width, height));
         newWindow.setResizable(false);
         newWindow.show();
     }
