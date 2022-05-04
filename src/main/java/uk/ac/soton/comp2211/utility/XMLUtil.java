@@ -33,54 +33,15 @@ public class XMLUtil {
      * This just allows me to implement the rest of the predefined obstacle stuff with template data
      * @return an array list of obstacles
      */
-    public static ArrayList<Obstacle> readObstacles(){
-        XmlMapper xmlMapper = new XmlMapper();
-
-        try {
-            XmlMapper mapper = new XmlMapper();
-
-            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            Obstacle[] obs = mapper.readValue(new File("obstacles.xml"), Obstacle[].class);
-            System.out.println("Good");
-            return new ArrayList<>(List.of(obs));
-
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Error");
-        }
-
-        return null;
-    }
 
     /**
      * called by the predefined obstacles class to update the xml file
      * We could have this called automatically using a listener or do it manually with like a save button or something
      * @param obstacles the new list of obstacles
      */
-    public static void writeObstacles (ArrayList<Obstacle> obstacles){
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        try {
-            xmlMapper.writeValue(new File("obstacles.xml"), obstacles.toArray());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
-    public static void exportAirport(Airport airport) {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        try {
-            xmlMapper.writeValue(new File("obstacles.xml"), airport);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static Airport[] importAirports(String fileName) throws IOException {
         XmlMapper xmlMapper = new XmlMapper();

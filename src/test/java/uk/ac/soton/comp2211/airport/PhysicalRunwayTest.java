@@ -70,4 +70,17 @@ class PhysicalRunwayTest {
         assertTrue(physicalRunways[0].getUpperThreshold().equals(runways[1].getName()),"Error with physical runway getUpperThreshold function");
         assertTrue(physicalRunways[1].getUpperThreshold().equals(runways[3].getName()),"Error with physical runway getUpperThreshold function");
     }
+
+    @Test
+    void PhysicalRunway(){
+        boolean failed = true;
+        try {
+           PhysicalRunway physicalRunway = new PhysicalRunway();
+           failed = false;
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
+        assertFalse(failed, "Error with physcial runway base constructor");
+    }
 }

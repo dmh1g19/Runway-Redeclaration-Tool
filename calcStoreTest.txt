@@ -1,0 +1,20 @@
+Heathrow Test
+
+09L
+TORA: 3342m
+TODA: 3342m
+ASDA: 3342m
+LDA: 2982m
+
+27R
+TORA: 2986m
+TODA: 2986m
+ASDA: 2986m
+LDA: 3346m
+
+Obstacle Information
+Height: 12m
+Width: 0m
+Length: 0m
+Distance From 09L: -50m
+Distance From 27R: 3646m

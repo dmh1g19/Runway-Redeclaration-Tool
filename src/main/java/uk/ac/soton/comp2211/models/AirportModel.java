@@ -14,6 +14,7 @@ import uk.ac.soton.comp2211.utility.Calculator;
 import uk.ac.soton.comp2211.utility.XMLUtil;
 import uk.ac.soton.comp2211.views.SelectionView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,7 +53,14 @@ public class AirportModel {
     }
 
     public void writeObstaclesToXML() {
-        XMLUtil.writeObstacles(new ArrayList<>(preDefinedObstacles));
+        try {
+            XMLUtil.exportObstacles(new File("obstacles.xml"),new ArrayList<>(preDefinedObstacles));
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
+
+
     }
 
     public void setRedeclaredRunway(RedeclaredRunway redeclaredRunway) {

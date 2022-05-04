@@ -151,4 +151,17 @@ class RunwayTest {
         runway.setStopwayWidth(1);
         assertTrue(runway.getStopwayWidth()==1,"Error with  runway setClearwayLength function");
     }
+
+    @Test
+    void Runway(){
+        boolean failed = true;
+        try {
+            Runway Runway = new Runway();
+            failed = false;
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
+        assertFalse(failed, "Error with  runway base constructor");
+    }
 }

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 class AirportTest {
     private  static Airport airport;
     private static Runway[] runways;
@@ -53,5 +55,18 @@ class AirportTest {
         Assertions.assertSame(physicalRunways[0].getFirst(), runways[0], "Error with Airport setRunways method (runway 0)");
         Assertions.assertSame(physicalRunways[0].getSecond(), runways[1], "Error with Airport setRunways method (runway 1)");
 
+    }
+
+    @Test
+    void Airport(){
+        boolean failed = true;
+        try {
+            Airport airport = new Airport();
+            failed = false;
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
+        assertFalse(failed, "Error with airport  base constructor");
     }
 }
