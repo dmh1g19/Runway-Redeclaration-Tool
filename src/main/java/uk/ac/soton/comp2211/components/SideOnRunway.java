@@ -21,6 +21,8 @@ public class SideOnRunway extends RunwayView {
     private double height;
     private double obPos;
     private double obLen;
+
+
     private double obHeight;
     private double TODALen;
     private double TORALen;
@@ -36,6 +38,7 @@ public class SideOnRunway extends RunwayView {
     private Direction dToObstacle;//direction relative to obstacle
     private Character rwayDirection; //direction of the runway
     private boolean reflected =false;
+
 
     private GraphicsContext gc =  getGraphicsContext2D();
 
@@ -327,6 +330,9 @@ public class SideOnRunway extends RunwayView {
             gc.fillText(s,x,y);
             gc.restore();
         }
+
+
+
 
 
 

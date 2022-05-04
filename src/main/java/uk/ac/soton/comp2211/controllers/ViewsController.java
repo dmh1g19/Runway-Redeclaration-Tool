@@ -37,6 +37,10 @@ public class ViewsController {
         if (!(model.redeclaredRunwayProperty().get() == null) && !(model.stateProperty().get() == null)) {
             view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.stateProperty().get());
         }
+        model.blastProtectionProperty().addListener((observableValue, oldV, newV) ->{
+            view.getRunwayView().setBlastProtection(newV.intValue());
+        });
+
     }
 
 }

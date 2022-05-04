@@ -31,6 +31,7 @@ public class AirportModel {
     private final SimpleStringProperty customColours = new SimpleStringProperty("");
     private final SimpleObjectProperty<Pair<RedeclaredRunway,RedeclaredRunway>> redeclaredRunways = new SimpleObjectProperty<>();
     private final SimpleListProperty<Pair<Date,String>> actions = new SimpleListProperty<>();
+    private final SimpleIntegerProperty blastProtection = new SimpleIntegerProperty(300);
 
 
     public AirportModel() {}
@@ -140,4 +141,11 @@ public class AirportModel {
         this.actions.add(new Pair<>(date,action));
     }
 
+    public int getBlastProtection() {
+        return blastProtection.get();
+    }
+
+    public SimpleIntegerProperty blastProtectionProperty() {
+        return blastProtection;
+    }
 }

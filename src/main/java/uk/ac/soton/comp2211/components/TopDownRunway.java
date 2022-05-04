@@ -30,7 +30,6 @@ public class TopDownRunway extends RunwayView {
     double startOfRunwayX;
     double startOfRunwayY;
     double endOfRunwayX;
-
     double scaledASDA;
     double scaledDTL;
     double scaledRESA;
@@ -40,7 +39,10 @@ public class TopDownRunway extends RunwayView {
     double scaledObjPos;
     double scaledObjLen;
     double scaledObjDFCL;
+    double scaledObjHeight;
     double scaledObjWidth;
+    double scaledBlast;
+    double scaledEndGap;
 
     double bearing;
 
@@ -70,10 +72,10 @@ public class TopDownRunway extends RunwayView {
         this.bearing = runway.getBearing();
         this.halfHeight = getHeight()/2;
         this.halfWidth = getWidth()/2;
+        this.scaledEndGap =         scaleToRunwayLength(60);
         this.startOfRunwayX = halfWidth-(runwayLen/2);
         this.startOfRunwayY = halfHeight-(runwayWidth/2);
         this.endOfRunwayX = halfWidth+(runwayLen/2);
-
         this.scaledASDA = scaleToRunwayLength(runway.getASDA());
         this.scaledDTL = scaleToRunwayLength(runway.getDTL());
         this.scaledRESA = scaleToRunwayLength(240);
@@ -82,8 +84,10 @@ public class TopDownRunway extends RunwayView {
         this.scaledTODA = scaleToRunwayLength(runway.getTODA());
         this.scaledObjPos = scaleToRunwayLength(obstacle.getPosition());
         this.scaledObjLen = scaleToRunwayLength(obstacle.getLength());
+        this.scaledObjHeight = scaleToRunwayLength(obstacle.getHeight());
         this.scaledObjDFCL = scaleToRunwayWidth(obstacle.getDFCL());
         this.scaledObjWidth = scaleToRunwayWidth(obstacle.getWidth());
+        this.scaledBlast = scaleToRunwayWidth(blastProtection);
 
         //clear canvas before drawing -- for when you have to redraw
         gc.clearRect(0,0, getWidth(), getHeight());
@@ -189,19 +193,25 @@ public class TopDownRunway extends RunwayView {
     public void landingAndTakeOffAwayFromObj_LowestThreshold() {
 
 
+        double gap = Double.max(scaledRESA+scaledEndGap,scaledBlast); //max of resa and blast protection
+        double slopeGap = Double.max(scaledObjHeight *50,scaledRESA) ;
+
+
+        //obstacle position is how far down runway not relative to displaced threshold
+
 
         //TODA
         gc.setStroke(TODA_COLOR);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,50,scaledTODA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+gap,50,scaledTODA);
         //TORA
         gc.setStroke(TORA_COLOR);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,70,scaledTORA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+gap,70,scaledTORA);
         //LDA
         gc.setStroke(LDA_COLOR);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL,90,scaledLDA);
+        lineMarking(startOfRunwayX+scaledObjPos+slopeGap+scaledEndGap,90,scaledLDA);
         //ASDA
         gc.setStroke(ASDA_COLOR);
-        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen,110,scaledASDA);
+        lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+gap,110,scaledASDA);
         //RESA
         gc.setStroke(RESA_COLOR);
         lineMarking(startOfRunwayX+scaledObjPos+scaledObjLen+scaledDTL, 130,scaledRESA);
@@ -226,7 +236,7 @@ public class TopDownRunway extends RunwayView {
         //RESA
         gc.setStroke(RESA_COLOR);
         if (scaledObjPos > 0) {
-            lineMarking((startOfRunwayX-scaledRESA)+scaledObjPos+scaledDTL, 50, scaledRESA);
+            lineMarking(startOfRunwayX +scaledTODA, 50, scaledRESA);
         }
         else {
             lineMarking(startOfRunwayX+scaledDTL, 50, scaledRESA);
@@ -378,5 +388,6 @@ public class TopDownRunway extends RunwayView {
         gc.transform(new Affine(new Scale(scale,scale,this.halfWidth,halfHeight)));
         gc.transform(new Affine(new Rotate(rotDegrees,this.halfWidth,halfHeight)));
     }
+
 
 }

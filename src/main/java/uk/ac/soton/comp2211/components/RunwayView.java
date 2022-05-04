@@ -8,6 +8,7 @@ import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.airport.State;
 
 public abstract class RunwayView extends Canvas {
+    protected int blastProtection =0;
 
     private RedeclaredRunway runway;
 
@@ -23,5 +24,13 @@ public abstract class RunwayView extends Canvas {
     }
 
     public abstract void draw(RedeclaredRunway runway, State state);
+
+    public int getBlastProtection() {
+        return blastProtection;
+    }
+
+    public void setBlastProtection(int blastProtection) {
+        this.blastProtection = blastProtection;
+    }
 
 }
