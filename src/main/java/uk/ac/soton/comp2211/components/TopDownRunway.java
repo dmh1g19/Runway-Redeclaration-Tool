@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import uk.ac.soton.comp2211.airport.*;
 
 import static java.lang.Math.round;
@@ -18,7 +19,6 @@ public class TopDownRunway extends RunwayView {
     //scaled down runway dimension
     double runwayLen = 650;
     double runwayWidth = 50;
-
 
 
     GraphicsContext gc = this.getGraphicsContext2D();
@@ -55,6 +55,12 @@ public class TopDownRunway extends RunwayView {
 
     public TopDownRunway( double width, double height)  {
         super(width, height);
+    }
+
+    @Override
+    public void redraw()
+    {
+        draw(redeclaredRunway,state);
     }
 
     @Override
@@ -95,8 +101,8 @@ public class TopDownRunway extends RunwayView {
         //this gc.save() is essential for rotating and scaling, dont remove x
         gc.save();
         if(bearingAlligned) {
-            transformRunway(bearing-90, 0.9);
-        } else { transformRunway(0, 0.9);}
+            transformRunway(bearing-90, scale,x,y);
+        } else { transformRunway(0, scale,x,y);}
 
         //background
         gc.setFill(Color.color(0.1,0.1,0.1));
@@ -407,10 +413,11 @@ public class TopDownRunway extends RunwayView {
         gc.fillText(String.valueOf(bearing)+"°",getWidth() - 45,getHeight()/10 + 15 );
     }
 
-    public void transformRunway(double rotDegrees, double scale)
+    public void transformRunway(double rotDegrees, double scale, double x, double y)
     {
         gc.transform(new Affine(new Scale(scale,scale,this.halfWidth,halfHeight)));
-        gc.transform(new Affine(new Rotate(rotDegrees,this.halfWidth,halfHeight)));
+        gc.transform(new Affine(new Rotate(rotDegrees,this.halfWidth+x,halfHeight+y)));
+        gc.transform(new Affine(new Translate(x,y)));
     }
 
     public void toggleBearingAlligned()

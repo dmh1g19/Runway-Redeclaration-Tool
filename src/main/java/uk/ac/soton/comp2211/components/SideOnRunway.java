@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import uk.ac.soton.comp2211.airport.Direction;
 import uk.ac.soton.comp2211.airport.ObstacleOnRunway;
 import uk.ac.soton.comp2211.airport.RedeclaredRunway;
@@ -41,6 +42,7 @@ public class SideOnRunway extends RunwayView {
     private Character rwayDirection; //direction of the runway
     private boolean reflected =false;
 
+    private State state;
 
     private GraphicsContext gc =  getGraphicsContext2D();
 
@@ -54,12 +56,19 @@ public class SideOnRunway extends RunwayView {
     }
 
 
+    @Override
+    public void redraw()
+    {
+        draw(runway,state);
+    }
+
     //need to add stopway and clearway to the view.
     @Override
     public void draw(RedeclaredRunway runway1, State state) {
 
         //Moved from constructor
         this.runway = runway1;
+        this.state = state;
         this.obstacle = runway.getObstacle();
         this.dToObstacle = runway.getDirection();
         this.rwayDirection = runway.getRunway().getName().charAt(2);
@@ -103,7 +112,14 @@ public class SideOnRunway extends RunwayView {
         ALSAcross = (ALSAcross /overallLength) * height;
 
 
+        //clear canvas before drawing -- for when you have to redraw
+        gc.clearRect(0,0, getWidth(), getHeight());
+
         //Original Function
+        gc.save();
+
+        gc.transform(new Affine(new Scale(scale,scale,width/2,height/2)));
+        gc.transform(new Affine(new Translate(x,y)));
 
         gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
@@ -121,20 +137,6 @@ public class SideOnRunway extends RunwayView {
 
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(width - clearwayLength,(height - 20),clearwayLength,20 );
-
-        gc.setFill(Color.BLACK);
-        if(reflected){
-            gc.save();
-            gc.transform(new Affine(new Scale(-1,1,70,50)));
-            gc.fillText("Width : Height = 1 : 10",0,15);
-            gc.restore();
-        }else{
-            gc.fillText("Width : Height = 1 : 10",0,15);
-        }
-
-
-
-
 
 
         //the obstructions dimensions relative to the view size are calculated.
@@ -155,6 +157,14 @@ public class SideOnRunway extends RunwayView {
             gc.fillText("Obstacle",obPos - 25, (height - 85));
         }
 
+        //right now just shows take off view but buttons will be installed to switch between the two
+        if(state==State.TAKEOFF){
+            takeOffView();
+        }else{
+            landingView();
+        }
+
+        gc.restore(); //EVERYTHING PAST THIS POINT WILL NOT BE SCALED
 
 
         //A compass in the top right of the screen that shows the bearing of the runway
@@ -190,15 +200,16 @@ public class SideOnRunway extends RunwayView {
             gc.restore();
         }
 
-
-
-
-        //right now just shows take off view but buttons will be installed to switch between the two
-        if(state==State.TAKEOFF){
-            takeOffView();
+        gc.setFill(Color.BLACK);
+        if(reflected){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,70,50)));
+            gc.fillText("Width : Height = 1 : 10",0,15);
+            gc.restore();
         }else{
-            landingView();
+            gc.fillText("Width : Height = 1 : 10",0,15);
         }
+
 
     }
 

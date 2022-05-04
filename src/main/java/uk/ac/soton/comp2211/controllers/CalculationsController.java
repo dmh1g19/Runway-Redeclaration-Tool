@@ -2,6 +2,8 @@ package uk.ac.soton.comp2211.controllers;
 
 import javafx.animation.*;
 import javafx.collections.FXCollections;
+import javafx.geometry.Side;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
@@ -530,6 +532,15 @@ public class CalculationsController {
         compassClickbox.setOnMouseClicked((e) -> runway.toggleBearingAlligned());
 
         AnchorPane anchorPane = new AnchorPane();
+
+
+        viewsView.getView().setOnScroll((e) -> runway.zoom(e.getDeltaY()/1000));
+
+        viewsView.getView().setOnMousePressed((e) -> runway.enterScroll(e.getX(), e.getY()));
+        viewsView.getView().setOnMouseDragged((e) -> runway.scroll(e.getX()-runway.getWidth()/2,e.getY()-runway.getHeight()/2));
+        viewsView.getView().setOnMousePressed((e) -> runway.exitScroll(e.getX()-runway.getWidth()/2,e.getY()-runway.getHeight()/2));
+
+
         anchorPane.getChildren().add(viewsView.getView());
         anchorPane.getChildren().add(compassClickbox);
 
@@ -544,11 +555,23 @@ public class CalculationsController {
         int width = 700;
         int height = 400;
 
-        ViewsView viewsView = new ViewsView(new SideOnRunway(width,height));
+        SideOnRunway runway = new SideOnRunway(width,height);
+        ViewsView viewsView = new ViewsView(runway);
         ViewsController viewsController = new ViewsController(viewsView, model);
         Stage newWindow = new Stage();
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().add(viewsView.getView());
+
+        viewsView.getView().setOnScroll((e) -> runway.zoom(e.getDeltaY()/1000));
+
+        viewsView.getView().setOnMousePressed((e) -> runway.enterScroll(e.getX(), e.getY()));
+        viewsView.getView().setOnMouseDragged((e) -> runway.scroll(e.getX()-runway.getWidth()/2,e.getY()-runway.getHeight()/2));
+        viewsView.getView().setOnMousePressed((e) -> runway.exitScroll(e.getX()-runway.getWidth()/2,e.getY()-runway.getHeight()/2));
+
         newWindow.setTitle("Side On View");
-        newWindow.setScene(new Scene(viewsView.getView(), width, height));
+        newWindow.setScene(new Scene(anchorPane, width, height));
+        anchorPane.setStyle("-fx-background-color: #ADD8E6");
         newWindow.setResizable(false);
         newWindow.show();
     }
