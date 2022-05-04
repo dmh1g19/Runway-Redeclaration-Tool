@@ -4,6 +4,7 @@ import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -461,6 +462,40 @@ public class CalculationsController {
             view.getSideOnView().setDisable(false);
             view.getTopDownView().setDisable(false);
             view.getStoreCalculationButton().setDisable(false);
+        });
+
+        //blast proctection button
+        view.getBlastProtection().setOnAction(e ->{
+
+            TextInputDialog td = new TextInputDialog("Enter new distance");
+            td.showAndWait().ifPresent(distanceStr ->{
+                int blastDistance =0;
+                try {
+                    blastDistance = Integer.parseInt(distanceStr);
+                }
+                catch(Exception e1) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Please enter a number");
+                    a.show();
+                }
+                if(blastDistance >1000){
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("blast distance to large");
+                    a.show();
+                    return;
+                }
+                if(blastDistance <0){
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("blast distance to small");
+                    a.show();
+                    return;
+                }
+                model.blastProtectionProperty().set(blastDistance);
+
+            });
+
+
+
         });
 
     }

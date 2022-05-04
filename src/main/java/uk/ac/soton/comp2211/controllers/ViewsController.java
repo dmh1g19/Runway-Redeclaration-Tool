@@ -18,7 +18,7 @@ public class ViewsController {
     public ViewsController(ViewsView view, AirportModel model) {
         this.view = view;
         this.model = model;
-
+        view.getRunwayView().setBlastProtection(model.getBlastProtection());
         initialise();
         if(model.isCustomColours()){
             view.getView().setStyle(model.getCustomColours());
