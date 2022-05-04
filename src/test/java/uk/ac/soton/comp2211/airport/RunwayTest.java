@@ -13,7 +13,8 @@ class RunwayTest {
      void initialiseRunway() {
 
         runway = new Runway("09R", 4022, 280, 90, 3660, 3660, 3660, 3353, 5,100);
-
+        runway.setStopwayLength(100);
+        runway.setStopwayWidth(50);
 
 
     }
@@ -127,5 +128,27 @@ class RunwayTest {
     void setClearwayLength() {
         runway.setClearwayLength(1);
         assertTrue(runway.getClearwayLength()==1,"Error with  runway setClearwayLength function");
+    }
+
+
+    @Test
+    void getStopwayLength() {
+        assertTrue(runway.getStopwayLength()==100,"Error with  runway getClearwayLength function");
+    }
+
+    @Test
+    void setStopwayLength() {
+        runway.setStopwayLength(1);
+        assertTrue(runway.getStopwayLength()==1,"Error with  runway setClearwayLength function");
+    }
+    @Test
+    void getStopwayWidth() {
+        assertTrue(runway.getStopwayWidth()==50,"Error with  runway getClearwayLength function");
+    }
+
+    @Test
+    void setStopwayWidth() {
+        runway.setStopwayWidth(1);
+        assertTrue(runway.getStopwayWidth()==1,"Error with  runway setClearwayLength function");
     }
 }

@@ -7,9 +7,7 @@ public class ObstacleOnRunway extends Obstacle {
 protected int position; // how far down the runway the obstacle is
 protected int distanceFromCentreLine;
 
-    public ObstacleOnRunway () {
 
-    }
 
     public ObstacleOnRunway(Obstacle obstacle, int pos, int dis) {
         this.name = obstacle.getName();

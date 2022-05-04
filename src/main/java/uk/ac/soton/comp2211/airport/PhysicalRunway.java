@@ -15,9 +15,6 @@ public class PhysicalRunway {
     private Runway first;
     private Runway second;
 
-    public PhysicalRunway() {
-
-    }
 
     public PhysicalRunway(Runway f, Runway s) {
         Runway[] runways = new Runway[]{f, s};
