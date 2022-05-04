@@ -46,6 +46,7 @@ public class TopDownRunway extends RunwayView {
     double scaledObjWidth;
     double scaledBlast;
     double scaledEndGap;
+    RedeclaredRunway oppositeRunway;
 
     double bearing;
     boolean bearingAlligned = true;
@@ -58,11 +59,12 @@ public class TopDownRunway extends RunwayView {
     }
 
     @Override
-    public void draw(RedeclaredRunway runway1, State state) {
+    public void draw(RedeclaredRunway runway1, RedeclaredRunway runway2,State state) {
 
 
         this.runway = runway1.getRunway();
         this.redeclaredRunway = runway1;
+        this.oppositeRunway = runway2;
         this.obstacle = runway1.getObstacle();
         this.direction = runway1.getDirection();
         this.state = state;
@@ -418,11 +420,11 @@ public class TopDownRunway extends RunwayView {
         if(!bearingAlligned)
         {
             bearingAlligned = true;
-            draw(redeclaredRunway,state);
+            draw(redeclaredRunway,oppositeRunway,state);
         }
         else{
             bearingAlligned = false;
-            draw(redeclaredRunway,state);
+            draw(redeclaredRunway,oppositeRunway,state);
         }
     }
 

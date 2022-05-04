@@ -27,15 +27,27 @@ public class ViewsController {
 
     public void initialise() {
         model.redeclaredRunwayProperty().addListener((observableValue, oldV, newV) -> {
-            view.getRunwayView().draw(newV, model.stateProperty().get());
+            if (model.redeclaredRunwaysProperty().get().getKey().equals(newV)) {
+                view.getRunwayView().draw(newV, model.redeclaredRunwaysProperty().get().getValue(), model.stateProperty().get());
+            } else {
+                view.getRunwayView().draw(newV, model.redeclaredRunwaysProperty().get().getKey(), model.stateProperty().get());
+            }
         });
 
         model.stateProperty().addListener((observableValue, oldV, newV) -> {
-            view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), newV);
+            if (model.redeclaredRunwaysProperty().get().getKey().equals(model.redeclaredRunwayProperty().get())) {
+                view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.redeclaredRunwaysProperty().get().getValue(), newV);
+            } else {
+                view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.redeclaredRunwaysProperty().get().getKey(), newV);
+            }
         });
 
         if (!(model.redeclaredRunwayProperty().get() == null) && !(model.stateProperty().get() == null)) {
-            view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.stateProperty().get());
+            if (model.redeclaredRunwaysProperty().get().getKey().equals(model.redeclaredRunwayProperty().get())) {
+                view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.redeclaredRunwaysProperty().get().getValue(), model.stateProperty().get());
+            } else {
+                view.getRunwayView().draw(model.redeclaredRunwayProperty().get(), model.redeclaredRunwaysProperty().get().getKey(), model.stateProperty().get());
+            }
         }
         model.blastProtectionProperty().addListener((observableValue, oldV, newV) ->{
             view.getRunwayView().setBlastProtection(newV.intValue());
