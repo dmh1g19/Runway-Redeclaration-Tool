@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,7 +146,35 @@ class XMLUtilTest {
             ObstacleOnRunway obs2 = new ObstacleOnRunway("test", 12, 0, 0, 3646, 0);
             RedeclaredRunway redeclaredRunway1 = Calculator.AwayFromObstacle(r09L,obs);
             RedeclaredRunway redeclaredRunway2 = Calculator.TowardsObstacle(r27R,obs2);
-            XMLUtil.storeCalculation(heathrow,new Pair<>(redeclaredRunway1,redeclaredRunway2),new File("calcStoreTest.txt"));
+            Pair<RedeclaredRunway,RedeclaredRunway> rPair = new Pair<>(redeclaredRunway1,redeclaredRunway2);
+            XMLUtil.storeCalculation(heathrow,rPair,new File("calcStoreTest.txt"));
+            Scanner myReader = new Scanner(new File("calcStoreTest.txt"));
+            StringBuilder output = new StringBuilder();
+            while (myReader.hasNextLine()) {
+               output.append(myReader.nextLine());;
+            }
+            String toWrite = heathrow.getName() + "\n\n"
+                    + rPair.getKey().getRunway().getName() + "\n"
+                    + "TORA: " + rPair.getKey().getRunway().getTORA() + "m\n"
+                    + "TODA: " + rPair.getKey().getRunway().getTODA() + "m\n"
+                    + "ASDA: " + rPair.getKey().getRunway().getASDA() + "m\n"
+                    + "LDA: " + rPair.getKey().getRunway().getLDA() + "m\n\n"
+                    + rPair.getValue().getRunway().getName() + "\n"
+                    + "TORA: " + rPair.getValue().getRunway().getTORA() + "m\n"
+                    + "TODA: " + rPair.getValue().getRunway().getTODA() + "m\n"
+                    + "ASDA: " + rPair.getValue().getRunway().getASDA() + "m\n"
+                    + "LDA: " + rPair.getValue().getRunway().getLDA() + "m\n\n"
+                    + "Obstacle Information" + "\n"
+                    + "Height: " + rPair.getKey().getObstacle().getHeight() + "m\n"
+                    + "Width: " + rPair.getKey().getObstacle().getWidth() + "m\n"
+                    + "Length: " + rPair.getKey().getObstacle().getLength() + "m\n"
+                    + "Distance From " + rPair.getKey().getRunway().getName() + ": " + rPair.getKey().getObstacle().getPosition() + "m\n"
+                    + "Distance From " + rPair.getValue().getRunway().getName() + ": " + rPair.getValue().getObstacle().getPosition() + "m";
+
+            toWrite=toWrite.replace("\n","");
+            System.out.println(output);
+            System.out.println(toWrite);
+            assertTrue(output.toString().equals(toWrite),"Error with store calculation invalid output");
             failed =false;
         }
         catch(Exception e) {

@@ -2,7 +2,7 @@ package uk.ac.soton.comp2211.airport;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-public class Runway {
+public class  Runway {
     protected String name;
     protected int length;
     protected int width;
@@ -153,6 +153,7 @@ public class Runway {
         LDA = runway.getLDA();
         clearwayLength = runway.getClearwayLength();
         displacedThreshold = runway.getDTL();
+        stopwayLength=runway.getStopwayLength();
     }
 
 }

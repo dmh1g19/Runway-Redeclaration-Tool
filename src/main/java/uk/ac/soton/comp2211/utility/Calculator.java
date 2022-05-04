@@ -72,15 +72,14 @@ public class Calculator {
         Runway runwayWithObstacle = new Runway(runway);
         int obstacleHeight = obs.getHeight();
         int obstaclePosition = obs.getPosition(); //obstacle position should represent how far down the runway it is
-        int clearway = runway.getTODA() -runway.getTORA();
-        int stopway = runway.getASDA() - runway.getTORA();
+        int clearway = runway.getClearwayLength();
+        int stopway = runway.getStopwayLength();
         int newTORA = runway.getTORA() -(Integer.max(blastProtectionDistance,RESA +distanceToStripEnd)) - obstaclePosition - runway.getDTL() ;
         if(newTORA < runway.getTORA()){
             runwayWithObstacle.setTORA(newTORA);
             runwayWithObstacle.setTODA(newTORA+clearway);
             runwayWithObstacle.setASDA(newTORA+stopway);
-        }
-
+        };
 
         return runwayWithObstacle;
     }

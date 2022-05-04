@@ -37,7 +37,10 @@ public class SideOnRunway extends RunwayView {
     private double scaledDTL;
     private double scaledBlast;
     private double scaledRESA;
-    private double clearwayLength;
+    private double closeClearwayLength;
+    private double farClearwayLength;
+    private double closeStopwayLength;
+    private double farStopwayLength;
     private double ALSUp;
     private double ALSAcross;
     private double overallLength;
@@ -80,6 +83,9 @@ public class SideOnRunway extends RunwayView {
         if(runway.getRunway().getBearing() >181){
             reflected=true;
             this.setScaleX(-1);
+        }else{
+            reflected=false;
+            this.setScaleX(1);
         }
 
 
@@ -88,12 +94,16 @@ public class SideOnRunway extends RunwayView {
 
         width=getWidth();
         height= getHeight();
-        overallLength = runway.getRunway().getLength() + runway.getRunway().getClearwayLength();
+        overallLength = runway.getRunway().getLength() + runway.getRunway().getStopwayLength()  + runway.getRunway().getClearwayLength() +runway2.getRunway().getStopwayLength() + runway2.getRunway().getClearwayLength();
+
 
 
         obPos = (((double) obstacle.getPosition())/overallLength)*width; //relative position of object
         obLen = (((double)obstacle.getLength())/overallLength)*width; //relative length of object
         obHeight = (((double)obstacle.getHeight())/overallLength)*height; //relative height of object
+
+
+
 
 
         //relative sizes for TODA, 60m and the RESA are calculated.
@@ -103,13 +113,36 @@ public class SideOnRunway extends RunwayView {
         LDALen = ((double) runway.getRunway().getLDA() / overallLength) * width;
         sixtyLen = (60.0/overallLength)*width;
         RESALen = (240.0/overallLength)*width;
-        clearwayLength = ((double) runway.getRunway().getClearwayLength() / overallLength) * width;
         scaledDTL = (runway.getRunway().getDTL() /overallLength ) *width;
         scaledBlast =(blastProtection /overallLength)*width;
         scaledRESA =(300 /overallLength)*width;
 
 
-        // length and height of ALS slope relative to view size are calculated.
+
+        //stopway and clearway
+        closeClearwayLength = ((double) runway2.getRunway().getClearwayLength() / overallLength) * width;
+        closeStopwayLength = ((double) runway2.getRunway().getStopwayLength() / overallLength) * width;
+        farClearwayLength = ((double ) runway.getRunway().getClearwayLength()/ overallLength) * width;
+        farStopwayLength = ((double)  runway.getRunway().getStopwayLength() / overallLength) * width;
+
+        closeClearwayLength -=closeStopwayLength;
+        farClearwayLength -=farStopwayLength;
+
+
+
+        //obstacle moved to account for DTL clearway and stopway
+        obPos = obPos + scaledDTL + closeStopwayLength + closeClearwayLength;
+
+
+
+
+        System.out.println("TODA "+ TODALen);
+        System.out.println("TORA"+ TORALen);
+        System.out.println("stff "+ (farClearwayLength+farStopwayLength));
+        System.out.println("stopwau "+ runway2.getRunway().getStopwayLength());
+
+
+                // length and height of ALS slope relative to view size are calculated.
         ALSUp = 4 * obstacle.getHeight();
         ALSAcross = 50 * ALSUp;
         ALSUp = (ALSUp / overallLength) * height * 10;
@@ -128,20 +161,46 @@ public class SideOnRunway extends RunwayView {
         gc.setFill(Color.LIGHTBLUE);
         gc.fillRect(0,0, width, height);
 
+        double currentEnd = 0;
+
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(0, (height - 20), width - clearwayLength , 20);
+        gc.fillRect(0, (height - 20), width - farStopwayLength -farClearwayLength , 20);
 
+        //clearway
+        gc.setFill(Color.LIGHTBLUE);
+        gc.fillRect(0, (height - 20),closeClearwayLength  , 20);
+
+
+        //stopway
+        gc.setFill(Color.DARKGREY);
+        gc.fillRect(closeClearwayLength, (height - 20),closeStopwayLength  , 20);
+
+
+        currentEnd=closeStopwayLength +closeClearwayLength;
 
         //DTL
 
         gc.setFill(Color.YELLOW);
-        gc.fillRect(0, (height - 20),scaledDTL  , 20);
+        gc.fillRect(currentEnd, (height - 20), scaledDTL  , 20);
 
+
+
+        gc.setFill(Color.LIGHTBLUE);
+        gc.fillRect(width - farClearwayLength,(height - 20),farStopwayLength,20 );
 
         gc.setFill(Color.DARKGRAY);
-        gc.fillRect(width - clearwayLength,(height - 20),clearwayLength,20 );
+        gc.fillRect(width - farClearwayLength-farStopwayLength,(height - 20), farStopwayLength,20 );
 
+        gc.setFill(Color.BLACK);
+        if(reflected){
+            gc.save();
+            gc.transform(new Affine(new Scale(-1,1,70,50)));
+            gc.fillText("Width : Height = 1 : 10",0,15);
+            gc.restore();
+        }else{
+            gc.fillText("Width : Height = 1 : 10",0,15);
+        }
 
         //the obstructions dimensions relative to the view size are calculated.
         gc.setFill(Color.RED);
@@ -252,17 +311,17 @@ public class SideOnRunway extends RunwayView {
         else{
             //TODA
             gc.setStroke(TODA_COLOR);
-            gc.strokeLine(1,(height - 50), (TODALen-1) ,(height - 50));
+            gc.strokeLine(closeStopwayLength+closeClearwayLength,(height - 50), TODALen+closeStopwayLength+closeClearwayLength ,(height - 50));
             writeText(("TODA:" + runway.getRunway().getTODA() + "m"), (TODALen / 2) ,(height - 65),reflected);
 
             //TORA
             gc.setStroke(TORA_COLOR);
-            gc.strokeLine(1,(height - 80), (TORALen-1) ,(height - 80));
+            gc.strokeLine(closeStopwayLength+closeClearwayLength,(height - 80), TORALen + closeStopwayLength+closeClearwayLength ,(height - 80));
             writeText(("TORA:" + runway.getRunway().getTORA() + "m"), (TORALen / 2) ,(height - 95),reflected);
 
             //ASDA
             gc.setStroke(ASDA_COLOR);
-            gc.strokeLine(1,(height - 110), (ASDALen-1) ,(height - 110));
+            gc.strokeLine(closeStopwayLength+closeClearwayLength,(height - 110), ASDALen+closeStopwayLength+closeClearwayLength ,(height - 110));
             writeText(("ASDA:" + runway.getRunway().getASDA() + "m"), (ASDALen / 2) ,(height - 125),reflected);
 
 
@@ -278,12 +337,12 @@ public class SideOnRunway extends RunwayView {
             }
             else{
                 gc.setStroke(Color.YELLOW);
-                gc.strokeLine((TODALen+1),(height - 50),(TODALen + sixtyLen - 1),(height - 50));
+                gc.strokeLine((TODALen+closeStopwayLength+closeClearwayLength),(height - 50),(TODALen + sixtyLen + closeStopwayLength+closeClearwayLength),(height - 50));
 
                 gc.setStroke(Color.ORANGE);
-                gc.strokeLine((TODALen + sixtyLen + 1),(height - 50),(TODALen + sixtyLen +RESALen - 1),(height - 50));
+                gc.strokeLine((TODALen + sixtyLen + closeStopwayLength+closeClearwayLength),(height - 50),(TODALen + sixtyLen +RESALen + closeStopwayLength+closeClearwayLength),(height - 50));
 
-                writeText(("RESA: 240m"), (TODALen + sixtyLen +(RESALen/2)) ,(height - 65),reflected);
+                writeText(("RESA: 240m"), (TODALen + sixtyLen + closeStopwayLength+closeClearwayLength -40 ) ,(height - 65),reflected);
 
 
 
@@ -332,14 +391,15 @@ public class SideOnRunway extends RunwayView {
         }
         //landing towards an object
         else{
-            gc.strokeLine(1,(height - 50), (LDALen-1) ,(height - 50));
+            double offset =closeStopwayLength+closeClearwayLength + scaledDTL;
+            gc.strokeLine(offset,(height - 50), LDALen+offset ,(height - 50));
             writeText(("LDA:" + runway.getRunway().getLDA() + "m"), (LDALen / 2) ,(height - 65),reflected);
 
             gc.setStroke(Color.YELLOW);
-            gc.strokeLine((LDALen+1),(height - 50),(LDALen + sixtyLen - 1),(height - 50));
+            gc.strokeLine((LDALen+offset),(height - 50),(LDALen + sixtyLen+ offset),(height - 50));
 
             gc.setStroke(Color.ORANGE);
-            gc.strokeLine((LDALen + sixtyLen + 1),(height - 50),(LDALen + sixtyLen +RESALen - 1),(height - 50));
+            gc.strokeLine((LDALen + sixtyLen +offset),(height - 50),(LDALen + sixtyLen +RESALen + offset),(height - 50));
             writeText(("RESA: 240m"), (LDALen + sixtyLen +(RESALen/2)) ,(height - 65),reflected);
             }
         }

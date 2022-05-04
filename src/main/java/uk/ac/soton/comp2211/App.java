@@ -96,6 +96,7 @@ public class App extends Application {
             scene.getStylesheets().add(App.class.getResource("MediumFont.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
+            System.out.println("09L: "+model.airportListProperty().get(0).getRunways()[0].getFirst().getStopwayLength());
 
         } catch (Exception e) {
             e.printStackTrace();

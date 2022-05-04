@@ -5,6 +5,7 @@ public class RedeclaredRunway {
     protected final Runway runway;
     protected final ObstacleOnRunway obstacle;
     protected final Direction direction;
+    
 
     public RedeclaredRunway(Runway runway, ObstacleOnRunway obstacle, Direction direction) {
         this.runway = runway;
