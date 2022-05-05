@@ -12,6 +12,8 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import uk.ac.soton.comp2211.airport.*;
 
+import java.awt.*;
+
 import static java.lang.Math.round;
 
 public class TopDownRunway extends RunwayView {
@@ -112,7 +114,7 @@ public class TopDownRunway extends RunwayView {
         } else { transformRunway(0, scale,x,y);}
 
         //background
-        gc.setFill(Color.color(0.1,0.1,0.1));
+        gc.setFill(Color.web("#1A1A1AFF"));
         gc.fillRect(0,0, getWidth(), getHeight());
 
         //graded area
