@@ -187,7 +187,7 @@ public class Calculator {
             s.append("New LDA = Distance From Threshold - Strip End - RESA\n");
             s.append("= "+ (obs.getPosition() - runway.getDTL() )+ " - 60 - 240 \n");
             s.append("= "+newLDA);
-            s.append("LDA = Min (Original LDA , NewLDA"+  " \n");
+            s.append("\nLDA = Min (Original LDA , NewLDA"+  " \n");
             s.append("LDA = "+LDA+  " \n");
             map.put("LDA",s.toString());
 
@@ -235,7 +235,7 @@ public class Calculator {
             s.append("= "+obs.getPosition() +" + "+ runway.getDTL() +" - 60 " + "- (50 * " +obstacleHeight+ ") \n");
 
         }else{
-            s.append("= "+obs.getPosition() +" + "+ runway.getDTL() +" - 60 " + "- " +RESA+  "- "+ obs.getLength() +  " \n");
+            s.append("= "+obs.getPosition() +" + "+ runway.getDTL() +" - 60 " + "- " +RESA+  "- "+ (RESA + obs.getLength()/2) +  " \n");
         }
         s.append("= "+newTORA + " \n");
         s.append(name+ " = Min ( New"+ name+ ", Original "+name+" )" +  " \n");
@@ -269,8 +269,8 @@ public class Calculator {
         }
         s.append("    = "+runway.getTORA() +" - "+ (Integer.max(300,blastProtection)) + " - " + obs.getPosition()+" - "+runway.getDTL());
         switch (extra) {
-            case 1 -> s.append(clearway+" \n").append(name+" = Min (Original "+name+" , New "+name+"\n").append("    ="+(TORA+clearway)+  " \n");
-            case 2 -> s.append(stopway+ "\n").append(name+"= Min (Original "+name+" , New "+name+"\n").append("    ="+(TORA+stopway) +  " \n");
+            case 1 -> s.append(" - "+clearway+" \n").append(name+" = Min (Original "+name+" , New "+name+"\n").append("    ="+(TORA+clearway)+  " \n");
+            case 2 -> s.append(" - "+stopway+ "\n").append(name+"= Min (Original "+name+" , New "+name+"\n").append("    ="+(TORA+stopway) +  " \n");
             default -> s.append("\n").append(name+" = Min (Original "+name+" , New "+name+"\n").append("    ="+TORA +  " \n");
         }
         return s.toString();
