@@ -57,13 +57,13 @@ public class ObstacleCreationController {
 
         //Obstacle data only contains numbers
         view.getObstacleHeight().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("[0-9]?")) view.getObstacleHeight().setText(oldV);
+            if (!newV.matches("[0-9]+")) view.getObstacleHeight().setText(oldV);
         });
         view.getObstacleWidth().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("[0-9]?")) view.getObstacleWidth().setText(oldV);
+            if (!newV.matches("[0-9]+")) view.getObstacleWidth().setText(oldV);
         });
         view.getObstacleLength().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("[0-9]?")) view.getObstacleLength().setText(oldV);
+            if (!newV.matches("[0-9]+")) view.getObstacleLength().setText(oldV);
         });
 
         view.getAddObstacle().setOnMouseClicked(e-> addObstacle());
