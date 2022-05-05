@@ -7,10 +7,7 @@ import uk.ac.soton.comp2211.App;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.models.AirportModel;
 import uk.ac.soton.comp2211.utility.XMLUtil;
-import uk.ac.soton.comp2211.views.MenuView;
-import uk.ac.soton.comp2211.views.ObstacleCreationView;
-import uk.ac.soton.comp2211.views.SelectionView;
-import uk.ac.soton.comp2211.views.SettingsView;
+import uk.ac.soton.comp2211.views.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -123,6 +120,9 @@ public class SettingsController {
 
         });
 
+        // EDIT AIRPORTS BUTTON
+        view.getEditAirportsButton().setOnAction(e -> loadAirportMenu());
+
         // EDIT OBSTACLES BUTTON
         view.getEditObstaclesButton().setOnAction(e -> loadObstacleMenu());
 
@@ -139,11 +139,13 @@ public class SettingsController {
                 importSuccess.setTitle("Success!");
                 importSuccess.setContentText("Airport(s) were imported successfully");
                 importSuccess.show();
+                model.addAction("Airport(s) successfully imported from: '" + file.getName() + "'");
             } catch (Exception ex) {
                 Alert importFail = new Alert(Alert.AlertType.ERROR);
                 importFail.setTitle("Error");
                 importFail.setContentText("Error importing airport(s) from XML file");
                 importFail.show();
+                model.addAction("Error: Airport(s) could not be imported from: '" + file.getName() + "'");
             }
         });
 
@@ -160,11 +162,13 @@ public class SettingsController {
                 importSuccess.setTitle("Success!");
                 importSuccess.setContentText("Obstacle(s) were imported successfully");
                 importSuccess.show();
+                model.addAction("Obstacle(s) successfully imported from: '" + file.getName() + "'");
             } catch (Exception ex) {
                 Alert importFail = new Alert(Alert.AlertType.ERROR);
                 importFail.setTitle("Error");
                 importFail.setContentText("Error importing obstacle(s) from XML file");
                 importFail.show();
+                model.addAction("Error: Obstacle(s) could not be imported from: '" + file.getName() + "'");
             }
         });
 
@@ -181,11 +185,13 @@ public class SettingsController {
                 importSuccess.setTitle("Success!");
                 importSuccess.setContentText("Airports were successfully exported");
                 importSuccess.show();
+                model.addAction("Airport(s) successfully exported to: '" + file.getName() + "'");
             } catch (IOException ex) {
                 Alert importFail = new Alert(Alert.AlertType.ERROR);
                 importFail.setTitle("Error");
                 importFail.setContentText("Error exporting Airports");
                 importFail.show();
+                model.addAction("Error: Airport(s) could not be exported to: '" + file.getName() + "'");
             }
         });
 
@@ -202,11 +208,13 @@ public class SettingsController {
                 importSuccess.setTitle("Success!");
                 importSuccess.setContentText("Obstacles were successfully exported");
                 importSuccess.show();
+                model.addAction("Obstacle(s) successfully exported to: '" + file.getName() + "'");
             } catch (IOException ex) {
                 Alert importFail = new Alert(Alert.AlertType.ERROR);
                 importFail.setTitle("Error");
                 importFail.setContentText("Error exporting Obstacles");
                 importFail.show();
+                model.addAction("Error: Obstacle(s) could not be exported to: '" + file.getName() + "'");
             }
         });
     }
@@ -258,6 +266,12 @@ public class SettingsController {
         ObstacleCreationView obstaclesView = new ObstacleCreationView();
         ObstacleCreationController obstacleCreationController = new ObstacleCreationController(obstaclesView, model);
         view.getView().getScene().setRoot(obstaclesView.getView());
+    }
+
+    public void loadAirportMenu() {
+        EditAirportsView editAirportsView = new EditAirportsView();
+        EditAirportsController editAirportsController = new EditAirportsController(editAirportsView, model);
+        view.getView().getScene().setRoot(editAirportsView.getView());
     }
 
 }

@@ -90,7 +90,10 @@ public class XMLUtil {
         xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
-        xmlMapper.writeValue(file, airports);
+        Airport[] airportsArray = new Airport[airports.size()];
+        airportsArray = airports.toArray(airportsArray);
+
+        xmlMapper.writeValue(file, airportsArray);
     }
 
     public static void exportObstacles(File file, List<Obstacle> obstacles) throws IOException {

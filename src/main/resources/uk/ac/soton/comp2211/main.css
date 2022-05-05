@@ -147,3 +147,6 @@ AnchorPane {
 Button:hover {
     -fx-cursor: hand;
 }
+.runwayInfo Label {
+    -fx-pref-width: 180;
+}

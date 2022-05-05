@@ -142,6 +142,20 @@ public class  Runway {
         this.displacedThreshold = displacedThreshold;
         this.clearwayLength = clearwayLength;
     }
+    public Runway(String name, int length, int width, double bearing, int TORA,  int TODA, int ASDA, int LDA , int displacedThreshold ,int clearwayLength ,int stopwayLength, int stopwayWidth) {
+        this.name = name;
+        this.length = length;
+        this.width = width;
+        this.bearing = bearing;
+        this.TORA = TORA;
+        this.TODA = TODA;
+        this.ASDA = ASDA;
+        this.LDA = LDA;
+        this.displacedThreshold = displacedThreshold;
+        this.clearwayLength = clearwayLength;
+        this.stopwayLength = stopwayLength;
+        this.stopwayWidth = stopwayWidth;
+    }
     public Runway (Runway runway){
         name = runway.getName();
         length = runway.getLength();

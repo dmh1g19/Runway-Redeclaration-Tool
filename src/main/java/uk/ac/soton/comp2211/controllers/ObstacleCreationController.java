@@ -48,6 +48,7 @@ public class ObstacleCreationController {
             button.setOnAction(e -> {
                 view.getObsForm().getChildren().remove(obstacleB);
                 model.preDefinedObstaclesProperty().remove(obstacle);
+                model.addAction("Obstacle: '" + obstacle.getName() + "' was removed!");
             });
 
             view.getObsForm().getChildren().add(obstacleB);
@@ -56,13 +57,13 @@ public class ObstacleCreationController {
 
         //Obstacle data only contains numbers
         view.getObstacleHeight().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleHeight().setText(oldV);
+            if (!newV.matches("[0-9]?")) view.getObstacleHeight().setText(oldV);
         });
         view.getObstacleWidth().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleWidth().setText(oldV);
+            if (!newV.matches("[0-9]?")) view.getObstacleWidth().setText(oldV);
         });
         view.getObstacleLength().textProperty().addListener((observableValue, oldV, newV) -> {
-            if (!newV.matches("\\d*(\\\\d*)?")) view.getObstacleLength().setText(oldV);
+            if (!newV.matches("[0-9]?")) view.getObstacleLength().setText(oldV);
         });
 
         view.getAddObstacle().setOnMouseClicked(e-> addObstacle());
@@ -180,6 +181,7 @@ public class ObstacleCreationController {
                         Integer.parseInt(view.getObstacleLength().getText()),
                         Integer.parseInt(view.getObstacleWidth().getText()));
                 model.preDefinedObstaclesProperty().add(obstacle);
+                model.addAction("Obstacle: '" + obstacle.getName() + "' was created");
 
                 //Add Obstacle to write side List
                 HBox obstacleB = new HBox();

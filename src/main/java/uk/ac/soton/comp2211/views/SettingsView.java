@@ -26,6 +26,7 @@ public class SettingsView extends BaseView {
     private ComboBox<String> colourBlindOptionsBox;
     private Label airportIndicator = new Label();
     private Button editObstaclesButton = new Button("Edit");
+    private Button editAirportsButton = new Button("Edit");
     private Button importAirportsButton = new Button("Import");
     private Button importObstaclesButton = new Button("Import");
     private Button exportAirportsButton = new Button("Export");
@@ -140,6 +141,13 @@ public class SettingsView extends BaseView {
         resetAllHBox.getChildren().addAll(resetSpacing, resetColours);
         menu.getChildren().add(resetAllHBox);
 
+        // Edit Airports
+        Label createAirportLabel = new Label("Edit Airports");
+        createAirportLabel.getStyleClass().add("settingsHeader");
+        menu.getChildren().add(createAirportLabel);
+
+        menu.getChildren().add(editAirportsButton);
+
         // Create Obstacles Label
         Label createObstacleLabel = new Label("Edit Obstacles");
         createObstacleLabel.getStyleClass().add("settingsHeader");
@@ -244,5 +252,9 @@ public class SettingsView extends BaseView {
 
     public Button getExportObstaclesButton() {
         return exportObstaclesButton;
+    }
+
+    public Button getEditAirportsButton() {
+        return editAirportsButton;
     }
 }
