@@ -13,9 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.w3c.dom.Text;
 import uk.ac.soton.comp2211.airport.Airport;
 import uk.ac.soton.comp2211.airport.PhysicalRunway;
 import uk.ac.soton.comp2211.airport.Runway;
@@ -166,57 +166,60 @@ public class EditAirportsController {
         Label runwayLengthLabel = new Label("Length: ");
         TextField runwayLength = new TextField();
         HBox runwayLengthHBox = new HBox();
-        runwayLengthHBox.getChildren().addAll(runwayLengthLabel, runwayLength);
+        runwayLengthHBox.getChildren().addAll(runwayLengthLabel, addMetre(runwayLength));
 
         Label runwayWidthLabel = new Label("Width: ");
         TextField runwayWidth = new TextField();
         HBox runwayWidthHBox = new HBox();
-        runwayWidthHBox.getChildren().addAll(runwayWidthLabel, runwayWidth);
+        runwayWidthHBox.getChildren().addAll(runwayWidthLabel, addMetre(runwayWidth));
 
         Label runwayBearingLabel = new Label("Bearing: ");
         TextField runwayBearing = new TextField();
+        runwayBearing.textProperty().addListener((observableValue, s, t1) -> {
+            if (!t1.matches("\\d*(\\.\\d*)?")) runwayBearing.setText(s);
+        });
         HBox runwayBearingHBox = new HBox();
-        runwayBearingHBox.getChildren().addAll(runwayBearingLabel, runwayBearing);
+        runwayBearingHBox.getChildren().addAll(runwayBearingLabel, addDegree(runwayBearing));
 
         Label runwayTORALabel = new Label("TORA: ");
         TextField runwayTORA = new TextField();
         HBox runwayTORAHBox = new HBox();
-        runwayTORAHBox.getChildren().addAll(runwayTORALabel, runwayTORA);
+        runwayTORAHBox.getChildren().addAll(runwayTORALabel, addMetre(runwayTORA));
 
         Label runwayTODALabel = new Label("TODA: ");
         TextField runwayTODA = new TextField();
         HBox runwayTODAHBox = new HBox();
-        runwayTODAHBox.getChildren().addAll(runwayTODALabel, runwayTODA);
+        runwayTODAHBox.getChildren().addAll(runwayTODALabel, addMetre(runwayTODA));
 
         Label runwayASDALabel = new Label("ASDA: ");
         TextField runwayASDA= new TextField();
         HBox runwayASDAHBox = new HBox();
-        runwayASDAHBox.getChildren().addAll(runwayASDALabel, runwayASDA);
+        runwayASDAHBox.getChildren().addAll(runwayASDALabel, addMetre(runwayASDA));
 
         Label runwayLDALabel = new Label("LDA: ");
         TextField runwayLDA = new TextField();
         HBox runwayLDAHBox = new HBox();
-        runwayLDAHBox.getChildren().addAll(runwayLDALabel, runwayLDA);
+        runwayLDAHBox.getChildren().addAll(runwayLDALabel, addMetre(runwayLDA));
 
         Label runwayDispLabel = new Label("Displaced Thresh: ");
         TextField runwayDisp = new TextField();
         HBox runwayDispHBox = new HBox();
-        runwayDispHBox.getChildren().addAll(runwayDispLabel, runwayDisp);
+        runwayDispHBox.getChildren().addAll(runwayDispLabel, addMetre(runwayDisp));
 
         Label runwayClearLabel = new Label("Clearway Length: ");
         TextField runwayClear = new TextField();
         HBox runwayClearHBox = new HBox();
-        runwayClearHBox.getChildren().addAll(runwayClearLabel, runwayClear);
+        runwayClearHBox.getChildren().addAll(runwayClearLabel, addMetre(runwayClear));
 
         Label runwayStopLengthLabel = new Label("Stopway Length: ");
         TextField runwayStopLength = new TextField();
         HBox runwayStopLengthHBox = new HBox();
-        runwayStopLengthHBox.getChildren().addAll(runwayStopLengthLabel, runwayStopLength);
+        runwayStopLengthHBox.getChildren().addAll(runwayStopLengthLabel, addMetre(runwayStopLength));
 
         Label runwayStopWidthLabel = new Label("Stopway Width: ");
         TextField runwayStopWidth = new TextField();
         HBox runwayStopWidthHBox = new HBox();
-        runwayStopWidthHBox.getChildren().addAll(runwayStopWidthLabel, runwayStopWidth);
+        runwayStopWidthHBox.getChildren().addAll(runwayStopWidthLabel, addMetre(runwayStopWidth));
 
         VBox runway = new VBox();
         runway.setSpacing(4);
@@ -233,7 +236,10 @@ public class EditAirportsController {
                 ,runwayTORA, runwayTODA, runwayASDA, runwayLDA,
                 runwayDisp, runwayClear, runwayStopLength, runwayStopWidth));
 
-        for (var node : rNodes.subList(1,11)) {
+        ArrayList<TextField> listenerToAdd = new ArrayList<>();
+        listenerToAdd.addAll(rNodes.subList(1,2));
+        listenerToAdd.addAll(rNodes.subList(4,11));
+        for (var node : listenerToAdd) {
             node.textProperty().addListener((observableValue, s, t1) -> {
                 if (!t1.matches("[0-9]*")) node.setText(s);
             });
@@ -266,6 +272,27 @@ public class EditAirportsController {
         }
     }
 
+    public Node addMetre(Node input) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+
+        javafx.scene.text.Text metre = new Text("m");
+        metre.getStyleClass().add("metre");
+
+        hbox.getChildren().addAll(input, metre);
+        return hbox;
+    }
+
+    public Node addDegree(Node input) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+
+        javafx.scene.text.Text metre = new Text("°  ");
+        metre.getStyleClass().add("metre");
+
+        hbox.getChildren().addAll(input, metre);
+        return hbox;
+    }
 
     public void loadSettings() {
         SettingsView settingsView = new SettingsView();

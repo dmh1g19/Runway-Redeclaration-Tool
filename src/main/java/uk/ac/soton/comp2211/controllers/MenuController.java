@@ -40,7 +40,7 @@ public class MenuController {
 
         view.getExitButton().setOnMouseClicked(e -> Platform.exit());
         view.getSettingsButton().setOnMouseClicked(e -> loadSettings());
-        view.getNotifButton().setOnMouseClicked(e -> loadNotifications());
+        view.getNotifButton().setOnAction(e -> loadNotifications());
     }
 
     public void loadSelection() {

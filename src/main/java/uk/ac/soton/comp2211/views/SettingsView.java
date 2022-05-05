@@ -192,7 +192,8 @@ public class SettingsView extends BaseView {
 
         ScrollPane settingsMenuScroll = new ScrollPane(menu);
         settingsMenuScroll.setMaxWidth(500);
-        settingsMenuScroll.setMaxHeight(500);
+        settingsMenuScroll.setMaxHeight(800);
+        settingsMenuScroll.setFitToHeight(true);
 
         settingsMenuScroll.getStyleClass().add("inputs");
 
