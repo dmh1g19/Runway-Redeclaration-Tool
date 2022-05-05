@@ -49,12 +49,11 @@ public class ObstacleCreationView extends BaseView {
         VBox vBox = new VBox();
 
         vBox.getChildren().add(hBox);
-        vBox.getChildren().add(writeObstacles);
         layout.setCenter(vBox);
 
         //adding back button
 
-        layout.setLeft(backButton);
+        layout.setTop(createTopBar());
 
         return layout;
 
@@ -99,6 +98,18 @@ public class ObstacleCreationView extends BaseView {
 
 
         return new Group(inputForm);
+    }
+
+    public Node createTopBar() {
+        HBox topHBox = new HBox();
+
+        Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+        BorderPane.setMargin(topHBox, new Insets(0,0,4,0));
+
+        topHBox.getChildren().addAll(backButton, region, writeObstacles);
+
+        return topHBox;
     }
 
 

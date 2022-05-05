@@ -48,66 +48,42 @@ public class App extends Application {
         stage.setTitle("Runway Re-declaration Tool");
 
         // INPUT RUNWAYS MANUALLY
-//        Runway r09L = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
-//        Runway r27R = new Runway("27R", 3901,50, 269.71,3882,3960,3882,3882, 78, 0);
-//        Runway r09R = new Runway("09R", 3658,50, 089.67,3658,3658,3658,3350,0,308);
-//        Runway r27L = new Runway("27L", 3658,50, 0269.71,3658,3658,3658,3658,0,0);
-//
-//        PhysicalRunway r09L27R = new PhysicalRunway(r09L,r27R);
-//        PhysicalRunway r09R27L = new PhysicalRunway(r09R,r27L);
-//
-//        PhysicalRunway[] runways = new PhysicalRunway[]{r09L27R,r09R27L};
-//
-//        Airport heathrow = new Airport("Heathrow", runways);
-//
-//        Airport[] airports = new Airport[]{heathrow,heathrow};
-//
-//        XmlMapper xmlMapper = new XmlMapper();
-//        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-//        xmlMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-//        xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-//        try {
-//            xmlMapper.writeValue(new File("airports.xml"), airports);
-//
-//            XmlMapper mapper = new XmlMapper();
-//
-//
-//
-//            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-//            Airport[] ports = mapper.readValue(new File("airports.xml"), Airport[].class);
-//            System.out.println(ports[0].getRunways()[0].getFirst().getName());
-//            System.out.println("Good");
-//        } catch (Exception e) {
-//            System.out.println(e);
-//            System.out.println("Error");
-//        }
+        Runway r09L = new Runway("09L",3901,50,089.67,3901,3901,3901,3592,0,309);
+        Runway r27R = new Runway("27R", 3901,50, 269.71,3882,3960,3882,3882, 78, 0);
+        Runway r09R = new Runway("09R", 3658,50, 089.67,3658,3658,3658,3350,0,308);
+        Runway r27L = new Runway("27L", 3658,50, 0269.71,3658,3658,3658,3658,0,0);
+        PhysicalRunway r09L27R = new PhysicalRunway(r09L,r27R);
+        PhysicalRunway r09R27L = new PhysicalRunway(r09R,r27L);
 
+        PhysicalRunway[] runways = new PhysicalRunway[]{r09L27R,r09R27L};
+        Airport heathrow = new Airport("London Heathrow", runways);
+        Airport[] airports = new Airport[]{heathrow};
+
+
+
+        AirportModel model;
         try {
-
-            AirportModel model = new AirportModel(XMLUtil.importAirports("airports.xml"));
-            model.setPreDefinedObstacles(XMLUtil.importObstacles("obstacles.xml"));
-
-            MenuView view = new MenuView();
-            MenuController controller = new MenuController(view, model);
-
-            Scene scene = new Scene(view.getView(), width, height);
-
-            scene.getStylesheets().add(App.class.getResource("main.css").toExternalForm());
-            scene.getStylesheets().add(App.class.getResource("MediumFont.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-            System.out.println("09L: "+model.airportListProperty().get(0).getRunways()[0].getFirst().getStopwayLength());
+            model = new AirportModel(XMLUtil.importAirports("airports.xml"));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            model = new AirportModel(airports);
         }
 
-//
-//        SimpleObjectProperty<Airport> airportLL = new SimpleObjectProperty<>(heathrow);
-//        if (airportLL.isNull().get()) {
-//            System.out.println("TESTING");
-//        }
+        try {
+            model.setPreDefinedObstacles(XMLUtil.importObstacles("obstacles.xml"));
+        } catch (Exception e) { }
+
+        MenuView view = new MenuView();
+        MenuController controller = new MenuController(view, model);
+
+        Scene scene = new Scene(view.getView(), width, height);
+
+        scene.getStylesheets().add(App.class.getResource("main.css").toExternalForm());
+        scene.getStylesheets().add(App.class.getResource("MediumFont.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
+
 
 
     public void defaultScene() {
