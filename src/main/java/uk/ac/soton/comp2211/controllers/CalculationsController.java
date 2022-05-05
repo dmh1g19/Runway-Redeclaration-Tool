@@ -489,13 +489,13 @@ public class CalculationsController {
                 }
                 if(blastDistance >1000){
                     Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setContentText("blast distance to large");
+                    a.setContentText("Blast distance too large");
                     a.show();
                     return;
                 }
                 if(blastDistance <=0){
                     Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setContentText("blast distance to small");
+                    a.setContentText("Blast distance too small");
                     a.show();
                     return;
                 }
