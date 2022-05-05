@@ -45,7 +45,7 @@ public class AirportModel {
     private void initialiseNotifications() {
         // LISTEN FOR ACTIONS
         selectedAirportProperty().addListener((observableValue, airport, t1) -> {
-            addAction(t1.getName() + " Selected");
+            addAction("Airport: '" + t1.getName() + "' Selected");
         });
 
         redeclaredRunwaysProperty().addListener((observableValue, redeclaredRunwayRedeclaredRunwayPair, t1) -> {

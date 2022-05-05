@@ -89,7 +89,7 @@ public class EditAirportsController {
                     var runwayFields2 = prunway.getValue();
                     if (runwayFields1.size() != 12) throw new Exception("Not enough fields");
                     Runway runway1 = new Runway(runwayFields1.get(0).getText(), Integer.parseInt(runwayFields1.get(1).getText())
-                            , Integer.parseInt(runwayFields1.get(2).getText()), Integer.parseInt(runwayFields1.get(3).getText())
+                            , Integer.parseInt(runwayFields1.get(2).getText()), Double.parseDouble(runwayFields1.get(3).getText())
                             , Integer.parseInt(runwayFields1.get(4).getText()), Integer.parseInt(runwayFields1.get(5).getText())
                             , Integer.parseInt(runwayFields1.get(6).getText()), Integer.parseInt(runwayFields1.get(7).getText())
                             , Integer.parseInt(runwayFields1.get(8).getText()), Integer.parseInt(runwayFields1.get(9).getText())
@@ -97,7 +97,7 @@ public class EditAirportsController {
 
                     if (runwayFields2.size() != 12) throw new Exception("Not enough fields");
                     Runway runway2 = new Runway(runwayFields2.get(0).getText(), Integer.parseInt(runwayFields2.get(1).getText())
-                            , Integer.parseInt(runwayFields2.get(2).getText()), Integer.parseInt(runwayFields2.get(3).getText())
+                            , Integer.parseInt(runwayFields2.get(2).getText()), Double.parseDouble(runwayFields2.get(3).getText())
                             , Integer.parseInt(runwayFields2.get(4).getText()), Integer.parseInt(runwayFields2.get(5).getText())
                             , Integer.parseInt(runwayFields2.get(6).getText()), Integer.parseInt(runwayFields2.get(7).getText())
                             , Integer.parseInt(runwayFields2.get(8).getText()), Integer.parseInt(runwayFields2.get(9).getText())
@@ -238,8 +238,8 @@ public class EditAirportsController {
                 runwayDisp, runwayClear, runwayStopLength, runwayStopWidth));
 
         ArrayList<TextField> listenerToAdd = new ArrayList<>();
-        listenerToAdd.addAll(rNodes.subList(1,2));
-        listenerToAdd.addAll(rNodes.subList(4,11));
+        listenerToAdd.addAll(rNodes.subList(1,3));
+        listenerToAdd.addAll(rNodes.subList(4,12));
         for (var node : listenerToAdd) {
             node.textProperty().addListener((observableValue, s, t1) -> {
                 if (!t1.matches("[0-9]*")) node.setText(s);
