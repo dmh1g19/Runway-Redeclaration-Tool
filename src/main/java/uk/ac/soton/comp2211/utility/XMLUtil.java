@@ -34,37 +34,54 @@ public class XMLUtil {
      * @return an array list of obstacles
      */
 
-    /**
-     * called by the predefined obstacles class to update the xml file
-     * We could have this called automatically using a listener or do it manually with like a save button or something
-     * @param obstacles the new list of obstacles
-     */
+
 
 
 
 
     public static Airport[] importAirports(String fileName) throws IOException {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return xmlMapper.readValue(new File(fileName), Airport[].class);
+        File file= new File(fileName);
+        return importAirports(file);
     }
 
     public static Airport[] importAirports(File file) throws IOException {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return xmlMapper.readValue(file, Airport[].class);
+
+        try {
+            Airport[] airports =xmlMapper.readValue(file, Airport[].class);
+            for (Airport airport : airports){
+               if(airport.getRunways()[0].getFirst().getName()==null)
+                   throw new IOException();
+               return xmlMapper.readValue(file, Airport[].class);
+            }
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
+       return null;
     }
 
     public static Obstacle[] importObstacles(String fileName) throws IOException {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return xmlMapper.readValue(new File(fileName), Obstacle[].class);
+        File file = new File(fileName);
+        return importObstacles(file);
     }
 
     public static Obstacle[] importObstacles(File file) throws IOException {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return xmlMapper.readValue(file, Obstacle[].class);
+        try {
+            Obstacle[] obstacles =xmlMapper.readValue(file, Obstacle[].class);
+            for (Obstacle obstacle : obstacles){
+                if(obstacle.getName()==null)
+                    throw new IOException();
+                return obstacles;
+            }
+        }
+        catch(Exception e) {
+            //  Block of code to handle errors
+        }
+        return null;
     }
 
     public static void exportAirports(File file, List<Airport> airports) throws IOException {

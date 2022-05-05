@@ -372,7 +372,7 @@ public class CalculationsController {
                     a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getFirst().getName());
                     error=true;
                     a.show();
-                    view.getDistanceLowerThreshold().setText("");
+
                 }
             } else {
                 try {
@@ -382,7 +382,6 @@ public class CalculationsController {
                     a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getFirst().getName());
                     error=true;
                     a.show();
-                    view.getDistanceLowerThreshold().setText("");
                 }
             }
             RedeclaredRunway redeclaredRunwayUpper = null;
@@ -394,7 +393,7 @@ public class CalculationsController {
                     a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getSecond().getName());
                     error=true;
                     a.show();
-                    view.getDistanceUpperThreshold().setText("");
+
                 }
             } else {
                 try {
@@ -404,7 +403,6 @@ public class CalculationsController {
                     a.setContentText("Invalid obstacle position for runway: "+view.getRunwaySelect().getValue().getSecond().getName());
                     error=true;
                     a.show();
-                    view.getDistanceUpperThreshold().setText("");
                 }
             }
             if (error)
