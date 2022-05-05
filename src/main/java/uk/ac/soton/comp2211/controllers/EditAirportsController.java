@@ -115,6 +115,7 @@ public class EditAirportsController {
                 view.getEditRunwaysVBox().getChildren().clear();
                 view.getNameInput().clear();
                 view.getEditAirportsVBox().getChildren().add(newRunway);
+                model.addAction("Airport: '" + airport.getName() + "' was created");
             } catch (Exception ex) {
                 view.getSaveAirport().setStyle("-fx-background-color: red");
                 PauseTransition pauseTransition = new PauseTransition(
@@ -256,8 +257,8 @@ public class EditAirportsController {
             hbox.setSpacing(8);
 
             Label airportName = new Label(airport.getName());
-            airportName.setPrefWidth(260);
-            airportName.setMaxWidth(260);
+            airportName.setPrefWidth(300);
+            airportName.setMaxWidth(300);
 
             //Button editAirport = new Button("Edit");
             Button removeAirport = new Button("Delete");
@@ -268,6 +269,7 @@ public class EditAirportsController {
             removeAirport.setOnAction(e -> {
                 model.airportListProperty().remove(airport);
                 view.getAirportList().getChildren().remove(hbox);
+                model.addAction("Airport: '" + airport.getName() + "' was removed");
             });
         }
     }

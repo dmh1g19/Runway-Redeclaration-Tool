@@ -50,8 +50,7 @@ public class ObstacleCreationView extends BaseView {
 
         vBox.getChildren().add(hBox);
         layout.setCenter(vBox);
-
-        //adding back button
+        
 
         layout.setTop(createTopBar());
 
