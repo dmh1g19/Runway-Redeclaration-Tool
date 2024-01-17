@@ -5,13 +5,12 @@ This tool recalculates and visualizes revised runway parameters for UK commercia
 
 ## Features
 - Configurable for any UK commercial airport.
-- Provides 2D and 3D visualizations of runways.
+- Provides 2D visualizations of runways.
 - Calculates new runway distances based on obstructions.
 - Displays both original and recalculated values with calculation breakdown.
 - Import and export capabilities using XML files.
 
 ## Optional Extensions
-- Map integration with real-world images.
 - Zoom and pan in visualizations.
 - Multiple export formats (JPEG, PNG, GIF, etc.).
 - Assistive technology support (screen readers).
