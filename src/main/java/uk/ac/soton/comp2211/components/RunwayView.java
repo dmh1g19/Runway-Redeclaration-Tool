@@ -8,19 +8,18 @@ import uk.ac.soton.comp2211.airport.Runway;
 import uk.ac.soton.comp2211.airport.State;
 
 public abstract class RunwayView extends Canvas {
-    protected int blastProtection =0;
+    protected int blastProtection = 0;
 
     private RedeclaredRunway runway;
 
-    final Color TODA_COLOR = Color.rgb(255,145,255);
-    final Color TORA_COLOR = Color.rgb(95,185,255);
-    final Color LDA_COLOR = Color.rgb(255,255,0);
-    final Color RESA_COLOR = Color.rgb(255,255,255);
-    final Color ASDA_COLOR = Color.rgb(255,150,50);
+    Color TODA_COLOR = Color.rgb(255,145,255);
+    Color TORA_COLOR = Color.rgb(95,185,255);
+    Color LDA_COLOR = Color.rgb(255,255,0);
+    Color RESA_COLOR = Color.rgb(255,255,255);
+    Color ASDA_COLOR = Color.rgb(255,150,50);
 
-    double scale = 0.9;
-    final private double MIN_SCALE = 0.2;
-    final private double MAX_SCALE = 3;
+    private double MIN_SCALE = 0.2;
+    private double MAX_SCALE = 3;
 
     private double scrollStartX = 0;
     private double scrollStartY = 0;
@@ -30,6 +29,8 @@ public abstract class RunwayView extends Canvas {
     private double deltaX = 0;
     private double deltaY = 0;
 
+
+    double scale = 0.9;
     double x = 0;
     double y = 0;
 
@@ -71,11 +72,30 @@ public abstract class RunwayView extends Canvas {
         scrollStartX = newX;
         scrollStartY = newY;
     }
+
     public void exitScroll(double newX, double newY)
     {
         lastScrollEndX=x;
         lastScrollEndY=y;
     }
 
+    public Color getTODAColor() {
+        return this.TODA_COLOR;
+    }
 
+    public Color getTORAColor() {
+        return this.TORA_COLOR;
+    }
+
+    public Color getLDAColor() {
+        return this.LDA_COLOR;
+    }
+
+    public Color getRESAColor() {
+        return this.RESA_COLOR;
+    }
+
+    public Color getASDAColor() {
+        return this.ASDA_COLOR;
+    }
 }

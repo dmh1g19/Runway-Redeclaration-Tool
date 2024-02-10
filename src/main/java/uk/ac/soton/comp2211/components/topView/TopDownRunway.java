@@ -22,14 +22,12 @@ public class TopDownRunway extends RunwayView {
     double runwayLen = 650;
     double runwayWidth = 50;
 
-
     GraphicsContext gc = this.getGraphicsContext2D();
 
     private Runway runway;
     private RedeclaredRunway redeclaredRunway;
     private RedeclaredRunway redeclaredRunway2;
     private ObstacleOnRunway obstacle;
-
 
     double halfHeight;
     double halfWidth;
@@ -68,6 +66,7 @@ public class TopDownRunway extends RunwayView {
     {
         draw(redeclaredRunway, redeclaredRunway2 ,state);
     }
+
     @Override
     public void draw(RedeclaredRunway runway1, RedeclaredRunway runway2,State state) {
 
@@ -85,7 +84,7 @@ public class TopDownRunway extends RunwayView {
         this.bearing = runway.getBearing();
         this.halfHeight = getHeight()/2;
         this.halfWidth = getWidth()/2;
-        this.scaledEndGap =         scaleToRunwayLength(60);
+        this.scaledEndGap = scaleToRunwayLength(60);
         this.startOfRunwayX = halfWidth-(runwayLen/2);
         this.startOfRunwayY = halfHeight-(runwayWidth/2);
         this.endOfRunwayX = halfWidth+(runwayLen/2);
@@ -143,6 +142,7 @@ public class TopDownRunway extends RunwayView {
         int bearing = ((int) Math.round(runway.getBearing()))/10 ;
         String closeLetter = "";
         String farLetter = "";
+
         if(runway.getName().contains("L")){
             closeLetter="L";
             farLetter="R";
@@ -169,11 +169,6 @@ public class TopDownRunway extends RunwayView {
 
         }
 
-        //LEFT THR MARKING
-        //thresholdL(String.valueOf(round(bearing)),"L");
-
-        
-
         gc.setFill(Color.WHITE);
         //RESA1
         gc.fillRect(startOfRunwayX+scaledDTL, startOfRunwayY, scaledRESA, runwayWidth);
@@ -195,10 +190,6 @@ public class TopDownRunway extends RunwayView {
         gc.setFill(Color.RED);
         gc.fillRect(startOfRunwayX+scaledObjPos+scaledCloseStopway, (halfHeight-(scaledObjWidth/2))+scaledObjDFCL,scaledObjLen,scaledObjWidth);
 
-
-
-
-
         //Draw distances according to what the plane is doing
         gc.setLineWidth(2);
         gc.setLineDashes(0);
@@ -208,12 +199,6 @@ public class TopDownRunway extends RunwayView {
         else if (direction == Direction.AWAYOVER) {
             landingAndTakeOffAwayFromObj_LowestThreshold();
         }
-        //else if (for when direction TOWARDS for highest threshold) {
-        //    landingAndTakeOffTowardsObj_HighestThreshold();
-        //}
-        //else if (for when direction AWAY for highest threshold) {
-        //    landingAndTakeOffAwayFromObj_HighestThreshold();
-        //}
 
         gc.restore();
         legend();
